@@ -9,7 +9,7 @@ namespace DotNetEd.CoreAdmin.Controllers
     {
         public IActionResult Index()
         {
-            return Content("hello");
+            return View();
         }
     }
 }
