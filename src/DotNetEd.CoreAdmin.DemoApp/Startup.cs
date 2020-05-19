@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DotNetEd.CoreAdmin.DemoApp.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,7 +25,10 @@ namespace DotNetEd.CoreAdmin
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase("TestDatabase"));
+
             services.AddCoreAdmin();
+
             services.AddControllersWithViews();
         }
 
@@ -48,6 +53,8 @@ namespace DotNetEd.CoreAdmin
             app.UseAuthorization();
 
             app.UseCoreAdmin();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

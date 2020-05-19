@@ -1,0 +1,7 @@
+﻿@model DotNetEd.CoreAdmin.ViewModels.MenuViewModel
+    <ul>
+        @foreach (var dbContext in Model.DbContextNames)
+        {
+            <li>@dbContext</li>
+        }
+    </ul>

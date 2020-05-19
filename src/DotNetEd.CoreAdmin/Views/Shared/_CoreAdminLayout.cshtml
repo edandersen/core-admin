@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-    <header>
+    @*<header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Core Admin</a>
@@ -28,11 +28,17 @@
                 </div>
             </div>
         </nav>
-    </header>
+    </header>*@
     <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+        <div class="row">
+            <div class="col-md-3">
+                @await Component.InvokeAsync("CoreAdminMenu")
+            </div>
+            <main role="main" class="pb-3 col-md-9">
+                @RenderBody()
+            </main>
+        </div>
+       
     </div>
 
     <footer class="border-top footer text-muted">
