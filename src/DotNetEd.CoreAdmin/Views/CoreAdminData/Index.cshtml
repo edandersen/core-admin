@@ -5,9 +5,9 @@
     Layout = "_CoreAdminLayout";
 }
 
-<h1>@Model.DbSetProperty.Name</h1>
+<h1 class="display-4">@Model.DbSetProperty.Name</h1>
 
-<table class="table">
+<table class="table table-striped table-sm">
     <thead>
         <tr>
             @foreach (var entityProperty in Model.EntityType.GetProperties())
