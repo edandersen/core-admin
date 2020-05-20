@@ -24,14 +24,7 @@ namespace DotNetEd.CoreAdmin
 
         public static void UseCoreAdmin(this IApplicationBuilder app)
         {
-           // var dbContexts = app.ApplicationServices.
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "coreadmin",
-                    pattern: "/admin/{controller=CoreAdminHome}/{action=Index}/{id?}");
-            });
+          
         }
     }
 }

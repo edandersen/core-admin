@@ -1,0 +1,30 @@
+﻿@model DotNetEd.CoreAdmin.ViewModels.DataListViewModel
+
+@{
+    ViewData["Title"] = Model.DbSetProperty.Name;
+    Layout = "_CoreAdminLayout";
+}
+
+<h1>@Model.DbSetProperty.Name</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            @foreach (var entityProperty in Model.EntityType.GetProperties())
+            {
+                <th>@entityProperty.Name</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                @foreach (var entityProperty in Model.EntityType.GetProperties())
+                {
+                    <td>@entityProperty.GetValue(item)</td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>

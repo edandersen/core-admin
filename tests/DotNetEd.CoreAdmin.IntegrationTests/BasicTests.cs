@@ -37,8 +37,32 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             Assert.Contains("TestEntities", content);
 
+        }
 
+        [Fact]
+        public async Task ShowDataInDbSetOnScreen()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var idGuid = Guid.NewGuid();
+            var nameGuidString = Guid.NewGuid().ToString();
+            dbContext.TestEntities.Add(new TestApp.Entities.TestEntity() { Id = idGuid, Name = nameGuidString});
+            await dbContext.SaveChangesAsync();
 
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/admin/data/testentities");
+
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            Assert.Equal("text/html; charset=utf-8",
+                response.Content.Headers.ContentType.ToString());
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            Assert.Contains(idGuid.ToString(), content);
+            Assert.Contains(nameGuidString, content);
         }
     }
 }

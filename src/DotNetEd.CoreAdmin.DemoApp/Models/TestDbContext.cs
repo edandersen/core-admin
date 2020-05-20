@@ -12,7 +12,12 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         public TestDbContext(DbContextOptions<TestDbContext> contextOptions) : base(contextOptions)
         {
+            this.Database.EnsureCreated();
+        }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<TestEntity>().HasData(new TestEntity() { Id = Guid.NewGuid(), Name = "Test entity 1" });
         }
     }
 }

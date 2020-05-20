@@ -5,6 +5,7 @@ using System.Text;
 
 namespace DotNetEd.CoreAdmin.Controllers
 {
+    [Route("admin")]
     public class CoreAdminHomeController : Controller
     {
         public IActionResult Index()
