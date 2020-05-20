@@ -25,6 +25,15 @@ namespace DotNetEd.CoreAdmin.ViewComponents
             foreach(var dbContext in dbContexts)
             {
                 viewModel.DbContextNames.Add(dbContext.Type.Name);
+
+                foreach(var dbSetProperty in dbContext.Type.GetProperties())
+                {
+                    // looking for DbSet<Entity>
+                    if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
+                    {
+                        viewModel.DbSetNames.Add(dbSetProperty.Name);
+                    }    
+                }
             }
 
             return View(viewModel);
