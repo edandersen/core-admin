@@ -27,5 +27,5 @@ jobs:
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
     - name: Push generated package to Nuget
-      run: nuget push src\DotNetEd.AutoAdmin\out\*.nupkg -Source https://api.nuget.org/v3/index.json
+      run: nuget push src\DotNetEd.AutoAdmin\out\*.nupkg -SkipDuplicate -Source https://api.nuget.org/v3/index.json
 
