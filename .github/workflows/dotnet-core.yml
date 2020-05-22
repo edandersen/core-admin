@@ -29,5 +29,5 @@ jobs:
     - name: Push generated package to Nuget
       env: # Or as an environment variable
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-      run: nuget push src\DotNetEd.AutoAdmin\out\*.nupkg -ApiKey %NUGET_API_KEY%
+      run: nuget push src\DotNetEd.AutoAdmin\out\*.nupkg -s https://api.nuget.org/v3/index.json -ApiKey %NUGET_API_KEY%
 
