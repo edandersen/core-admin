@@ -1,4 +1,4 @@
-name: .NET Core
+name: Publish nuget
 
 on:
   push:
@@ -10,30 +10,27 @@ jobs:
   build:
 
     runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+        working-directory: src
 
     steps:
     - name: Install dependencies
-      run: |  
-        cd src
-        dotnet restore
+      run: dotnet restore
     - name: Build
-      run: |  
-        cd src
-        dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: |  
-        cd src
-        dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal
     - name: Build solution and generate NuGet package
-      run: |  
-        cd src
+      run: |
         cd DotNetEd.AutoAdmin
         dotnet pack -c Release -o out  
 
     - name: Install NuGet client
       uses: warrenbuckley/Setup-Nuget@v1
 
-    - name: Push generated package to GitHub registry
+    - name: Push generated package to Nuget
       env: # Or as an environment variable
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
       run: nuget push .\src\DotNetEd.AutoAdmin\out\*.nupkg -ApiKey %NUGET_API_KEY%
