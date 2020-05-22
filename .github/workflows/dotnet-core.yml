@@ -12,8 +12,6 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
-    - name: directory list
-      run: dir
     - name: Install dependencies
       run: dotnet restore
     - name: Build
