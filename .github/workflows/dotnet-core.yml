@@ -22,13 +22,10 @@ jobs:
       run: |
         cd src\DotNetEd.AutoAdmin
         dotnet pack -c Release -o out  
-
-    - name: Install NuGet client
-      uses: warrenbuckley/Setup-Nuget@v1
-
-    - name: Push generated package to Nuget
+    - name: Setup nuget
       uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+    - name: Push generated package to Nuget
       run: nuget push src\DotNetEd.AutoAdmin\out\*.nupkg -Source https://api.nuget.org/v3/index.json
 
