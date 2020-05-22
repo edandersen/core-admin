@@ -11,7 +11,7 @@
     <Authors>edandersen</Authors>
     <Copyright>Copyright ©2020 Ed Andersen</Copyright>
     <PackageProjectUrl>https://github.com/edandersen/auto-admin</PackageProjectUrl>
-    
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
