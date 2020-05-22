@@ -17,11 +17,11 @@ jobs:
         cd src
         dotnet restore
     - name: Build
-        run: |  
+      run: |  
         cd src
         dotnet build --configuration Release --no-restore
     - name: Test
-        run: |  
+      run: |  
         cd src
         dotnet test --no-restore --verbosity normal
     - name: Build solution and generate NuGet package
