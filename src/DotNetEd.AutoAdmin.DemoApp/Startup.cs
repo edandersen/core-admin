@@ -64,10 +64,6 @@ namespace DotNetEd.AutoAdmin
 
             app.UseAuthorization();
 
-            app.UseAutoAdmin();
-
-            
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

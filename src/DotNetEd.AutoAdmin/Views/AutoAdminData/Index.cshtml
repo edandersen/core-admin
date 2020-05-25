@@ -1,4 +1,6 @@
-﻿@model DotNetEd.AutoAdmin.ViewModels.DataListViewModel
+﻿@using NonFactors.Mvc.Grid
+@using System.Linq.Expressions
+@model DotNetEd.AutoAdmin.ViewModels.DataListViewModel
 
 @{
     ViewData["Title"] = Model.DbSetProperty.Name;
@@ -7,6 +9,75 @@
 
 <h1 class="display-4">@Model.DbSetProperty.Name</h1>
 
+@(Html
+    .Grid(Model.Data)
+    .Build((columns) => {
+
+        foreach(var entityProperty in Model.EntityType.GetProperties())
+        {
+            
+
+            ParameterExpression entity = Expression.Parameter(typeof(object), "ent");
+            var changedType = Expression.Convert(entity, Model.EntityType);
+            var property = Expression.Property(changedType, entityProperty.Name);
+
+            if (entityProperty.PropertyType == typeof(Guid))
+            {
+                var returnTarget = Expression.Label(typeof(Guid));
+                var lambda = Expression.Lambda<Func<object,Guid>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            } 
+            else if (entityProperty.PropertyType == typeof(string))
+            {
+                var returnTarget = Expression.Label(typeof(string));
+                var lambda = Expression.Lambda<Func<object,string>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            } 
+            else 
+            {
+                var returnTarget = Expression.Label(typeof(object));
+                var lambda = Expression.Lambda<Func<object,object>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            }
+
+        }
+
+        //Expression keyValue = Expression.Invoke(this.pkFieldExpression, entity);
+        //Expression pkValue = Expression.Constant(Pk, keyValue.Type);
+        //Expression body = Expression.Equal(keyValue, pkValue);
+        //var expression = Expression.Lambda<Func<TEntity, bool>>(body, entity);
+
+      
+
+       // columns.Add(model => Expression.Lambda(
+       //         Expression.Property(
+       //             Expression.Parameter(Model.EntityType), Model.EntityType.GetProperty("Id")), 
+       //             Expression.Parameter(Model.EntityType)).Compile());
+        //.Titled("Id");
+        // columns.Add(model => Expression.Invoke());
+       
+
+        }
+        
+        )
+    .Using(GridFilterMode.Header)
+    .Empty("No data found")
+    .Filterable()
+    .Sortable()
+    .Pageable()
+)
+
+@section Scripts
+{
+     <script>
+           document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+        </script>
+}
+
+@* 
 <table class="table table-striped table-sm">
     <thead>
         <tr>
@@ -27,4 +98,4 @@
             </tr>
         }
     </tbody>
-</table>
+</table> *@

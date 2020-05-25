@@ -1,0 +1,460 @@
+﻿/*!
+ * Mvc.Grid 6.1.0
+ * https://github.com/NonFactors/AspNetCore.Grid
+ *
+ * Copyright © NonFactors
+ *
+ * Licensed under the terms of the MIT License
+ * http://www.opensource.org/licenses/mit-license.php
+ */
+
+@font-face {
+    src: url("../mvc-grid/fonts/grid-glyphs.woff") format("woff");
+    font-family: GridGlyphs;
+}
+
+.mvc-grid {
+    line-height: 1.25em;
+    position: relative;
+    overflow-x: auto;
+    font-size: 1rem;
+}
+
+.mvc-grid > table {
+    border-collapse: collapse;
+    max-width: 100%;
+    width: 100%;
+}
+
+.mvc-grid > table > thead > tr > th {
+    background-clip: padding-box;
+    background-color: #f7f7f7;
+    position: relative;
+}
+
+.mvc-grid > table > thead > tr > th,
+.mvc-grid > table > tbody > tr > td,
+.mvc-grid > table > tfoot > tr > td {
+    border: 1px solid #dee2e6;
+    padding: 0.75em;
+}
+
+.mvc-grid .sortable {
+    padding-right: 2.75em;
+    cursor: pointer;
+}
+
+.mvc-grid-hidden,
+.mvc-grid-options {
+    display: none;
+}
+
+.mvc-grid-title {
+    display: inline-block;
+}
+
+.mvc-grid-sort,
+.mvc-grid-filter {
+    background-color: rgba(0, 0, 0, 0.03);
+    transition: background-color 0.5s;
+    font-family: GridGlyphs;
+    font-size: inherit;
+    position: absolute;
+    font-weight: bold;
+    cursor: pointer;
+    width: 2.75em;
+    border: none;
+    height: 100%;
+    right: 0;
+    top: 0;
+}
+
+.mvc-grid-filter:focus,
+.mvc-grid-filter:hover {
+    background-color: rgba(0, 0, 0, 0.06);
+    color: inherit;
+}
+
+.mvc-grid-filter::before {
+    content: "\0041";
+}
+
+.mvc-grid-filter.applied::before {
+    content: "\0042";
+}
+
+.mvc-grid-sort {
+    background: transparent;
+    font-weight: normal;
+    transition: none;
+}
+
+.mvc-grid-sort::after {
+    font-size: 0.9em;
+    content: "\0044";
+    opacity: 0.15;
+}
+
+.mvc-grid-sort::before {
+    margin-right: -0.5em;
+    font-size: 0.9em;
+    content: "\0043";
+    opacity: 0.15;
+}
+
+.mvc-grid-sort span {
+    position: absolute;
+    font-weight: bold;
+    text-align: left;
+    font-size: 0.7em;
+    color: #adacac;
+    width: 33%;
+    right: 0;
+    top: 40%;
+}
+
+.mvc-grid .desc .mvc-grid-sort::after,
+.mvc-grid .asc .mvc-grid-sort::before {
+    opacity: 0.5;
+}
+
+.mvc-grid-row-filters .filterable {
+    padding: 0.25em;
+}
+
+.mvc-grid-row-filters th div {
+    display: flex;
+}
+
+.mvc-grid-row-filters .mvc-grid-value {
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    text-overflow: ellipsis;
+    margin-right: 0.25em;
+    font-size: inherit;
+    font-weight: bold;
+    padding: 0 0.5em;
+    flex: 1;
+}
+
+.mvc-grid-row-filters select.mvc-grid-value {
+    padding: 0 0.2em;
+}
+
+.mvc-grid-row-filters .mvc-grid-value.invalid {
+    outline-color: #dc3545;
+}
+
+.mvc-grid-row-filters .mvc-grid-value::placeholder {
+    color: #bbbbbb;
+}
+
+.mvc-grid-row-filters .mvc-grid-value::-ms-input-placeholder {
+    color: #bbbbbb;
+}
+
+.mvc-grid-row-filters .mvc-grid-filter {
+    border: 1px solid #cccccc;
+    position: static;
+    height: 2.25em;
+    width: 2.25em;
+}
+
+.mvc-grid-excel-mode .filterable {
+    padding-right: 3.5em;
+}
+
+.mvc-grid-excel-mode .sortable.filterable {
+    padding-right: 5.5em;
+}
+
+.mvc-grid-excel-mode .filterable .mvc-grid-sort,
+.mvc-grid-header-mode .filterable .mvc-grid-sort {
+    right: 2.75em;
+}
+
+.mvc-grid-header-mode .filterable {
+    padding: 0 2.75em 0 0;
+}
+
+.mvc-grid-header-mode .mvc-grid-value {
+    background-color: #f7f7f7;
+    padding: 0.75em;
+    font: inherit;
+    border: none;
+    margin: 0;
+}
+
+.mvc-grid-header-mode .mvc-grid-filter {
+    position: absolute;
+    width: 2.75em;
+    border: none;
+    height: 100%;
+}
+
+.mvc-grid-header-mode .sortable .mvc-grid-value {
+    padding-right: 2.5em;
+}
+
+.mvc-grid-popup {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
+    background-clip: padding-box;
+    max-width: calc(100% - 2em);
+    background-color: #ffffff;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    position: absolute;
+    min-width: 12em;
+    font-size: 1rem;
+    z-index: 1100;
+    margin: 1em;
+}
+
+.mvc-grid-popup.mvc-grid-guid-filter {
+    min-width: 20em;
+}
+
+.mvc-grid-popup .popup-arrow {
+    border-right: 7px solid transparent;
+    border-left: 7px solid transparent;
+    border-bottom: 8px solid #ffffff;
+    box-sizing: border-box;
+    position: absolute;
+    height: 9px;
+    top: -8px;
+}
+
+.mvc-grid-popup .popup-arrow::after {
+    border-right: 8px solid transparent;
+    border-left: 8px solid transparent;
+    border-bottom: 9px solid #cccccc;
+    position: absolute;
+    content: " ";
+    z-index: -1;
+    left: -8px;
+    top: -1px;
+}
+
+.mvc-grid-popup .popup-content {
+    padding: 0.5em;
+}
+
+.mvc-grid-popup .popup-group {
+    padding: 0.2em;
+}
+
+.mvc-grid-popup .popup-operator {
+    text-align: center;
+}
+
+.mvc-grid-popup .popup-actions {
+    padding: 0.4em 0 0.2em;
+    text-align: center;
+}
+
+.mvc-grid-popup .mvc-grid-value,
+.mvc-grid-popup .mvc-grid-method,
+.mvc-grid-popup .mvc-grid-operator {
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    font-size: 0.9em;
+    padding: 0 0.2em;
+    height: 2.5em;
+    width: 100%;
+}
+
+.mvc-grid-popup .mvc-grid-value[multiple] {
+    overflow-y: auto;
+    height: 8em;
+}
+
+.mvc-grid-popup .mvc-grid-operator {
+    width: auto;
+}
+
+.mvc-grid-popup input.mvc-grid-value {
+    text-overflow: ellipsis;
+    padding: 0 0.5em;
+}
+
+.mvc-grid-popup .mvc-grid-value.invalid {
+    outline-color: #dc3545;
+}
+
+.mvc-grid-popup .mvc-grid-apply,
+.mvc-grid-popup .mvc-grid-cancel {
+    border: 1px solid #ffffff;
+    padding: 0.25em;
+    cursor: pointer;
+    min-width: 4em;
+    color: #ffffff;
+    outline: 0;
+}
+
+.mvc-grid-popup .mvc-grid-apply {
+    background-color: #28a745;
+    border-color: #28a745;
+    margin-right: 0.3em;
+    font-weight: bold;
+}
+
+.mvc-grid-popup .mvc-grid-apply:focus {
+    box-shadow: 0 0 0 0.2em rgba(40, 167, 69, 0.5);
+}
+
+.mvc-grid-popup .mvc-grid-cancel {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    margin-left: 0.3em;
+}
+
+.mvc-grid-popup .mvc-grid-cancel:focus {
+    box-shadow: 0 0 0 0.2em rgba(220, 53, 69, 0.5);
+}
+
+.mvc-grid-popup .mvc-grid-column {
+    box-sizing: border-box;
+    align-items: center;
+    cursor: pointer;
+    padding: 0.5em;
+    display: flex;
+    width: 100%;
+    margin: 0;
+}
+
+.mvc-grid-popup .mvc-grid-column span {
+    padding: 0 0.5em;
+}
+
+.mvc-grid-popup .mvc-grid-dropzone:first-child {
+    padding-top: 0.5em;
+}
+
+.mvc-grid-popup .mvc-grid-dropzone:last-child {
+    padding-bottom: 0.5em;
+}
+
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-column {
+    padding: 0 0.5em;
+}
+
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone {
+    background-color: #c4daff;
+    padding: 0.5em;
+    opacity: 0.4;
+}
+
+.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone.hover {
+    background-color: #5a90ea;
+}
+
+.mvc-grid-pager,
+.mvc-grid-empty-row {
+    text-align: center;
+}
+
+.mvc-grid-pager button {
+    background-color: #ffffff;
+    border: 1px solid #dddddd;
+    box-sizing: content-box;
+    line-height: 2.5em;
+    padding: 0 0.25em;
+    cursor: pointer;
+    margin: 0.5em 0;
+    min-width: 2em;
+    color: #337ab7;
+}
+
+.mvc-grid-pager button:focus,
+.mvc-grid-pager button:hover {
+    background-color: #f7f7f7;
+    color: #014c8c;
+}
+
+.mvc-grid-pager .active,
+.mvc-grid-pager .active:focus,
+.mvc-grid-pager .active:hover {
+    background-color: #0275d8;
+    border-color: #0275d8;
+    color: #ffffff;
+}
+
+.mvc-grid-pager .disabled,
+.mvc-grid-pager .disabled:focus,
+.mvc-grid-pager .disabled:hover {
+    background-color: #efefef;
+    cursor: not-allowed;
+    color: #777777;
+    outline: 0;
+}
+
+.mvc-grid-page-sizes {
+    display: inline-block;
+    margin-left: 0.5em;
+}
+
+.mvc-grid-page-sizes select {
+    border: 1px solid #dddddd;
+    padding: 0.5em;
+    font: inherit;
+}
+
+.mvc-grid-page-sizes input {
+    border: 1px solid #dddddd;
+    box-sizing: content-box;
+    text-align: center;
+    padding: 0 0.25em;
+    height: 2.5em;
+    width: 2.5em;
+}
+
+.mvc-grid-loader {
+    background-color: rgba(0, 0, 0, 0.3);
+    justify-content: center;
+    transition: opacity 1s;
+    align-items: center;
+    position: absolute;
+    display: flex;
+    z-index: 100;
+    height: 100%;
+    cursor: wait;
+    width: 100%;
+    opacity: 0;
+    left: 0;
+    top: 0;
+}
+
+.mvc-grid-loading {
+    opacity: 1;
+}
+
+.mvc-grid-loading > div > div {
+    animation: loader-points 1.4s infinite ease-in-out both;
+    background-color: #f5f5f5;
+    display: inline-block;
+    border-radius: 100%;
+    margin: 0 0.75em;
+    height: 1.5em;
+    width: 1.5em;
+}
+
+.mvc-grid-loading > div > div:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.mvc-grid-loading > div > div:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes loader-points {
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1);
+    }
+}

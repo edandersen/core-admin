@@ -44,9 +44,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests.TestApp
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseAutoAdmin();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

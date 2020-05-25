@@ -21,10 +21,5 @@ namespace DotNetEd.AutoAdmin
                 }
             }
         }
-
-        public static void UseAutoAdmin(this IApplicationBuilder app)
-        {
-          
-        }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using DotNetEd.AutoAdmin.Controllers;
 
 namespace DotNetEd.AutoAdmin.ViewModels
 {
