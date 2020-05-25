@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotNetEd.AutoAdmin.Controllers
 {
-    [Route("admin")]
+    [Route("autoadmin")]
     public class AutoAdminHomeController : Controller
     {
         public IActionResult Index()

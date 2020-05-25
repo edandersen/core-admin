@@ -35,10 +35,17 @@
 
                 columns.Add(lambda).Titled(entityProperty.Name);
             } 
-            else 
+            else if (entityProperty.PropertyType == typeof(Int32))
             {
-                var returnTarget = Expression.Label(typeof(object));
-                var lambda = Expression.Lambda<Func<object,object>>(property, entity);
+                var returnTarget = Expression.Label(typeof(Int32));
+                var lambda = Expression.Lambda<Func<object,Int32>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            }
+            else if (entityProperty.PropertyType == typeof(DateTime))
+            {
+                var returnTarget = Expression.Label(typeof(DateTime));
+                var lambda = Expression.Lambda<Func<object,DateTime>>(property, entity);
 
                 columns.Add(lambda).Titled(entityProperty.Name);
             }

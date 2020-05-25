@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotNetEd.AutoAdmin;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace DotNetEd.AutoAdmin
+namespace Microsoft.Extensions.DependencyInjection
 {
     public static class AutoAdminConfigurationExtensions
     {
@@ -20,6 +21,9 @@ namespace DotNetEd.AutoAdmin
                     services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType }) ;
                 }
             }
+
+            services.AddControllersWithViews();
+
         }
     }
 }

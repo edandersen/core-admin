@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DotNetEd.AutoAdmin.Controllers
 {
-    [Route("admin/data")]
+    [Route("autoadmin/data")]
     public class AutoAdminDataController : Controller
     {
         private readonly IEnumerable<DiscoveredDbContextType> dbContexts;
@@ -43,23 +43,7 @@ namespace DotNetEd.AutoAdmin.Controllers
                 }
             }
 
-            // var list = new List<TestThing>();
-            // // no
-            // foreach(var i in Enumerable.Range(0,100))
-            // {
-            //     list.Add(new TestThing() { Id = Guid.NewGuid(), Name = "Test thing " + i});
-            // }
-            
-            // viewModel.Data = list;
-            // viewModel.EntityType = typeof(TestThing);
-
             return View(viewModel);
         }
-    }
-
-    public class TestThing
-    {
-        public Guid Id {get;set;}
-        public string Name {get;set;}
     }
 }
