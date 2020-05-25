@@ -26,7 +26,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/admin");
+            var response = await client.GetAsync("/autoadmin");
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
@@ -53,7 +53,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/admin/data/testentities");
+            var response = await client.GetAsync("/autoadmin/data/testentities");
 
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",
