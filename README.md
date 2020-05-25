@@ -20,7 +20,7 @@ services.AddAutoAdmin();
 
 Run your app with with /autoadmin on the end of the URL, for example https://localhost:5001/autoadmin and you'll get a little something like this -
 
-![Screenshot of auto admin](/docs/screenshot-1.png "Auto Admin")
+![Screenshot of auto admin](/docs/screenshot-1.PNG "Auto Admin")
 
 The above screenshot is of the [Contoso University sample](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu30) with Auto Admin added to it.
 
