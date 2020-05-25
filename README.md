@@ -19,5 +19,3 @@ services.AddAutoAdmin();
 ```
 
 Run your app with with /admin on the end of the URL, for example https://localhost:5001/admin and enjoy!
-
-
