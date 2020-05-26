@@ -1,5 +1,6 @@
 ﻿@using NonFactors.Mvc.Grid
 @using System.Linq.Expressions
+@using Microsoft.EntityFrameworkCore
 @model DotNetEd.AutoAdmin.ViewModels.DataListViewModel
 
 @{
@@ -52,19 +53,17 @@
 
         }
 
-        //Expression keyValue = Expression.Invoke(this.pkFieldExpression, entity);
-        //Expression pkValue = Expression.Constant(Pk, keyValue.Type);
-        //Expression body = Expression.Equal(keyValue, pkValue);
-        //var expression = Expression.Lambda<Func<TEntity, bool>>(body, entity);
+        // only supports single PKs, not composite ones
+        var pkProperties = Model.DbContext.Model.FindEntityType(Model.EntityType).FindPrimaryKey().Properties;
+        if (pkProperties.Count == 1) 
+        {
+            var pKProperty = pkProperties.Single()?.PropertyInfo;
 
-      
-
-       // columns.Add(model => Expression.Lambda(
-       //         Expression.Property(
-       //             Expression.Parameter(Model.EntityType), Model.EntityType.GetProperty("Id")), 
-       //             Expression.Parameter(Model.EntityType)).Compile());
-        //.Titled("Id");
-        // columns.Add(model => Expression.Invoke());
+            if (pKProperty != null) 
+            {
+                columns.Add(item => Html.ActionLink("Delete", "DeleteEntity", new { dbSetName = Model.DbSetProperty.Name, Id = pKProperty.GetValue(item)}));
+            }
+        }
        
 
         }

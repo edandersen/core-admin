@@ -37,11 +37,12 @@ namespace DotNetEd.AutoAdmin.Controllers
                         viewModel.EntityType = dbSetProperty.PropertyType.GetGenericArguments().First();
                         viewModel.DbSetProperty = dbSetProperty;
 
-                        var dbContextObject = this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
+                        var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
 
                         var dbSetValue = dbSetProperty.GetValue(dbContextObject);
 
                         viewModel.Data = (IEnumerable<object>)dbSetValue;
+                        viewModel.DbContext = dbContextObject;
                     }
                 }
             }
@@ -49,10 +50,70 @@ namespace DotNetEd.AutoAdmin.Controllers
             return View(viewModel);
         }
 
+        [HttpGet]
+        [Route("deleteentity/{dbSetName}/{id}")]
+        public async Task<IActionResult> DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
+        {
+            var viewModel = new DataDeleteViewModel();
+            viewModel.DbSetName = dbSetName;
+            viewModel.Id = id;
+            viewModel.Object = GetEntityFromDbSet(dbSetName, id);
+            if (viewModel.Object == null) return NotFound();
+
+            return View(viewModel);
+        }
+
+        private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject, out Type typeOfEntity)
+        {
+            foreach (var dbContext in dbContexts)
+            {
+                foreach (var dbSetProperty in dbContext.Type.GetProperties())
+                {
+                    if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet") && dbSetProperty.Name.ToLowerInvariant() == dbSetName.ToLowerInvariant())
+                    {
+                        dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
+                        typeOfEntity = dbSetProperty.PropertyType.GetGenericArguments()[0];
+                        return dbSetProperty.GetValue(dbContextObject);
+                    }
+                }
+            }
+
+            dbContextObject = null;
+            typeOfEntity = null;
+            return null;
+        }
+
+        private object GetEntityFromDbSet(string dbSetName, string id)
+        {
+            DbContext dbContextObject;
+            Type typeOfEntity;
+            var dbSetValue = GetDbSetValueOrNull(dbSetName, out dbContextObject, out typeOfEntity);
+
+            var primaryKey = dbContextObject.Model.FindEntityType(typeOfEntity).FindPrimaryKey();
+            var clrType = primaryKey.Properties[0].ClrType;
+
+            object convertedPrimaryKey = id;
+            if (clrType == typeof(Guid))
+            {
+                convertedPrimaryKey = Guid.Parse(id);
+            }
+            else if (clrType == typeof(int))
+            {
+                convertedPrimaryKey = int.Parse(id);
+            }
+            else if (clrType == typeof(Int64))
+            {
+                convertedPrimaryKey = Int64.Parse(id);
+            }
+
+            return dbSetValue.GetType().InvokeMember("Find", BindingFlags.InvokeMethod, null, dbSetValue, args: new object[] { convertedPrimaryKey });
+
+        }
+
         [HttpPost]
         [Route("deleteentity")]
         [IgnoreAntiforgeryToken]
-        public async Task<IActionResult> DeleteEntity([FromForm] DataDeleteViewModel viewModel)
+        public async Task<IActionResult> DeleteEntityPost([FromForm] DataDeleteViewModel viewModel)
         {
             foreach (var dbContext in dbContexts)
             {
@@ -89,7 +150,7 @@ namespace DotNetEd.AutoAdmin.Controllers
                 }
             }
 
-            return Content("OK");
+            return RedirectToAction("Index", new { Id = viewModel.DbSetName});
 
         }
     }

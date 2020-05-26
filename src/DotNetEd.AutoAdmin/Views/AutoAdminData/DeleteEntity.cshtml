@@ -1,0 +1,28 @@
+@model DotNetEd.AutoAdmin.ViewModels.DataDeleteViewModel
+
+@{
+    ViewData["Title"] = Model.DbSetName;
+    Layout = "_AutoAdminLayout";
+}
+
+<h1 class="display-4">Are you sure you want to delete this?</h1>
+
+<div class="row my-3">
+    <div class="col-lg-12">
+        @Html.DisplayFor(m => m.Object)
+    </div>
+</div>
+
+
+@using (Html.BeginForm("DeleteEntityPost", "AutoAdminData", new {}, FormMethod.Post))
+{
+    @Html.HiddenFor(m => m.DbSetName)
+    @Html.HiddenFor(m => m.Id)
+
+    <button type="submit" class="btn btn-primary">Yes, delete it</button>
+
+    @Html.ActionLink("No, go back", "Index", new {Id = Model.DbSetName})
+}
+
+
+
