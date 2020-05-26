@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using DotNetEd.AutoAdmin;
 using Microsoft.Extensions.Hosting;
+using DotNetEd.AutoAdmin.Controllers;
 
 namespace DotNetEd.AutoAdmin.IntegrationTests.TestApp
 {
@@ -22,7 +23,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests.TestApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddApplicationPart(typeof(AutoAdminDataController).Assembly); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

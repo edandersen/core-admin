@@ -53,7 +53,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/autoadmin/data/testentities");
+            var response = await client.GetAsync("/autoadmin/data/list/testentities");
 
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",
