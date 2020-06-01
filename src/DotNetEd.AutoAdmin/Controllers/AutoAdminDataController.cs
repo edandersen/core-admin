@@ -119,9 +119,9 @@ namespace DotNetEd.AutoAdmin.Controllers
 
             var newEntity = System.Activator.CreateInstance(entityType);
 
-            if (TryValidateModel(newEntity))
+            if (await TryUpdateModelAsync(newEntity, entityType, string.Empty))
             {
-                if (await TryUpdateModelAsync(newEntity, entityType, string.Empty))
+                if (TryValidateModel(newEntity))
                 {
                     // updated model with new values
                     dbContextObject.Add(newEntity);
@@ -130,7 +130,22 @@ namespace DotNetEd.AutoAdmin.Controllers
                 }
             }
 
-            return View("Create");
+            ViewBag.DbSetName = dbSetName;
+
+            return View("Create", newEntity);
+        }
+
+        [HttpGet]
+        [Route("create/{dbSetName}")]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> Create([FromRoute] string dbSetName)
+        {
+            var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
+
+            var newEntity = System.Activator.CreateInstance(entityType);
+            ViewBag.DbSetName = dbSetName;
+
+            return View(newEntity);
         }
 
         [HttpPost]

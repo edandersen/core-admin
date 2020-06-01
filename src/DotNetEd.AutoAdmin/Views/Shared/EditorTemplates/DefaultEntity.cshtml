@@ -1,0 +1,46 @@
+﻿@functions{ 
+    
+    bool ShouldShow(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata metadata)
+    {
+        return metadata.ShowForDisplay
+            && !metadata.IsComplexType;
+    } 
+    
+}
+@if (ViewData.TemplateInfo.TemplateDepth > 1)
+{
+    if (Model == null)
+    {
+        @ViewData.ModelMetadata.NullDisplayText 
+    
+    }
+    else
+    {
+        @ViewData.ModelMetadata.GetDisplayName() 
+    }
+}
+else
+{
+    foreach (var prop in ViewData.ModelMetadata.Properties.Where(ShouldShow))
+    {
+
+    <div class="form-group row">
+        @if (prop.HideSurroundingHtml)
+        {
+            @Html.Editor(prop.PropertyName) 
+        }
+        else if (!String.IsNullOrEmpty(Html.Label(prop.PropertyName).ToString()))
+        {
+
+            @Html.Label(prop.PropertyName, prop.DisplayName, new { @class = "col-md-2 col-form-label" })
+        }
+
+        <div class="col-md-10">
+                @Html.Editor(prop.PropertyName)
+
+                @Html.ValidationMessage(prop.PropertyName)
+            </div>
+    </div>
+    }
+}
+
