@@ -28,7 +28,7 @@ Auto Admin scans your app for Entity Framework DB Contexts and makes a nice set 
 
 ### License
 
-MIT licensed. Depends on the snazzy [NonFactors.Grid.Mvc6](https://github.com/NonFactors/AspNetCore.Grid) which is also MIT licensed.
+LGPL licensed. Depends on the snazzy [NonFactors.Grid.Mvc6](https://github.com/NonFactors/AspNetCore.Grid) and Bootstrap, both of which are MIT licensed.
 
 ### Authors
 
