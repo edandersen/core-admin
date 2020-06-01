@@ -111,6 +111,29 @@ namespace DotNetEd.AutoAdmin.Controllers
         }
 
         [HttpPost]
+        [Route("create/{dbSetName}")]
+        [IgnoreAntiforgeryToken]
+        public async Task<IActionResult> CreateEntityPost([FromRoute]string dbSetName, [FromForm] object formData)
+        {
+            var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
+
+            var newEntity = System.Activator.CreateInstance(entityType);
+
+            if (TryValidateModel(newEntity))
+            {
+                if (await TryUpdateModelAsync(newEntity, entityType, string.Empty))
+                {
+                    // updated model with new values
+                    dbContextObject.Add(newEntity);
+                    await dbContextObject.SaveChangesAsync();
+                    return RedirectToAction("Index", new {id = dbSetName});
+                }
+            }
+
+            return View("Create");
+        }
+
+        [HttpPost]
         [Route("deleteentity")]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> DeleteEntityPost([FromForm] DataDeleteViewModel viewModel)

@@ -45,5 +45,28 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
             Assert.False(await dbContext.TestEntities.AnyAsync(test => test.Id == idGuid));
 
         }
+
+        [Fact]
+        public async Task CreateHappyPath()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var idGuid = Guid.NewGuid();
+            var nameGuidString = Guid.NewGuid().ToString();
+
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+
+            // Do the post to delete the item
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+            var data = new Dictionary<string, string>() { { "Name", nameGuidString } };
+
+            var response = await client.PostAsync("/autoadmin/data/create/testentities", new FormUrlEncodedContent(data));
+            response.EnsureSuccessStatusCode();
+
+            // check to see if the item is deleted from DB context
+            Assert.True(await dbContext.TestEntities.AnyAsync(test => test.Name == nameGuidString));
+
+        }
     }
 }
