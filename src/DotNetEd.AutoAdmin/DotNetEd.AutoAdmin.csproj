@@ -5,13 +5,13 @@
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
-    <PackageId>DotNetEd.AutoAdmin</PackageId>
+    <PackageId>AutoAdmin</PackageId>
     <PackageVersion>0.3.0-beta</PackageVersion>
     <Title>Auto Admin for ASP.NET Core</Title>
     <Authors>edandersen</Authors>
     <Copyright>Copyright ©2020 Ed Andersen</Copyright>
     <PackageProjectUrl>https://github.com/edandersen/auto-admin</PackageProjectUrl>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
