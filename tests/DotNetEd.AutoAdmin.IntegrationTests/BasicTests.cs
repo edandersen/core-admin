@@ -1,11 +1,11 @@
-using DotNetEd.AutoAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace DotNetEd.AutoAdmin.IntegrationTests
+namespace DotNetEd.CoreAdmin.IntegrationTests
 {
     public class BasicTests : IClassFixture<IntegrationTestsWebHostFactory<IntegrationTestStartup>>
     {
@@ -26,7 +26,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/autoadmin");
+            var response = await client.GetAsync("/coreadmin");
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
@@ -53,7 +53,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/autoadmin/data/list/testentities");
+            var response = await client.GetAsync("/coreadmin/data/list/testentities");
 
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",

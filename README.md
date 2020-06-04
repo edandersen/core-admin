@@ -1,4 +1,4 @@
-# Auto Admin for ASP.NET Core
+# Core Admin Panel for ASP.NET Core
 
 ![.NET Core 3.1](https://github.com/edandersen/auto-admin/workflows/.NET%20Core%203.1/badge.svg)
 
@@ -9,16 +9,16 @@ Fully automatic admin site generator for ASP.NET Core. Add one line of code, get
 Add via nuget:
 
 ```
-dotnet add package AutoAdmin -v 0.5.0-beta
+dotnet add package CoreAdmin -v 0.5.0-beta
 ```
 
 Add this line at the bottom of ConfigureServices() in Startup.cs:
 
 ```
-services.AddAutoAdmin();
+services.AddCoreAdmin();
 ```
 
-Run your app with with /autoadmin on the end of the URL, for example https://localhost:5001/autoadmin and you'll get a little something like this -
+Run your app with with /coreadmin on the end of the URL, for example https://localhost:5001/coreadmin and you'll get a little something like this -
 
 ![Screenshot of auto admin](/docs/screenshot-1.PNG "Auto Admin")
 

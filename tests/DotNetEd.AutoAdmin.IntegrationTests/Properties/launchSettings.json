@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "DotNetEd.AutoAdmin.IntegrationTests": {
+    "DotNetEd.CoreAdmin.IntegrationTests": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

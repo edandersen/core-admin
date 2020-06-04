@@ -1,4 +1,4 @@
-﻿using DotNetEd.AutoAdmin.IntegrationTests.TestApp;
+﻿using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using System;
@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.TestHost;
 
-namespace DotNetEd.AutoAdmin.IntegrationTests
+namespace DotNetEd.CoreAdmin.IntegrationTests
 {
     public class IntegrationTestsWebHostFactory<TStartup>
      : WebApplicationFactory<TStartup> where TStartup : class
@@ -63,7 +63,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
                     }
                 }
 
-                services.AddAutoAdmin();
+                services.AddCoreAdmin();
             });
 
 

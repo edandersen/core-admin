@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace DotNetEd.AutoAdmin.IntegrationTests.TestApp.Entities
+namespace DotNetEd.CoreAdmin.IntegrationTests.TestApp.Entities
 {
     public class TestEntity
     {

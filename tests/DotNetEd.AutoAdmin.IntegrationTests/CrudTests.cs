@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using DotNetEd.AutoAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace DotNetEd.AutoAdmin.IntegrationTests
+namespace DotNetEd.CoreAdmin.IntegrationTests
 {
     public class CrudTests : IClassFixture<IntegrationTestsWebHostFactory<IntegrationTestStartup>>
     {
@@ -39,7 +39,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "id", idGuid.ToString() }, { "dbSetName", "testentities" } };
 
-            var response = await client.PostAsync("/autoadmin/data/deleteentity", new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmin/data/deleteentity", new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is deleted from DB context
@@ -62,7 +62,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", nameGuidString } };
 
-            var response = await client.PostAsync("/autoadmin/data/create/testentities", new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmin/data/create/testentities", new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is deleted from DB context
@@ -89,7 +89,7 @@ namespace DotNetEd.AutoAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", updatedNameGuid }, { "Id", idGuid.ToString() } };
 
-            var response = await client.PostAsync("/autoadmin/data/edit/testentities/" + idGuid.ToString(), new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmin/data/edit/testentities/" + idGuid.ToString(), new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is updated from DB context

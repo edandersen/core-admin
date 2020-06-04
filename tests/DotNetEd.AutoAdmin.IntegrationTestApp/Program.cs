@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DotNetEd.AutoAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace DotNetEd.AutoAdmin.IntegrationTestApp
+namespace DotNetEd.CoreAdmin.IntegrationTestApp
 {
     public class Program
     {
