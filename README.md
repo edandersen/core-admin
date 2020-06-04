@@ -9,7 +9,7 @@ Fully automatic admin site generator for ASP.NET Core. Add one line of code, get
 Add via nuget:
 
 ```
-dotnet add package AutoAdmin -v 0.4.1-beta
+dotnet add package AutoAdmin -v 0.5.0-beta
 ```
 
 Add this line at the bottom of ConfigureServices() in Startup.cs:
