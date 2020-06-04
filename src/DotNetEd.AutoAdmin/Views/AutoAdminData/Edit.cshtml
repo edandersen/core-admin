@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = ViewBag.DbSetName;
+    Layout = "_AutoAdminLayout";
+}
+
+<h1 class="display-4">@ViewBag.DbSetName - Edit</h1>
+
+
+@using (Html.BeginForm("EditEntityPost", "AutoAdminData", new { dbSetName = ViewBag.DbSetName, id = ViewBag.Id }, FormMethod.Post))
+{
+
+    @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
+    @Html.Hidden("id", ViewBag.Id, new { })
+
+    @Html.EditorForModel("DefaultEntity")
+
+    <div class="row">
+        <div class="col-md-12 px-4">
+            <button type="submit" class="btn btn-primary">Edit</button>
+
+            @Html.ActionLink("No, go back", "Index", new { Id = ViewBag.DbSetName })
+
+        </div>
+    </div>
+
+
+}
+

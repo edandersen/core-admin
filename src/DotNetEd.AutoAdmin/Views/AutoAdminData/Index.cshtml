@@ -22,7 +22,7 @@
 
         foreach(var entityProperty in Model.EntityType.GetProperties())
         {
-            
+
 
             ParameterExpression entity = Expression.Parameter(typeof(object), "ent");
             var changedType = Expression.Convert(entity, Model.EntityType);
@@ -34,14 +34,14 @@
                 var lambda = Expression.Lambda<Func<object,Guid>>(property, entity);
 
                 columns.Add(lambda).Titled(entityProperty.Name);
-            } 
+            }
             else if (entityProperty.PropertyType == typeof(string))
             {
                 var returnTarget = Expression.Label(typeof(string));
                 var lambda = Expression.Lambda<Func<object,string>>(property, entity);
 
                 columns.Add(lambda).Titled(entityProperty.Name);
-            } 
+            }
             else if (entityProperty.PropertyType == typeof(Int32))
             {
                 var returnTarget = Expression.Label(typeof(Int32));
@@ -61,19 +61,20 @@
 
         // only supports single PKs, not composite ones
         var pkProperties = Model.DbContext.Model.FindEntityType(Model.EntityType).FindPrimaryKey().Properties;
-        if (pkProperties.Count == 1) 
+        if (pkProperties.Count == 1)
         {
             var pKProperty = pkProperties.Single()?.PropertyInfo;
 
-            if (pKProperty != null) 
+            if (pKProperty != null)
             {
                 columns.Add(item => Html.ActionLink("Delete", "DeleteEntity", new { dbSetName = Model.DbSetProperty.Name, Id = pKProperty.GetValue(item)}));
+                columns.Add(item => Html.ActionLink("Edit", "EditEntity", new { dbSetName = Model.DbSetProperty.Name, Id = pKProperty.GetValue(item) }));
             }
         }
-       
 
-        }
-        
+
+    }
+
         )
     .Using(GridFilterMode.Header)
     .Empty("No data found")

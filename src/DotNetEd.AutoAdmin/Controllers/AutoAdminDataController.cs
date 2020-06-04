@@ -50,19 +50,6 @@ namespace DotNetEd.AutoAdmin.Controllers
             return View(viewModel);
         }
 
-        [HttpGet]
-        [Route("deleteentity/{dbSetName}/{id}")]
-        public async Task<IActionResult> DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
-        {
-            var viewModel = new DataDeleteViewModel();
-            viewModel.DbSetName = dbSetName;
-            viewModel.Id = id;
-            viewModel.Object = GetEntityFromDbSet(dbSetName, id);
-            if (viewModel.Object == null) return NotFound();
-
-            return View(viewModel);
-        }
-
         private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject, out Type typeOfEntity)
         {
             foreach (var dbContext in dbContexts)
@@ -83,10 +70,8 @@ namespace DotNetEd.AutoAdmin.Controllers
             return null;
         }
 
-        private object GetEntityFromDbSet(string dbSetName, string id)
+        private object GetEntityFromDbSet(string dbSetName, string id, out DbContext dbContextObject, out Type typeOfEntity)
         {
-            DbContext dbContextObject;
-            Type typeOfEntity;
             var dbSetValue = GetDbSetValueOrNull(dbSetName, out dbContextObject, out typeOfEntity);
 
             var primaryKey = dbContextObject.Model.FindEntityType(typeOfEntity).FindPrimaryKey();
@@ -146,6 +131,55 @@ namespace DotNetEd.AutoAdmin.Controllers
             ViewBag.DbSetName = dbSetName;
 
             return View(newEntity);
+        }
+
+        [HttpGet]
+        [Route("edit/{dbSetName}/{id}")]
+        public async Task<IActionResult> EditEntity([FromRoute] string dbSetName, [FromRoute] string id)
+        {
+            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
+
+            ViewBag.DbSetName = dbSetName;
+            ViewBag.Id = id;
+            return View("Edit", entityToEdit);
+        }
+
+
+
+        [HttpPost]
+        [Route("edit/{dbSetName}/{id}")]
+        public async Task<IActionResult> EditEntityPost([FromRoute] string dbSetName, [FromRoute]string id, [FromForm] object formData)
+        {
+            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
+
+            dbContextObject.Attach(entityToEdit);
+
+            if (await TryUpdateModelAsync(entityToEdit, entityType, string.Empty))
+            {
+                if (TryValidateModel(entityToEdit))
+                {
+                    await dbContextObject.SaveChangesAsync();
+                    return RedirectToAction("Index", new {id = dbSetName});
+                }
+            }
+
+            ViewBag.DbSetName = dbSetName;
+            ViewBag.Id = id;
+
+            return View("Edit", entityToEdit);
+        }
+
+        [HttpGet]
+        [Route("deleteentity/{dbSetName}/{id}")]
+        public async Task<IActionResult> DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
+        {
+            var viewModel = new DataDeleteViewModel();
+            viewModel.DbSetName = dbSetName;
+            viewModel.Id = id;
+            viewModel.Object = GetEntityFromDbSet(dbSetName, id, out var dbContext, out var entityType);
+            if (viewModel.Object == null) return NotFound();
+
+            return View(viewModel);
         }
 
         [HttpPost]
