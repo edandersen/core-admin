@@ -8,6 +8,8 @@ using System.Text;
 using DotNetEd.CoreAdmin;
 using Microsoft.Extensions.Hosting;
 using DotNetEd.CoreAdmin.Controllers;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using DotNetEd.CoreAdmin.IntegrationTestApp.Middleware;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests.TestApp
 {
@@ -29,6 +31,8 @@ namespace DotNetEd.CoreAdmin.IntegrationTests.TestApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<FakeUserMiddleware>();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

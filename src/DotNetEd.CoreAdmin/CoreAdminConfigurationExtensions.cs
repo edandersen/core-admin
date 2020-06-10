@@ -12,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CoreAdminConfigurationExtensions
     {
-        public static void AddCoreAdmin(this IServiceCollection services)
+        public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
         {
             foreach(var service in services.ToList())
             {
@@ -20,6 +20,13 @@ namespace Microsoft.Extensions.DependencyInjection
                 {
                     services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType }) ;
                 }
+            }
+
+            if (restrictToRoles != null && restrictToRoles.Any())
+            {
+                var coreAdminSecurityOptions = new CoreAdminSecurityOptions();
+                coreAdminSecurityOptions.RestrictToRoles = restrictToRoles;
+                services.AddSingleton(coreAdminSecurityOptions);
             }
 
             services.AddControllersWithViews();

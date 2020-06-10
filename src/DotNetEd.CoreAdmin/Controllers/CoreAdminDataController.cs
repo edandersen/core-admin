@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace DotNetEd.CoreAdmin.Controllers
 {
     [Route("coreadmin/data")]
+    [CoreAdminAuth]
     public class CoreAdminDataController : Controller
     {
         private readonly IEnumerable<DiscoveredDbContextType> dbContexts;

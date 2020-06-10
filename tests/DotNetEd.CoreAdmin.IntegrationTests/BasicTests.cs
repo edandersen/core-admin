@@ -1,4 +1,5 @@
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -22,8 +23,10 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ShowsTestEntitiesOnScreenOnAdminScreen()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
 
             // Act
             var response = await client.GetAsync("/coreadmin");
@@ -49,8 +52,10 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             await dbContext.SaveChangesAsync();
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
 
             // Act
             var response = await client.GetAsync("/coreadmin/data/list/testentities");

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.TestHost;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
 {
@@ -21,6 +22,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var builder = Host.CreateDefaultBuilder()
                               .ConfigureWebHostDefaults(x =>
                               {
+                                  // x.UseEnvironment("Development");
                                   x.UseStartup<TStartup>().UseTestServer();
                               });
             return builder;

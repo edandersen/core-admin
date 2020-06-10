@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminSecurityOptions> SecurityOptions
+@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -32,6 +34,19 @@
             </nav>
             
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+
+                @if (WebHostEnvionment.EnvironmentName == "Development")
+                {
+                    @if (SecurityOptions == null || !SecurityOptions.Any())
+                    {
+                        <div class="alert alert-warning mt-3 mb-0" role="alert">
+                            You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development
+                            environments until security has been set up. See the documentation at <a href="https://github.com/edandersen/core-admin">https://github.com/edandersen/core-admin</a>.
+                        </div>
+                     }
+                 }
+
+
 
                 @RenderBody()
 

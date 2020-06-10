@@ -8,13 +8,13 @@ Fully automatic admin site generator for ASP.NET Core. Add one line of code, get
 
 Add via nuget:
 
-```
-dotnet add package CoreAdmin -v 0.5.1-beta
+```csharp
+dotnet add package CoreAdmin
 ```
 
 Add this line at the bottom of ConfigureServices() in Startup.cs:
 
-```
+```csharp
 services.AddCoreAdmin();
 ```
 
@@ -25,6 +25,20 @@ Run your app with with /coreadmin on the end of the URL, for example https://loc
 The above screenshot is of the [Contoso University sample](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu30) with Core Admin added to it.
 
 Core Admin scans your app for Entity Framework DB Contexts and makes a nice set of CRUD screens for them.
+
+### Security
+
+Basic role based security is currently supported. Whilst this does not need to be set up when running the admin panel in Development mode (for testing), all other environments need this set up.
+
+#### Role based security
+
+When adding Core Admin, provide the list of Roles required to access the panel, for example:
+
+```csharp
+services.AddCoreAdmin("Administrator");
+```
+
+The admin panel will then use the built in User Principal system to validate the roles. Essentially, if a normal call to ```User.IsInRole("rolename")``` would return ```true```, then the user will be able to access the panel.
 
 ### License
 

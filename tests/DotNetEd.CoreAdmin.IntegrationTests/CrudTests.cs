@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,8 +33,10 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             await dbContext.SaveChangesAsync();
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
 
             // Do the post to delete the item
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
@@ -55,8 +58,10 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var nameGuidString = Guid.NewGuid().ToString();
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
 
             // Do the post to delete the item
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
@@ -80,10 +85,12 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             await dbContext.SaveChangesAsync();
 
             var updatedNameGuid = Guid.NewGuid().ToString();
-                
+
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
 
             // Do the post to update the item
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
