@@ -14,7 +14,7 @@
 </div>
 
 
-@using (Html.BeginForm("DeleteEntityPost", "AutoAdminData", new {}, FormMethod.Post))
+@using (Html.BeginForm("DeleteEntityPost", "CoreAdminData", new {}, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.DbSetName)
     @Html.HiddenFor(m => m.Id)

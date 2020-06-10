@@ -18,7 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
-    <ProjectReference Include="..\DotNetEd.AutoAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" />
+    <ProjectReference Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>
