@@ -16,7 +16,9 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             foreach(var service in services.ToList())
             {
-                if (service.ImplementationType?.BaseType == typeof(DbContext))
+                if (service.ImplementationType == null)
+                    continue;
+                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)))
                 {
                     services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType }) ;
                 }
