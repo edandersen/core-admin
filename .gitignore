@@ -351,3 +351,5 @@ MigrationBackup/
 /src/DotNetEd.AutoAdmin/out/
 /src/out/
 /src/DotNetEd.CoreAdmin/out/*
+/src/DotNetEd.CoreAdmin/out/*
+/src/DotNetEd.CoreAdmin/out/*

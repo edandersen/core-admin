@@ -10,19 +10,24 @@
 {
 
 
-        @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
+    @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
 
-        @Html.EditorForModel("DefaultEntity")
+    @Html.EditorForModel("DefaultEntity")
 
-        <div class="row">
-            <div class="col-md-12 px-4">
-                <button type="submit" class="btn btn-primary">Create</button>
+    <div class="row">
+        <div class="col-md-12 px-4">
+            <button type="submit" class="btn btn-primary">Create</button>
 
-                @Html.ActionLink("No, go back", "Index", new { Id = ViewBag.DbSetName })
+            @Html.ActionLink("No, go back", "Index", new { Id = ViewBag.DbSetName })
 
-            </div>
         </div>
+    </div>
 
-    
+
+}
+
+
+@section Scripts {
+    @Html.Partial("_ValidationScriptsPartialCoreAdmin")
 }
 

@@ -1,4 +1,4 @@
-name: .NET Core 3.1 Pull Requests
+name: Pull Requests
 
 on:
   pull_request:
