@@ -25,7 +25,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
         [Route("list/{id}", Order = 1)]
         [HttpGet]
-        public async Task<IActionResult> Index(string id)
+        public IActionResult Index(string id)
         {
             var viewModel = new DataListViewModel();
 
@@ -124,7 +124,7 @@ namespace DotNetEd.CoreAdmin.Controllers
         [HttpGet]
         [Route("create/{dbSetName}")]
         [IgnoreAntiforgeryToken]
-        public async Task<IActionResult> Create([FromRoute] string dbSetName)
+        public IActionResult Create([FromRoute] string dbSetName)
         {
             var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
 
@@ -136,7 +136,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
         [HttpGet]
         [Route("edit/{dbSetName}/{id}")]
-        public async Task<IActionResult> EditEntity([FromRoute] string dbSetName, [FromRoute] string id)
+        public IActionResult EditEntity([FromRoute] string dbSetName, [FromRoute] string id)
         {
             var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
 
@@ -172,7 +172,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
         [HttpGet]
         [Route("deleteentity/{dbSetName}/{id}")]
-        public async Task<IActionResult> DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
+        public IActionResult DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
         {
             var viewModel = new DataDeleteViewModel();
             viewModel.DbSetName = dbSetName;
