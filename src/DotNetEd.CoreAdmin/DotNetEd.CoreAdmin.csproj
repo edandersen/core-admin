@@ -6,11 +6,11 @@
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
     <PackageId>CoreAdmin</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <PackageVersion>1.1.0</PackageVersion>
     <Description>Automagically add an Admin Panel to your .NET Core web app.</Description>
     <Title>Core Admin Panel for ASP.NET Core</Title>
     <Authors>edandersen</Authors>
-    <Copyright>Copyright ©2020 Ed Andersen</Copyright>
+    <Copyright>Copyright ©2021 Ed Andersen</Copyright>
     <PackageProjectUrl>https://github.com/edandersen/core-admin</PackageProjectUrl>
     <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
   </PropertyGroup>
