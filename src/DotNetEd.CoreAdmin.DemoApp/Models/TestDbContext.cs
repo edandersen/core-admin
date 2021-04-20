@@ -20,7 +20,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             var seedData = new List<TestEntity>();
             foreach(var i in Enumerable.Range(0, 2000))
             {
-                seedData.Add(new TestEntity() { Id = Guid.NewGuid(), Name = "Test entity " + i });
+                seedData.Add(new TestEntity() { Id = Guid.NewGuid(), Name = "Test entity " + i, Title = "Test title " + i });
             }
 
             modelBuilder.Entity<TestEntity>().HasData(seedData);

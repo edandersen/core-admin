@@ -14,6 +14,9 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string Title { get; set; }
+
         [Display(Name = "Enum name")]
         public TestEnum EnumName { get; set; }
     }
