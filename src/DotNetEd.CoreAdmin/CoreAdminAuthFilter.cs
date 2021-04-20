@@ -25,11 +25,10 @@ namespace DotNetEd.CoreAdmin
             this.securityOptions = securityOptions.ToList();
         }
 
-        public void OnAuthorization(AuthorizationFilterContext context)
+        public async void OnAuthorization(AuthorizationFilterContext context)
         {
 
             bool failedSecurityCheck = true;
-
 
             // in Development mode, allow bypassing security (shows a warning message)
             if (environment.EnvironmentName == "Development" && !securityOptions.Any())
@@ -48,6 +47,14 @@ namespace DotNetEd.CoreAdmin
                             {
                                 failedSecurityCheck = false;
                             }
+                        }
+                    }
+
+                    if (options.CustomAuthorisationMethod != null)
+                    {
+                        if (await options.CustomAuthorisationMethod())
+                        {
+                            failedSecurityCheck = false;
                         }
                     }
                 }

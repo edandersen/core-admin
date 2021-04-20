@@ -23,6 +23,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             services.AddCoreAdmin("TestRole"); 
         }
 
+        static void ConfigureTestServicesWithSecurityAuthMethod(IServiceCollection services, Func<Task<bool>> authMethod)
+        {
+            services.AddCoreAdmin(authMethod);
+        }
+
         static void ConfigureTestServicesWithSecurityAndAlternativeTestRole(IServiceCollection services)
         {
             services.AddCoreAdmin("TestRole2");
@@ -87,8 +92,6 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             // Assert
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
-
-
         }
 
         [Fact]
@@ -103,7 +106,6 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             // Assert
             Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
-
         }
 
         [Fact]
@@ -119,6 +121,46 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             // Assert
             Assert.True(response.IsSuccessStatusCode);
 
+        }
+
+        [Fact]
+        public async Task SuccessStatusCodeAndCallsCustomAuthMethodInProductionAndAuthMethodCheckSet()
+        {
+            bool authCalled = false;
+
+            var authMethod = new Func<Task<bool>>(() => { authCalled = true; return Task.FromResult(true); });
+
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(services => 
+                    ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+
+            // Assert
+            Assert.True(authCalled);
+            Assert.True(response.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task ReturnsUnauthorizedWhenInProductionCustomAuthMethodFails()
+        {
+            bool authCalled = false;
+
+            var authMethod = new Func<Task<bool>>(() => { authCalled = true; return Task.FromResult(false); });
+
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder =>
+                   builder.ConfigureTestServices(services =>
+                    ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+
+            // Assert
+            Assert.True(authCalled);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
         }
     }
 }

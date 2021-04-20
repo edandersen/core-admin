@@ -7,22 +7,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CoreAdminConfigurationExtensions
     {
+        public static void AddCoreAdmin(this IServiceCollection services, Func<Task<bool>> customAuthorisationMethod)
+        {
+            FindDbContexts(services);
+
+            if (customAuthorisationMethod != null)
+            {
+                var coreAdminSecurityOptions = new CoreAdminSecurityOptions();
+                coreAdminSecurityOptions.CustomAuthorisationMethod = customAuthorisationMethod;
+                services.AddSingleton(coreAdminSecurityOptions);
+            }
+
+            services.AddControllersWithViews();
+
+        }
+
         public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
         {
-            foreach(var service in services.ToList())
-            {
-                if (service.ImplementationType == null)
-                    continue;
-                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)))
-                {
-                    services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType }) ;
-                }
-            }
+            FindDbContexts(services);
 
             if (restrictToRoles != null && restrictToRoles.Any())
             {
@@ -33,6 +41,19 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddControllersWithViews();
 
+        }
+
+        private static void FindDbContexts(IServiceCollection services)
+        {
+            foreach (var service in services.ToList())
+            {
+                if (service.ImplementationType == null)
+                    continue;
+                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)))
+                {
+                    services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType });
+                }
+            }
         }
     }
 }

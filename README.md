@@ -42,6 +42,19 @@ services.AddCoreAdmin("Administrator");
 
 The admin panel will then use the built in User Principal system to validate the roles. Essentially, if a normal call to ```User.IsInRole("rolename")``` would return ```true```, then the user will be able to access the panel.
 
+#### Custom auth methods
+
+You can also provide a function that will be evaluated on every request to see if the user can access the panel.
+
+For example, if you update the AddCoreAdmin method (don't use the exact method below as all requests will be granted):
+
+```csharp
+services.AddCoreAdmin(() => Task.FromResult(true));
+```
+
+You can change this to your own logic as needed. You can read from cookies or do whatever you need to do.
+
+
 #### Troubleshooting
 
 If you see a 401 error when accessing /coreadmin it means you are running in a non-development environment and you have not set a role up. See "Role based security" above.
