@@ -13,5 +13,17 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         [Required]
         public string Name { get; set; }
+
+        [Display(Name = "Enum name")]
+        public TestEnum EnumName { get; set; }
+    }
+
+    public enum TestEnum
+    {
+        Alice = 0,
+        Bob = 1,
+        Gary = 2,
+        Nigel = 3,
+        Ian = 4
     }
 }
