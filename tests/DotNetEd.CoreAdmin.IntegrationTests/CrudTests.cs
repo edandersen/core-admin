@@ -42,7 +42,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "id", idGuid.ToString() }, { "dbSetName", "testentities" } };
 
-            var response = await client.PostAsync("/coreadmin/data/deleteentity", new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmindata/DeleteEntityPost", new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is deleted from DB context
@@ -65,12 +65,12 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             // Do the post to delete the item
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
-            var data = new Dictionary<string, string>() { { "Name", nameGuidString } };
+            var data = new Dictionary<string, string>() { { "Name", nameGuidString }, { "Id", nameGuidString } };
 
-            var response = await client.PostAsync("/coreadmin/data/create/testentities", new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities", new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
-            // check to see if the item is deleted from DB context
+            
             Assert.True(await dbContext.TestEntities.AnyAsync(test => test.Name == nameGuidString));
 
         }
@@ -96,7 +96,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", updatedNameGuid }, { "Id", idGuid.ToString() } };
 
-            var response = await client.PostAsync("/coreadmin/data/edit/testentities/" + idGuid.ToString(), new FormUrlEncodedContent(data));
+            var response = await client.PostAsync("/coreadmindata/editentityPost/" + idGuid.ToString() + "?dbSetName=TestEntities", new FormUrlEncodedContent(data));
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is updated from DB context

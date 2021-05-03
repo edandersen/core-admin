@@ -64,13 +64,15 @@ namespace DotNetEd.CoreAdmin
 
             app.UseAuthorization();
 
+            // app.UseCoreAdminCustomUrl("exeiscool");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
 
+            });
         }
     }
 }

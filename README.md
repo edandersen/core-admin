@@ -54,6 +54,15 @@ services.AddCoreAdmin(() => Task.FromResult(true));
 
 You can change this to your own logic as needed. You can read from cookies or do whatever you need to do.
 
+### Custom URL to the admin panel
+
+To use a custom URL, add this line of code in the ConfigureServices part of Startup.cs
+
+```
+app.UseCoreAdminCustomUrl("customurltoadmin");
+```
+
+you can then access the panel at ```/customurltoadmin``` or whatever you need it to be.
 
 #### Troubleshooting
 

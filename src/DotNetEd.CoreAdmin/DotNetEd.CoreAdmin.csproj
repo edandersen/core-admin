@@ -6,8 +6,8 @@
     <PreserveCompilationContext>false</PreserveCompilationContext>
     <SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
     <PackageId>CoreAdmin</PackageId>
-    <PackageVersion>1.3.0</PackageVersion>
-    <Description>Automagically add an Admin Panel to your .NET Core web app.</Description>
+    <PackageVersion>1.4.0</PackageVersion>
+    <Description>Automagically add an Admin Panel to your .NET Core or .NET 5 web app.</Description>
     <Title>Core Admin Panel for ASP.NET Core</Title>
     <Authors>edandersen</Authors>
     <Copyright>Copyright ©2021 Ed Andersen</Copyright>
@@ -22,6 +22,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="6.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Areas\coreadmin\Views\" />
   </ItemGroup>
 
 

@@ -25,7 +25,6 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             services.AddControllersWithViews();
-
         }
 
         public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
@@ -41,6 +40,17 @@ namespace Microsoft.Extensions.DependencyInjection
 
             services.AddControllersWithViews();
 
+        }
+
+        public static void UseCoreAdminCustomUrl(this IApplicationBuilder app, string customUrlPrefix)
+        {
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "coreadminroute",
+                    pattern: customUrlPrefix + "/{controller=CoreAdmin}/{action=Index}/{id?}");
+
+            });
         }
 
         private static void FindDbContexts(IServiceCollection services)

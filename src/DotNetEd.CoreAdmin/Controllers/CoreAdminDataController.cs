@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 
 namespace DotNetEd.CoreAdmin.Controllers
 {
-    [Route("coreadmin/data")]
     [CoreAdminAuth]
     public class CoreAdminDataController : Controller
     {
@@ -23,7 +22,7 @@ namespace DotNetEd.CoreAdmin.Controllers
             this.dbContexts = dbContexts;
         }
 
-        [Route("list/{id}", Order = 1)]
+
         [HttpGet]
         public IActionResult Index(string id)
         {
@@ -97,9 +96,8 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpPost]
-        [Route("create/{dbSetName}")]
         [IgnoreAntiforgeryToken]
-        public async Task<IActionResult> CreateEntityPost([FromRoute]string dbSetName, [FromForm] object formData)
+        public async Task<IActionResult> CreateEntityPost(string dbSetName, string id, [FromForm] object formData)
         {
             var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
 
@@ -112,31 +110,29 @@ namespace DotNetEd.CoreAdmin.Controllers
                     // updated model with new values
                     dbContextObject.Add(newEntity);
                     await dbContextObject.SaveChangesAsync();
-                    return RedirectToAction("Index", new {id = dbSetName});
+                    return RedirectToAction("Index", new {id = dbSetName });
                 }
             }
 
-            ViewBag.DbSetName = dbSetName;
+            ViewBag.DbSetName = id;
 
             return View("Create", newEntity);
         }
 
         [HttpGet]
-        [Route("create/{dbSetName}")]
         [IgnoreAntiforgeryToken]
-        public IActionResult Create([FromRoute] string dbSetName)
+        public IActionResult Create(string id)
         {
-            var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
+            var dbSetValue = GetDbSetValueOrNull(id, out var dbContextObject, out var entityType);
 
             var newEntity = System.Activator.CreateInstance(entityType);
-            ViewBag.DbSetName = dbSetName;
+            ViewBag.DbSetName = id;
 
             return View(newEntity);
         }
 
         [HttpGet]
-        [Route("edit/{dbSetName}/{id}")]
-        public IActionResult EditEntity([FromRoute] string dbSetName, [FromRoute] string id)
+        public IActionResult EditEntity(string dbSetName, string id)
         {
             var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
 
@@ -148,8 +144,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
 
         [HttpPost]
-        [Route("edit/{dbSetName}/{id}")]
-        public async Task<IActionResult> EditEntityPost([FromRoute] string dbSetName, [FromRoute]string id, [FromForm] object formData)
+        public async Task<IActionResult> EditEntityPost(string dbSetName, string id, [FromForm] object formData)
         {
             var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
 
@@ -171,8 +166,7 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpGet]
-        [Route("deleteentity/{dbSetName}/{id}")]
-        public IActionResult DeleteEntity([FromRoute]string dbSetName, [FromRoute]string id)
+        public IActionResult DeleteEntity(string dbSetName, string id)
         {
             var viewModel = new DataDeleteViewModel();
             viewModel.DbSetName = dbSetName;
@@ -184,7 +178,6 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpPost]
-        [Route("deleteentity")]
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> DeleteEntityPost([FromForm] DataDeleteViewModel viewModel)
         {

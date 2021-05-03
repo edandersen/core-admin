@@ -58,7 +58,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             }).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+            var response = await client.GetAsync("/coreadmindata/index/testentities");
 
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",

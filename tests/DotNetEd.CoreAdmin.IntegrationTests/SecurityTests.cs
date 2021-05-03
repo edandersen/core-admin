@@ -116,7 +116,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
                     builder.ConfigureTestServices(ConfigureTestServicesWithSecurity)).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+            var response = await client.GetAsync("/coreadmindata/index/testentities");
 
             // Assert
             Assert.True(response.IsSuccessStatusCode);
@@ -136,7 +136,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
                     ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+            var response = await client.GetAsync("/coreadmindata/index/testentities");
 
             // Assert
             Assert.True(authCalled);
@@ -156,7 +156,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
                     ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
 
             // Act
-            var response = await client.GetAsync("/coreadmin/data/list/testentities");
+            var response = await client.GetAsync("/coreadmindata/index/testentities");
 
             // Assert
             Assert.True(authCalled);
