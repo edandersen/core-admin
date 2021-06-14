@@ -64,6 +64,22 @@ app.UseCoreAdminCustomUrl("customurltoadmin");
 
 you can then access the panel at ```/customurltoadmin``` or whatever you need it to be.
 
+### Use CDN for static resources
+
+Publish your web site, copy wwwroot content into your cdn.
+
+Then add he CDN url to the appsettings.json file:
+
+```
+{
+  "cdn": {
+    "url": "https://myname.azureedge.net"
+  }
+}
+```
+
+It's based on https://github.com/madskristensen/WebEssentials.AspNetCore.CdnTagHelpers Nuget package.
+
 #### Troubleshooting
 
 If you see a 401 error when accessing /coreadmin it means you are running in a non-development environment and you have not set a role up. See "Role based security" above.

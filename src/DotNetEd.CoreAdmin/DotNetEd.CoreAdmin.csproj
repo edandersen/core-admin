@@ -22,6 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
     <PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="6.2.3" />
+    <PackageReference Include="WebEssentials.AspNetCore.CdnTagHelpers" Version="1.0.21" />
   </ItemGroup>
 
   <ItemGroup>
