@@ -17,12 +17,12 @@ namespace DotNetEd.CoreAdmin
     public class CoreAdminAuthFilter : IAuthorizationFilter
     {
         private readonly IWebHostEnvironment environment;
-        private readonly IList<CoreAdminSecurityOptions> securityOptions;
+        private readonly IList<CoreAdminOptions> coreAdminOptions;
 
-        public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminSecurityOptions> securityOptions)
+        public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminOptions> securityOptions)
         {
             this.environment = environment;
-            this.securityOptions = securityOptions.ToList();
+            this.coreAdminOptions = securityOptions.ToList();
         }
 
         public async void OnAuthorization(AuthorizationFilterContext context)
@@ -31,13 +31,13 @@ namespace DotNetEd.CoreAdmin
             bool failedSecurityCheck = true;
 
             // in Development mode, allow bypassing security (shows a warning message)
-            if (environment.EnvironmentName == "Development" && !securityOptions.Any())
+            if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any())
             {
                 failedSecurityCheck = false;
             }
             else
             {
-                foreach (var options in securityOptions)
+                foreach (var options in coreAdminOptions)
                 {
                     if (options.RestrictToRoles != null && options.RestrictToRoles.Any())
                     {

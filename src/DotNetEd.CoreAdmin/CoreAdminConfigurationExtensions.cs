@@ -19,7 +19,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (customAuthorisationMethod != null)
             {
-                var coreAdminSecurityOptions = new CoreAdminSecurityOptions();
+                var coreAdminSecurityOptions = new CoreAdminOptions();
                 coreAdminSecurityOptions.CustomAuthorisationMethod = customAuthorisationMethod;
                 services.AddSingleton(coreAdminSecurityOptions);
             }
@@ -33,7 +33,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
             if (restrictToRoles != null && restrictToRoles.Any())
             {
-                var coreAdminSecurityOptions = new CoreAdminSecurityOptions();
+                var coreAdminSecurityOptions = new CoreAdminOptions();
                 coreAdminSecurityOptions.RestrictToRoles = restrictToRoles;
                 services.AddSingleton(coreAdminSecurityOptions);
             }
