@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Page_Title"] - Core Admin</title>
-    <link rel="stylesheet" href="~/_content/CoreAdmin/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/_content/CoreAdmin/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/_content/CoreAdmin/css/mvc-grid/mvc-grid.css" />
     <link rel="stylesheet" href="~/_content/CoreAdmin/css/site.css" />
 </head>
@@ -16,11 +16,9 @@
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+
         <ul class="navbar-nav px-3">
-            @*<li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>*@
+
         </ul>
     </nav>
     <div class="container-fluid">
@@ -46,8 +44,6 @@
                      }
                  }
 
-
-
                 @RenderBody()
 
             </main>
@@ -55,8 +51,8 @@
        
     </div>
 
-    <script src="~/_content/CoreAdmin/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/_content/CoreAdmin/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/_content/CoreAdmin/js/jquery.min.js"></script>
+    <script src="~/_content/CoreAdmin/js/bootstrap.bundle.min.js"></script>
     <script src="~/_content/CoreAdmin/js/mvc-grid/mvc-grid.js"></script>
     <script src="~/_content/CoreAdmin/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
