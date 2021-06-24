@@ -31,7 +31,7 @@ namespace DotNetEd.CoreAdmin
             bool failedSecurityCheck = true;
 
             // in Development mode, allow bypassing security (shows a warning message)
-            if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any())
+            if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any(o => o.IsSecuritySet))
             {
                 failedSecurityCheck = false;
             }

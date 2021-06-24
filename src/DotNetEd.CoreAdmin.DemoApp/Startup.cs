@@ -64,6 +64,8 @@ namespace DotNetEd.CoreAdmin
 
             app.UseAuthorization();
 
+            // app.UseCoreAdminCdn("https://edandersen.com");
+
             // app.UseCoreAdminCustomUrl("exeiscool");
 
             app.UseEndpoints(endpoints =>

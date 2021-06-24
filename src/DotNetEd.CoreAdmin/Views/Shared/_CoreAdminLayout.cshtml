@@ -1,14 +1,31 @@
-﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> SecurityOptions
+﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
+@{ 
+    string cdnPath = null;
+    if (CoreAdminOptions.Any())
+    {
+        cdnPath = CoreAdminOptions.First().CdnPath;
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Page_Title"] - Core Admin</title>
-    <link rel="stylesheet" href="~/_content/CoreAdmin/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/_content/CoreAdmin/css/mvc-grid/mvc-grid.css" />
-    <link rel="stylesheet" href="~/_content/CoreAdmin/css/site.css" />
+    @if (cdnPath == null)
+    {
+        <link rel="stylesheet" href="~/_content/CoreAdmin/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/_content/CoreAdmin/css/mvc-grid/mvc-grid.css" />
+        <link rel="stylesheet" href="~/_content/CoreAdmin/css/site.css" />
+    }
+    else
+    {
+        <link rel="stylesheet" href="@cdnPath/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="@cdnPath/css/mvc-grid/mvc-grid.css" />
+        <link rel="stylesheet" href="@cdnPath/css/site.css" />
+    }
+
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -18,7 +35,6 @@
         </button>
 
         <ul class="navbar-nav px-3">
-
         </ul>
     </nav>
     <div class="container-fluid">
@@ -27,34 +43,50 @@
                 <div class="sidebar-sticky pt-3">
 
                     @await Component.InvokeAsync("CoreAdminMenu")
-                    
+
                 </div>
             </nav>
-            
+
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
 
                 @if (WebHostEnvionment.EnvironmentName == "Development")
                 {
-                    @if (SecurityOptions == null || !SecurityOptions.Any())
+                    @if (CoreAdminOptions == null || !CoreAdminOptions.Any() || CoreAdminOptions.All(o => !o.IsSecuritySet))
                     {
                         <div class="alert alert-warning mt-3 mb-0" role="alert">
                             You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development
                             environments until security has been set up. See the documentation at <a href="https://github.com/edandersen/core-admin">https://github.com/edandersen/core-admin</a>.
                         </div>
-                     }
-                 }
+                    }
+                }
 
                 @RenderBody()
 
             </main>
         </div>
-       
+
     </div>
 
-    <script src="~/_content/CoreAdmin/js/jquery.min.js"></script>
-    <script src="~/_content/CoreAdmin/js/bootstrap.bundle.min.js"></script>
-    <script src="~/_content/CoreAdmin/js/mvc-grid/mvc-grid.js"></script>
-    <script src="~/_content/CoreAdmin/js/site.js" asp-append-version="true"></script>
+    @if (cdnPath == null)
+    {
+        <script src="~/_content/CoreAdmin/js/jquery.min.js"></script>
+        <script src="~/_content/CoreAdmin/js/bootstrap.bundle.min.js"></script>
+        <script src="~/_content/CoreAdmin/js/mvc-grid/mvc-grid.js"></script>
+        <script src="~/_content/CoreAdmin/js/site.js" asp-append-version="true"></script>
+        <script src="~/_content/CoreAdmin/js/jquery.validate.min.js"></script>
+        <script src="~/_content/CoreAdmin/js/jquery.validate.unobtrusive.min.js"></script>
+    }
+    else
+    {
+        <script src="@cdnPath/js/jquery.min.js"></script>
+        <script src="@cdnPath/js/bootstrap.bundle.min.js"></script>
+        <script src="@cdnPath/js/mvc-grid/mvc-grid.js"></script>
+        <script src="@cdnPath/js/site.js" asp-append-version="true"></script>
+        <script src="@cdnPath/js/jquery.validate.min.js"></script>
+        <script src="@cdnPath/js/jquery.validate.unobtrusive.min.js"></script>
+    }
+
+
     @RenderSection("Scripts", required: false)
 </body>
 </html>

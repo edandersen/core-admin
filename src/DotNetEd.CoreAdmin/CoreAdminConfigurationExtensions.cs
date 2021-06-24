@@ -17,12 +17,15 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             FindDbContexts(services);
 
+            var coreAdminOptions = new CoreAdminOptions();
+            
             if (customAuthorisationMethod != null)
             {
-                var coreAdminSecurityOptions = new CoreAdminOptions();
-                coreAdminSecurityOptions.CustomAuthorisationMethod = customAuthorisationMethod;
-                services.AddSingleton(coreAdminSecurityOptions);
+                coreAdminOptions.CustomAuthorisationMethod = customAuthorisationMethod;
             }
+           
+            services.AddSingleton(coreAdminOptions);
+            
 
             services.AddControllersWithViews();
         }
@@ -31,12 +34,14 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             FindDbContexts(services);
 
+            var coreAdminOptions = new CoreAdminOptions();
+            
             if (restrictToRoles != null && restrictToRoles.Any())
             {
-                var coreAdminSecurityOptions = new CoreAdminOptions();
-                coreAdminSecurityOptions.RestrictToRoles = restrictToRoles;
-                services.AddSingleton(coreAdminSecurityOptions);
+                coreAdminOptions.RestrictToRoles = restrictToRoles;
             }
+            
+            services.AddSingleton(coreAdminOptions);
 
             services.AddControllersWithViews();
 
@@ -51,6 +56,15 @@ namespace Microsoft.Extensions.DependencyInjection
                     pattern: customUrlPrefix + "/{controller=CoreAdmin}/{action=Index}/{id?}");
 
             });
+        }
+
+        public static void UseCoreAdminCdn(this IApplicationBuilder app, string cdnPath)
+        {
+            var options = app.ApplicationServices.GetServices<CoreAdminOptions>();
+            foreach(var option in options)
+            {
+                option.CdnPath = cdnPath;
+            }
         }
 
         private static void FindDbContexts(IServiceCollection services)

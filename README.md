@@ -64,6 +64,17 @@ app.UseCoreAdminCustomUrl("customurltoadmin");
 
 you can then access the panel at ```/customurltoadmin``` or whatever you need it to be.
 
+
+### CDN Support for the built in static assets
+
+To use a CDN or serve the built in CSS and JS from another URL, copy the ```/css``` and ```/js``` folders from ```src/DotNetEd.CoreAdmin/wwwroot/``` to the root of your CDN. Then in ```Configure``` in Startup.cs, call the following method:
+
+```
+ app.UseCoreAdminCdn("https://my-cdn-root.com");
+```
+
+The Core Admin Razor Class library will then serve the static assets from this URL root rather than from the built in versions.
+
 #### Troubleshooting
 
 If you see a 401 error when accessing /coreadmin it means you are running in a non-development environment and you have not set a role up. See "Role based security" above.
