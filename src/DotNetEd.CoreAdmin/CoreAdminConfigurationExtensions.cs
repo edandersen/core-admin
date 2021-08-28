@@ -69,13 +69,14 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void FindDbContexts(IServiceCollection services)
         {
+            var discoveredServices = new List<DiscoveredDbContextType>();
             foreach (var service in services.ToList())
             {
                 if (service.ImplementationType == null)
                     continue;
-                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)))
-                {
-                    services.AddTransient(services => new DiscoveredDbContextType() { Type = service.ImplementationType });
+                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)) && !discoveredServices.Any(x => x.Type == service.ImplementationType)){
+                    discoveredServices.Add(new DiscoveredDbContextType() { Type = service.ImplementationType });
+                    services.AddTransient(_ => new DiscoveredDbContextType() { Type = service.ImplementationType });
                 }
             }
         }
