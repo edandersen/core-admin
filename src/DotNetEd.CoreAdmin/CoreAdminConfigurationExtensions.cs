@@ -69,7 +69,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static void FindDbContexts(IServiceCollection services)
         {
-            List<DiscoveredDbContextType> discoveredServices = new();
+            var discoveredServices = new List<DiscoveredDbContextType>();
             foreach (var service in services.ToList())
             {
                 if (service.ImplementationType == null)
