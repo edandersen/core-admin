@@ -2,8 +2,11 @@
     
     bool ShouldShow(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata metadata)
     {
+        var shouldIgnore = ViewBag.IgnoreFromForm != null 
+            && ((IEnumerable<string>)ViewBag.IgnoreFromForm).Contains(metadata.PropertyName);
+
         return metadata.ShowForDisplay
-            && !metadata.IsComplexType;
+            && !metadata.IsComplexType && !shouldIgnore;
     } 
     
 }
