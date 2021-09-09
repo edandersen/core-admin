@@ -1,4 +1,5 @@
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -154,6 +155,41 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var client = _factory.WithWebHostBuilder(builder =>
                    builder.ConfigureTestServices(services =>
                     ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
+
+            // Act
+            var response = await client.GetAsync("/coreadmindata/index/testentities");
+
+            // Assert
+            Assert.True(authCalled);
+            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+        }
+
+        [Fact]
+        public async Task ReturnsUnauthorizedWhenInProductionNewCustomAuthMethodFails()
+        {
+            bool authCalled = false;
+
+            var authMethod = new Func<IServiceProvider, Task<bool>>((serviceProvider) => { authCalled = true; return Task.FromResult(false); });
+
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Production");
+                builder.ConfigureTestServices(ConfigureTestServices);
+                builder.Configure(
+                        app =>
+                        {
+                            app.UseRouting();
+                            app.UseCoreAdminCustomAuth(authMethod);
+                            app.UseEndpoints(endpoints =>
+                            {
+                                endpoints.MapControllerRoute(
+                                    name: "default",
+                                    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                            });
+                        }
+                    );
+            }).CreateClient();
 
             // Act
             var response = await client.GetAsync("/coreadmindata/index/testentities");

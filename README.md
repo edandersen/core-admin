@@ -46,13 +46,13 @@ The admin panel will then use the built in User Principal system to validate the
 
 You can also provide a function that will be evaluated on every request to see if the user can access the panel.
 
-For example, if you update the AddCoreAdmin method (don't use the exact method below as all requests will be granted):
+For example, in Configure, use the following method (don't use the exact method below as all requests will be refused):
 
 ```csharp
-services.AddCoreAdmin(() => Task.FromResult(true));
+app.UseCoreAdminCustomAuth((serviceProvider) => Task.FromResult(false));
 ```
 
-You can change this to your own logic as needed. You can read from cookies or do whatever you need to do.
+You can change this to your own logic as needed. You can read from cookies or do whatever you need to do, loading services from the serviceProvider.
 
 ### Custom URL to the admin panel
 

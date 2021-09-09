@@ -18,11 +18,13 @@ namespace DotNetEd.CoreAdmin
     {
         private readonly IWebHostEnvironment environment;
         private readonly IList<CoreAdminOptions> coreAdminOptions;
+        private readonly IServiceProvider serviceProvider;
 
-        public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminOptions> securityOptions)
+        public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminOptions> securityOptions, IServiceProvider serviceProvider)
         {
             this.environment = environment;
             this.coreAdminOptions = securityOptions.ToList();
+            this.serviceProvider = serviceProvider;
         }
 
         public async void OnAuthorization(AuthorizationFilterContext context)
@@ -53,6 +55,14 @@ namespace DotNetEd.CoreAdmin
                     if (options.CustomAuthorisationMethod != null)
                     {
                         if (await options.CustomAuthorisationMethod())
+                        {
+                            failedSecurityCheck = false;
+                        }
+                    }
+
+                    if (options.CustomAuthorisationMethodWithServiceProvider != null)
+                    {
+                        if (await options.CustomAuthorisationMethodWithServiceProvider(serviceProvider))
                         {
                             failedSecurityCheck = false;
                         }

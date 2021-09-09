@@ -13,6 +13,7 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public static class CoreAdminConfigurationExtensions
     {
+        [Obsolete("Use app.UseCoreAdminCustomAuth()")]
         public static void AddCoreAdmin(this IServiceCollection services, Func<Task<bool>> customAuthorisationMethod)
         {
             FindDbContexts(services);
@@ -64,6 +65,15 @@ namespace Microsoft.Extensions.DependencyInjection
             foreach(var option in options)
             {
                 option.CdnPath = cdnPath;
+            }
+        }
+
+        public static void UseCoreAdminCustomAuth(this IApplicationBuilder app, Func<IServiceProvider, Task<bool>> customAuthFunction)
+        {
+            var options = app.ApplicationServices.GetServices<CoreAdminOptions>();
+            foreach (var option in options)
+            {
+                option.CustomAuthorisationMethodWithServiceProvider = customAuthFunction;
             }
         }
 

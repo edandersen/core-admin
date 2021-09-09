@@ -68,6 +68,8 @@ namespace DotNetEd.CoreAdmin
 
             // app.UseCoreAdminCustomUrl("exeiscool");
 
+            // app.UseCoreAdminCustomAuth((sp) => Task.FromResult(false));
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
