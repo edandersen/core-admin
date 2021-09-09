@@ -19,6 +19,8 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         [Display(Name = "Enum name")]
         public TestEnum EnumName { get; set; }
+
+        public double Price { get; set; }
     }
 
     public enum TestEnum

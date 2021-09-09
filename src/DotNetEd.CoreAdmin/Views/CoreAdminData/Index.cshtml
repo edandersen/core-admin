@@ -52,6 +52,12 @@
 
                 columns.Add(lambda).Titled(entityProperty.Name);
             }
+            else if (entityProperty.PropertyType == typeof(double))
+            {
+                var lambda = Expression.Lambda<Func<object, double>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            }
 
         }
 
