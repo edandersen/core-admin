@@ -21,6 +21,11 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         public TestEnum EnumName { get; set; }
 
         public double Price { get; set; }
+
+        public DateTime DateTime { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
     }
 
     public enum TestEnum
