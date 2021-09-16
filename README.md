@@ -64,6 +64,15 @@ app.UseCoreAdminCustomUrl("customurltoadmin");
 
 you can then access the panel at ```/customurltoadmin``` or whatever you need it to be.
 
+### Ignoring certain entity types
+
+You can prevent certain types of entities being shown or available in the admin panel by setting the ```IgnoreEntityTypes``` value in the options during ```AddCoreAdmin()```, like so:
+
+```
+services.AddCoreAdmin(new CoreAdminOptions() { IgnoreEntityTypes = new List<Type>() { typeof(DatabaseEntityToIgnore) } });
+```
+
+The above will make it so that ```DatabaseEntityToIgnore``` is not shown.
 
 ### CDN Support for the built in static assets
 

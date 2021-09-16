@@ -11,7 +11,7 @@ namespace DotNetEd.CoreAdmin.ViewModels
     {
         public Type EntityType { get; internal set; }
         public IEnumerable<object> Data { get; internal set; }
-        public PropertyInfo DbSetProperty { get; internal set; }
         public DbContext DbContext { get; internal set; }
+        public PropertyInfo DbSetProperty { get; internal set; }
     }
 }

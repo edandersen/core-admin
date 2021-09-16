@@ -16,10 +16,10 @@ namespace Microsoft.Extensions.DependencyInjection
         [Obsolete("Use app.UseCoreAdminCustomAuth()")]
         public static void AddCoreAdmin(this IServiceCollection services, Func<Task<bool>> customAuthorisationMethod)
         {
-            FindDbContexts(services);
-
             var coreAdminOptions = new CoreAdminOptions();
-            
+
+            FindDbContexts(services, coreAdminOptions);
+
             if (customAuthorisationMethod != null)
             {
                 coreAdminOptions.CustomAuthorisationMethod = customAuthorisationMethod;
@@ -31,12 +31,22 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddControllersWithViews();
         }
 
+        public static void AddCoreAdmin(this IServiceCollection services, CoreAdminOptions options)
+        {
+            FindDbContexts(services, options);
+
+            services.AddSingleton(options);
+
+            services.AddControllersWithViews();
+        }
+
         public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
         {
-            FindDbContexts(services);
-
-            var coreAdminOptions = new CoreAdminOptions();
             
+            var coreAdminOptions = new CoreAdminOptions();
+
+            FindDbContexts(services, coreAdminOptions);
+
             if (restrictToRoles != null && restrictToRoles.Any())
             {
                 coreAdminOptions.RestrictToRoles = restrictToRoles;
@@ -77,17 +87,45 @@ namespace Microsoft.Extensions.DependencyInjection
             }
         }
 
-        private static void FindDbContexts(IServiceCollection services)
+        private static void FindDbContexts(IServiceCollection services, CoreAdminOptions options)
         {
-            var discoveredServices = new List<DiscoveredDbContextType>();
+            // remove previously discovered db contexts
+            var servicesToRemove = services.Where(s => s.ServiceType == typeof(DiscoveredDbSetEntityType)).ToList();
+            foreach(var serviceToRemove in servicesToRemove)
+            {
+                services.Remove(serviceToRemove);
+            }
+
+            var discoveredServices = new List<DiscoveredDbSetEntityType>();
             foreach (var service in services.ToList())
             {
                 if (service.ImplementationType == null)
                     continue;
-                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)) && !discoveredServices.Any(x => x.Type == service.ImplementationType)){
-                    discoveredServices.Add(new DiscoveredDbContextType() { Type = service.ImplementationType });
-                    services.AddTransient(_ => new DiscoveredDbContextType() { Type = service.ImplementationType });
+                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)) && 
+                    !discoveredServices.Any(x => x.DbContextType == service.ImplementationType))
+                {
+                    foreach (var dbSetProperty in service.ImplementationType.GetProperties())
+                    {
+                        // looking for DbSet<Entity>
+                        if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
+                        {
+                            if (!options.IgnoreEntityTypes.Contains(dbSetProperty.PropertyType.GenericTypeArguments.First()))
+                            {
+                                discoveredServices.Add(new DiscoveredDbSetEntityType() { 
+                                    DbContextType = service.ImplementationType, 
+                                    DbSetType = dbSetProperty.PropertyType, 
+                                    UnderlyingType = dbSetProperty.PropertyType.GenericTypeArguments.First(), Name = dbSetProperty.Name });
+                            }
+                        }
+                    }
+
+                    
                 }
+            }
+
+            foreach (var service in discoveredServices)
+            {
+                services.AddTransient(_ => service);
             }
         }
     }

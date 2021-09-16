@@ -11,30 +11,22 @@ namespace DotNetEd.CoreAdmin.ViewComponents
 {
     public class CoreAdminMenuViewComponent : ViewComponent
     {
-        private readonly IEnumerable<DiscoveredDbContextType> dbContexts;
+        private readonly IEnumerable<DiscoveredDbSetEntityType> dbSetEntities;
 
-        public CoreAdminMenuViewComponent(IEnumerable<DiscoveredDbContextType> dbContexts)
+        public CoreAdminMenuViewComponent(IEnumerable<DiscoveredDbSetEntityType> dbContexts)
         {
-            this.dbContexts = dbContexts;
+            this.dbSetEntities = dbContexts;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var viewModel = new MenuViewModel();
 
-            foreach(var dbContext in dbContexts)
+            foreach(var dbSetEntity in dbSetEntities)
             {
-                viewModel.DbContextNames.Add(dbContext.Type.Name);
-
-                foreach(var dbSetProperty in dbContext.Type.GetProperties())
-                {
-                    // looking for DbSet<Entity>
-                    if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
-                    {
-                        viewModel.DbSetNames.Add(dbSetProperty.Name);
-                    }    
-                }
-            }
+                viewModel.DbContextNames.Add(dbSetEntity.DbContextType.Name);
+                viewModel.DbSetNames.Add(dbSetEntity.Name);
+            }    
 
             return View(viewModel);
         }

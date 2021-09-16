@@ -13,5 +13,6 @@ namespace DotNetEd.CoreAdmin
 
         public string CdnPath { get; internal set; }
         public Func<IServiceProvider, Task<bool>> CustomAuthorisationMethodWithServiceProvider { get; internal set; }
+        public IEnumerable<Type> IgnoreEntityTypes { get; set; } = new List<Type>();
     }
 }

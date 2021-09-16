@@ -16,11 +16,11 @@ namespace DotNetEd.CoreAdmin.Controllers
     [CoreAdminAuth]
     public class CoreAdminDataController : Controller
     {
-        private readonly IEnumerable<DiscoveredDbContextType> dbContexts;
+        private readonly IEnumerable<DiscoveredDbSetEntityType> dbSetEntities;
 
-        public CoreAdminDataController(IEnumerable<DiscoveredDbContextType> dbContexts)
+        public CoreAdminDataController(IEnumerable<DiscoveredDbSetEntityType> dbSetEntities)
         {
-            this.dbContexts = dbContexts;
+            this.dbSetEntities = dbSetEntities;
         }
 
 
@@ -29,16 +29,16 @@ namespace DotNetEd.CoreAdmin.Controllers
         {
             var viewModel = new DataListViewModel();
 
-            foreach (var dbContext in dbContexts)
+            foreach (var dbSetEntity in dbSetEntities.Where(db => db.Name.ToLowerInvariant() == id.ToLowerInvariant()))
             {
-                foreach (var dbSetProperty in dbContext.Type.GetProperties())
+                foreach (var dbSetProperty in dbSetEntity.DbContextType.GetProperties())
                 {
                     if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet") && dbSetProperty.Name.ToLowerInvariant() == id.ToLowerInvariant())
                     {
                         viewModel.EntityType = dbSetProperty.PropertyType.GetGenericArguments().First();
                         viewModel.DbSetProperty = dbSetProperty;
 
-                        var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
+                        var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbSetEntity.DbContextType);
 
                         var dbSetValue = dbSetProperty.GetValue(dbContextObject);
 
@@ -48,18 +48,23 @@ namespace DotNetEd.CoreAdmin.Controllers
                 }
             }
 
+            if (viewModel.DbContext == null)
+            {
+                return NotFound();
+            }
+
             return View(viewModel);
         }
 
         private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject, out Type typeOfEntity)
         {
-            foreach (var dbContext in dbContexts)
+            foreach (var dbSetEntity in dbSetEntities.Where(db => db.Name.ToLowerInvariant() == dbSetName.ToLowerInvariant()))
             {
-                foreach (var dbSetProperty in dbContext.Type.GetProperties())
+                foreach (var dbSetProperty in dbSetEntity.DbContextType.GetProperties())
                 {
                     if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet") && dbSetProperty.Name.ToLowerInvariant() == dbSetName.ToLowerInvariant())
                     {
-                        dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
+                        dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbSetEntity.DbContextType);
                         typeOfEntity = dbSetProperty.PropertyType.GetGenericArguments()[0];
                         return dbSetProperty.GetValue(dbContextObject);
                     }
@@ -195,13 +200,13 @@ namespace DotNetEd.CoreAdmin.Controllers
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> DeleteEntityPost([FromForm] DataDeleteViewModel viewModel)
         {
-            foreach (var dbContext in dbContexts)
+            foreach (var dbSetEntity in dbSetEntities.Where(db => db.Name.ToLowerInvariant() == viewModel.DbSetName.ToLowerInvariant()))
             {
-                foreach (var dbSetProperty in dbContext.Type.GetProperties())
+                foreach (var dbSetProperty in dbSetEntity.DbContextType.GetProperties())
                 {
                     if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet") && dbSetProperty.Name.ToLowerInvariant() == viewModel.DbSetName.ToLowerInvariant())
                     {
-                        var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbContext.Type);
+                        var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbSetEntity.DbContextType);
                         var dbSetValue = dbSetProperty.GetValue(dbContextObject);
 
                         var primaryKey = dbContextObject.Model.FindEntityType(dbSetProperty.PropertyType.GetGenericArguments()[0]).FindPrimaryKey();
