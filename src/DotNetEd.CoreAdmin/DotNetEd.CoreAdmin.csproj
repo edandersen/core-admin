@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.4" />
-    <PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="6.2.3" />
+    <PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="6.2.4" />
   </ItemGroup>
 
   <ItemGroup>
