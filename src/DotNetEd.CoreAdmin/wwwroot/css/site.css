@@ -22,12 +22,6 @@
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
-@media (max-width: 767.98px) {
-    .sidebar {
-        top: 5rem;
-    }
-}
-
 .sidebar-sticky {
     position: relative;
     top: 0;
