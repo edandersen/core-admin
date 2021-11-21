@@ -43,6 +43,7 @@ Add this line at the bottom of ConfigureServices() in Startup.cs:
 ```csharp
 services.AddCoreAdmin();
 ```
+## Running the app
 
 Run your app with with /coreadmin on the end of the URL, for example https://localhost:5001/coreadmin and you'll get a little something like this -
 
