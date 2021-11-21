@@ -1,7 +1,16 @@
+using DotNetEd.CoreAdmin.DemoApp.Models;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Add the DB Contexts
+builder.Services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase("TestDatabase"));
+
+// add Core Admin
+builder.Services.AddCoreAdmin();
 
 var app = builder.Build();
 
@@ -21,5 +30,14 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+// Required for Core Admin
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+});
 
 app.Run();
