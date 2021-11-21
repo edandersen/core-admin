@@ -1,4 +1,4 @@
-# Core Admin Panel for ASP.NET Core & .NET 5
+# Core Admin Panel for ASP.NET Core & .NET 6
 
 [![.NET 6](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
 
