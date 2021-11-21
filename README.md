@@ -1,10 +1,36 @@
 # Core Admin Panel for ASP.NET Core & .NET 5
 
-[![.NET Core 3.1 & .NET 5](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
+[![.NET 6](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
 
 Fully automatic admin site generator for ASP.NET Core. Add one line of code, get loads of stuff.
 
-## How to use
+## Setting up with .NET 6 Minimal APIs (version 2.0.0+)
+
+Add via nuget:
+
+```csharp
+dotnet add package CoreAdmin
+```
+
+Add this line before ```var app = builder.Build();``` in Program.cs:
+
+```csharp
+builder.Services.AddCoreAdmin();
+```
+
+You need to make sure Endpoints are enabled as they don't appear to be in the default templates. For example, add the following before ```app.Run();```:
+
+```csharp
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllerRoute(
+        name: "default",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+});
+```
+
+## How to use with .NET Core 3.1 and .NET 5 (version <2.0.0)
 
 Add via nuget:
 

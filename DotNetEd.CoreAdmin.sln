@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30011.22
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin", "src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj", "{44822078-CB19-4FE8-BC1D-141F067D6FF1}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.DemoApp", "src\DotNetEd.CoreAdmin.DemoApp\DotNetEd.CoreAdmin.DemoApp.csproj", "{6F846D2E-8DFC-4074-9DE9-388E120F7877}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.IntegrationTestApp", "tests\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj", "{20A156BB-163F-40B5-A577-1C3E76751DE9}"
 EndProject
@@ -18,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetEd.CoreAdmin.DemoAppDotNet6", "src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj", "{A3A57016-920D-4173-B054-891E42769923}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -28,10 +28,6 @@ Global
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6F846D2E-8DFC-4074-9DE9-388E120F7877}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6F846D2E-8DFC-4074-9DE9-388E120F7877}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6F846D2E-8DFC-4074-9DE9-388E120F7877}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6F846D2E-8DFC-4074-9DE9-388E120F7877}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -40,6 +36,10 @@ Global
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
