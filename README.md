@@ -21,13 +21,7 @@ builder.Services.AddCoreAdmin();
 You need to make sure Endpoints are enabled as they don't appear to be in the default templates. For example, add the following before ```app.Run();```:
 
 ```csharp
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-});
+app.MapDefaultControllerRoute();
 ```
 
 ## How to use with .NET Core 3.1 and .NET 5 (version <2.0.0)
