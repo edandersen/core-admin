@@ -32,12 +32,6 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 // Required for Core Admin
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-});
+app.MapDefaultControllerRoute();
 
 app.Run();
