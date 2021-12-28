@@ -10,6 +10,8 @@ namespace DotNetEd.CoreAdmin
     {
         public static string WebBase64EncodeImageByteArrayOrNull(byte[] image)
         {
+            if (image == null) return null;
+
             var byteSignaturesAndContentTypes = new Dictionary<byte[], string>();
             byteSignaturesAndContentTypes.Add(Encoding.ASCII.GetBytes("BM"), "image/bmp");
             byteSignaturesAndContentTypes.Add(Encoding.ASCII.GetBytes("GIF"), "image/gif");

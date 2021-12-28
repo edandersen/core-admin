@@ -6,10 +6,12 @@
 <h1 class="display-4">@ViewBag.DbSetName - Create</h1>
 
 
-@using (Html.BeginForm("CreateEntityPost", "CoreAdminData", new { id = ViewBag.DbSetName }, FormMethod.Post))
+@using (Html.BeginForm("CreateEntityPost",
+"CoreAdminData",
+new { id = ViewBag.DbSetName },
+FormMethod.Post, false,
+new { enctype = "multipart/form-data" }))
 {
-
-
     @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
 
     @Html.EditorForModel("DefaultEntity")
@@ -22,6 +24,5 @@
 
         </div>
     </div>
-
 
 }

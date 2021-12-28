@@ -66,7 +66,7 @@
                 columns.Add(lambda).Titled(entityProperty.Name)
                     .RenderedAs((value) => {
                         var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
-                        return base64 == null ? string.Empty : $"<img height='48' width='48' src='{base64}'>";
+                        return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
                     } ).Encoded(false);
             }
         }

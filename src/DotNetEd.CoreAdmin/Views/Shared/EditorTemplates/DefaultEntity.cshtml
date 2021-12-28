@@ -1,10 +1,15 @@
-﻿@functions{ 
-    
+﻿@functions{
+
     bool ShouldShow(Microsoft.AspNetCore.Mvc.ModelBinding.ModelMetadata metadata)
     {
         var shouldIgnore = ViewBag.IgnoreFromForm != null 
             && ((IEnumerable<string>)ViewBag.IgnoreFromForm).Contains(metadata.PropertyName);
 
+        if (metadata.ShowForDisplay && metadata.ModelType.Name == "Byte[]" && !shouldIgnore)
+        {
+            return true;
+        }
+        
         return metadata.ShowForDisplay
             && !metadata.IsComplexType && !shouldIgnore;
     } 
