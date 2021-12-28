@@ -39,7 +39,8 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             var pageContent = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("<link rel=\"stylesheet\" href=\"/_content/CoreAdmin/css/bootstrap.min.css\" />", pageContent);
+            Assert.Contains("<link rel=\"stylesheet\" class=\"meta-css-light\" href=\"/_content/CoreAdmin/css/bootstrap.min.css\" media=\"(prefers-color-scheme: no-preference), (prefers-color-scheme: light)\" />", pageContent);
+            Assert.Contains("<link rel=\"stylesheet\" class=\"meta-css-dark\" href=\"/_content/CoreAdmin/css/bootstrap-dark.min.css\" media=\"(prefers-color-scheme: dark)\" />", pageContent);
         }
 
         static void ConfigureTestServicesWithOptionsIgnoringDbSets(IServiceCollection services, IEnumerable<Type> dbSetsToIgnore)
@@ -98,7 +99,8 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             var pageContent = await response.Content.ReadAsStringAsync();
 
-            Assert.Contains("<link rel=\"stylesheet\" href=\"" + cdnPath + "/css/bootstrap.min.css\" />", pageContent);
+            Assert.Contains("<link rel=\"stylesheet\" class=\"meta-css-light\" href=\"" + cdnPath + "/css/bootstrap.min.css\" media=\"(prefers-color-scheme: no-preference), (prefers-color-scheme: light)\" />", pageContent);
+            Assert.Contains("<link rel=\"stylesheet\" class=\"meta-css-dark\" href=\"" + cdnPath + "/css/bootstrap-dark.min.css\" media=\"(prefers-color-scheme: dark)\" />", pageContent);
         }
 
 
