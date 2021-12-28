@@ -7,7 +7,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add the DB Contexts
-builder.Services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase("TestDatabase"));
+
+// In memory store
+//builder.Services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase("TestDatabase"));
+
+// SqlLite
+builder.Services.AddSqlite<TestDbContext>("Data Source=CoreAdminTest.db");
 
 // add Core Admin
 builder.Services.AddCoreAdmin();
