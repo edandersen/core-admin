@@ -75,6 +75,39 @@ app.UseCoreAdminCustomAuth((serviceProvider) => Task.FromResult(false));
 
 You can change this to your own logic as needed. You can read from cookies or do whatever you need to do, loading services from the serviceProvider.
 
+### Binary file uploads
+
+If your entities have byte array Properties, for example the Image property in the following:
+
+```csharp
+ public class TestEntityWithImage
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public Guid Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        public byte[]? Image { get; set; }
+    }
+```
+
+The package will attempt to render the byte arrays as images on the list view:
+
+![Screenshot of core admin](docs/images-1.png "Core Admin")
+
+And also provide upload functionality on the Create and Edit views:
+
+![Screenshot of core admin](docs/images-2.png "Core Admin")
+
+If you don't want this behaviour for a byte array property, make sure to prevent it from rendering in the forms using ScaffoldColumn(false):
+
+```csharp
+[System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
+public byte[]? NotAnImage { get; set; }
+```
+
 ### Custom URL to the admin panel
 
 To use a custom URL, add this line of code in the ConfigureServices part of Startup.cs

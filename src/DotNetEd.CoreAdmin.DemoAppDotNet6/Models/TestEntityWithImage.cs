@@ -12,6 +12,7 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
         [Required]
         public string Name { get; set; }
 
+        // [System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
         public byte[]? Image { get; set; }
     }
 }
