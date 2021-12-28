@@ -1,4 +1,5 @@
-﻿@using NonFactors.Mvc.Grid
+﻿@using DotNetEd.CoreAdmin
+@using NonFactors.Mvc.Grid
 @using System.Linq.Expressions
 @using Microsoft.EntityFrameworkCore
 @model DotNetEd.CoreAdmin.ViewModels.DataListViewModel
@@ -58,7 +59,16 @@
 
                 columns.Add(lambda).Titled(entityProperty.Name);
             }
+            else if (entityProperty.PropertyType == typeof(byte[]))
+            {
+                var lambda = Expression.Lambda<Func<object, byte[]>>(property, entity);
 
+                columns.Add(lambda).Titled(entityProperty.Name)
+                    .RenderedAs((value) => {
+                        var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
+                        return base64 == null ? string.Empty : $"<img height='48' width='48' src='{base64}'>";
+                    } ).Encoded(false);
+            }
         }
 
         // only supports single PKs, not composite ones
