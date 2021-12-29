@@ -12,7 +12,7 @@ Add via nuget:
 dotnet add package CoreAdmin
 ```
 
-Add this line before ```var app = builder.Build();``` in Program.cs:
+Add this line before ```var app = builder.Build();``` and after your DbContexts have been added to Services in Program.cs:
 
 ```csharp
 builder.Services.AddCoreAdmin();
@@ -32,7 +32,7 @@ Add via nuget:
 dotnet add package CoreAdmin
 ```
 
-Add this line at the bottom of ConfigureServices() in Startup.cs:
+Add this line at the bottom of ConfigureServices() (and after your DbContexts have been added to Services) in Startup.cs:
 
 ```csharp
 services.AddCoreAdmin();
