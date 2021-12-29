@@ -12,7 +12,7 @@ Add via nuget:
 dotnet add package CoreAdmin
 ```
 
-Add this line before ```var app = builder.Build();``` in Program.cs:
+Add this line just before ```var app = builder.Build();``` in Program.cs:
 
 ```csharp
 builder.Services.AddCoreAdmin();
