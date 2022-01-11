@@ -28,14 +28,14 @@
 
 .mvc-grid > table > thead > tr > th {
     background-clip: padding-box;
-    background-color: #f7f7f7;
+    background-color: #222222;
     position: relative;
 }
 
 .mvc-grid > table > thead > tr > th,
 .mvc-grid > table > tbody > tr > td,
 .mvc-grid > table > tfoot > tr > td {
-    border: 1px solid #dee2e6;
+    border: 1px solid #495057;
     padding: 0.75em;
 }
 
@@ -178,7 +178,7 @@
 }
 
 .mvc-grid-header-mode .mvc-grid-value {
-    background-color: #f7f7f7;
+    background-color: #222222;
     padding: 0.75em;
     font: inherit;
     border: none;
@@ -355,39 +355,41 @@
 }
 
 .mvc-grid-pager button {
-    background-color: #ffffff;
-    border: 1px solid #dddddd;
+    background-color: #375a7f;
+    border: 1px solid #375a7f;
     box-sizing: content-box;
     line-height: 2.5em;
     padding: 0 0.25em;
     cursor: pointer;
     margin: 0.5em 0;
     min-width: 2em;
-    color: #337ab7;
+    color: #fafafa;
     border-radius: 0.25rem;
 }
 
 .mvc-grid-pager button:focus,
 .mvc-grid-pager button:hover {
-    background-color: #f7f7f7;
-    color: #014c8c;
+    background-color: #2b4764;
+    border-color: #2b4764;
+    color: #fafafa;
 }
 
 .mvc-grid-pager .active,
 .mvc-grid-pager .active:focus,
 .mvc-grid-pager .active:hover {
-    background-color: #0275d8;
-    border-color: #0275d8;
-    color: #ffffff;
+    background-color: #2b4764;
+    border-color: #2b4764;
+    color: #fafafa;
 }
 
 .mvc-grid-pager .disabled,
 .mvc-grid-pager .disabled:focus,
 .mvc-grid-pager .disabled:hover {
-    background-color: #efefef;
+    background-color: #375a7f;
     cursor: not-allowed;
-    color: #777777;
+    color: #fafafa;
     outline: 0;
+    opacity: 0.65;
 }
 
 .mvc-grid-page-sizes {
