@@ -152,7 +152,7 @@ public class TestChildEntity
 
 Will result in:
 
-![Screenshot of core admin](docs/screenshot-3.png "Core Admin")
+![Screenshot of core admin](docs/screenshot-3.PNG "Core Admin")
 
 ### Custom URL to the admin panel
 
