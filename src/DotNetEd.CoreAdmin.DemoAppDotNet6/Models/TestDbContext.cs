@@ -15,6 +15,10 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         public DbSet<TestEntityWithImage> TestEntitiesWithImages { get; set; }
 
+        public DbSet<TestParentEntity> TestParentEntities { get; set; }
+
+        public DbSet<TestChildEntity> TestChildEntities { get; set; }
+
         public TestDbContext(DbContextOptions<TestDbContext> contextOptions) : base(contextOptions)
         {
             this.Database.EnsureCreated();
@@ -35,6 +39,19 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             seedDataImages.Add(new TestEntityWithImage() { Id = Guid.NewGuid(), Name = "Handsome person", Image = System.IO.File.ReadAllBytes("DemoAssets/ed-100.png") });
         
             modelBuilder.Entity<TestEntityWithImage>().HasData(seedDataImages);
+
+            var seedDataChildren = new List<TestChildEntity>();
+            foreach (var i in Enumerable.Range(0, 10))
+            {
+                seedDataChildren.Add(new TestChildEntity() { Id = Guid.NewGuid(), Name = "Child entity " + i });
+            }
+            modelBuilder.Entity<TestChildEntity>().HasData(seedDataChildren);
+
+            var seedDataParents = new List<TestParentEntity>();
+            seedDataParents.Add(new TestParentEntity() { Id = Guid.NewGuid(), ChildId = seedDataChildren.First().Id });
+            modelBuilder.Entity<TestParentEntity>().HasData(seedDataParents);
+
+            
         }
     }
 }

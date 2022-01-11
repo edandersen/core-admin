@@ -57,7 +57,9 @@ namespace DotNetEd.CoreAdmin.Controllers
             return View(viewModel);
         }
 
-        private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject, out Type typeOfEntity)
+        private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject,
+            out Type typeOfEntity,
+            out Dictionary<string, Dictionary<object, string>> relationships)
         {
             foreach (var dbSetEntity in dbSetEntities.Where(db => db.Name.ToLowerInvariant() == dbSetName.ToLowerInvariant()))
             {
@@ -67,6 +69,42 @@ namespace DotNetEd.CoreAdmin.Controllers
                     {
                         dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbSetEntity.DbContextType);
                         typeOfEntity = dbSetProperty.PropertyType.GetGenericArguments()[0];
+
+
+                        var fks = dbContextObject.Model.FindEntityType(typeOfEntity)
+                            .GetForeignKeyProperties().Cast<Microsoft.EntityFrameworkCore.Metadata.RuntimeProperty>();
+
+                        var relationshipDictionary = new Dictionary<string, Dictionary<object, string>>();
+                        foreach (var f in fks)
+                        {
+                            var childValues = new Dictionary<object, string>();
+
+                            if (f.ForeignKeys.Count == 1)
+                            {
+                                var typeOfChild = f.ForeignKeys[0];
+
+                                var propsOnDbContext = dbContextObject.GetType().GetProperties();
+
+                                var targetChildListOnDbContext = dbContextObject.GetType().GetProperties()
+                                    .FirstOrDefault(p => p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
+                                    && p.PropertyType.GetGenericArguments().First().FullName == typeOfChild.PrincipalEntityType.Name);
+
+                                var primaryKey2 = dbContextObject.Model.FindEntityType(typeOfChild.PrincipalEntityType.Name).FindPrimaryKey();
+
+                                var allChildren2 = (IEnumerable<object>)dbContextObject.GetType().GetProperty(targetChildListOnDbContext.Name).GetValue(dbContextObject);
+                                foreach (var childValue in allChildren2)
+                                {
+                                    var childPkValue = childValue.GetType().GetProperty(primaryKey2.Properties.First().Name).GetValue(childValue);
+                                    childValues.Add(childPkValue, childValue.ToString());
+                                }
+                            }
+
+
+                            relationshipDictionary.Add(f.Name, childValues);
+                        }
+
+                        relationships = relationshipDictionary;
+
                         return dbSetProperty.GetValue(dbContextObject);
                     }
                 }
@@ -74,12 +112,15 @@ namespace DotNetEd.CoreAdmin.Controllers
 
             dbContextObject = null;
             typeOfEntity = null;
+            relationships = null;
             return null;
         }
 
-        private object GetEntityFromDbSet(string dbSetName, string id, out DbContext dbContextObject, out Type typeOfEntity)
+        private object GetEntityFromDbSet(string dbSetName, string id, 
+            out DbContext dbContextObject, out Type typeOfEntity,
+            out Dictionary<string, Dictionary<object, string>> relationships)
         {
-            var dbSetValue = GetDbSetValueOrNull(dbSetName, out dbContextObject, out typeOfEntity);
+            var dbSetValue = GetDbSetValueOrNull(dbSetName, out dbContextObject, out typeOfEntity, out relationships);
 
             var primaryKey = dbContextObject.Model.FindEntityType(typeOfEntity).FindPrimaryKey();
             var clrType = primaryKey.Properties[0].ClrType;
@@ -106,7 +147,7 @@ namespace DotNetEd.CoreAdmin.Controllers
         [IgnoreAntiforgeryToken]
         public async Task<IActionResult> CreateEntityPost(string dbSetName, string id, [FromForm] object formData)
         {
-            var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType);
+            var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType, out var relationships);
 
             var newEntity = System.Activator.CreateInstance(entityType);
 
@@ -114,13 +155,11 @@ namespace DotNetEd.CoreAdmin.Controllers
             newEntity.GetType().GetProperties()
             .Where(p => p.GetCustomAttributes().Any(a => a.GetType().Name.Contains("DatabaseGenerated"))).Select(p => p.Name);
 
+            await AddByteArrayFiles(newEntity);
+
             await TryUpdateModelAsync(newEntity, entityType, string.Empty,
                 await CompositeValueProvider.CreateAsync(this.ControllerContext, this.ControllerContext.ValueProviderFactories),
                 (ModelMetadata meta) => !autoGeneratedPropertyNames.Contains(meta.PropertyName));
-
-            ModelState.Clear(); // we revalidate after try validate model below
-
-            await AddByteArrayFiles(newEntity);
 
             if (TryValidateModel(newEntity))
             {
@@ -134,6 +173,8 @@ namespace DotNetEd.CoreAdmin.Controllers
 
             ViewBag.IgnoreFromForm = autoGeneratedPropertyNames;
 
+            ViewBag.Relationships = relationships;
+
             return View("Create", newEntity);
         }
 
@@ -141,7 +182,7 @@ namespace DotNetEd.CoreAdmin.Controllers
         [IgnoreAntiforgeryToken]
         public IActionResult Create(string id)
         {
-            var dbSetValue = GetDbSetValueOrNull(id, out var dbContextObject, out var entityType);
+            var dbSetValue = GetDbSetValueOrNull(id, out var dbContextObject, out var entityType, out var relationships);
 
             var newEntity = System.Activator.CreateInstance(entityType);
             ViewBag.DbSetName = id;
@@ -151,16 +192,18 @@ namespace DotNetEd.CoreAdmin.Controllers
                 .Where(p => p.GetCustomAttributes().Any(a => a.GetType().Name.Contains("DatabaseGenerated"))).Select(p => p.Name);
 
             ViewBag.IgnoreFromForm = autoGeneratedPropertyNames;
+            ViewBag.Relationships = relationships;
             return View(newEntity);
         }
 
         [HttpGet]
         public IActionResult EditEntity(string dbSetName, string id)
         {
-            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
+            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType, out var relationships);
 
             ViewBag.DbSetName = dbSetName;
             ViewBag.Id = id;
+            ViewBag.Relationships = relationships;
             return View("Edit", entityToEdit);
         }
 
@@ -169,15 +212,13 @@ namespace DotNetEd.CoreAdmin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditEntityPost(string dbSetName, string id, [FromForm] object formData)
         {
-            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType);
+            var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType, out var relationships);
 
             dbContextObject.Attach(entityToEdit);
 
-            await TryUpdateModelAsync(entityToEdit, entityType, string.Empty);
-
-            ModelState.Clear();
-
             await AddByteArrayFiles(entityToEdit);
+
+            await TryUpdateModelAsync(entityToEdit, entityType, string.Empty);
 
             if (TryValidateModel(entityToEdit))
             {
@@ -188,6 +229,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
             ViewBag.DbSetName = dbSetName;
             ViewBag.Id = id;
+            ViewBag.Relationships = relationships;
 
             return View("Edit", entityToEdit);
         }
@@ -213,7 +255,7 @@ namespace DotNetEd.CoreAdmin.Controllers
             var viewModel = new DataDeleteViewModel();
             viewModel.DbSetName = dbSetName;
             viewModel.Id = id;
-            viewModel.Object = GetEntityFromDbSet(dbSetName, id, out var dbContext, out var entityType);
+            viewModel.Object = GetEntityFromDbSet(dbSetName, id, out var dbContext, out var entityType, out var relationships);
             if (viewModel.Object == null) return NotFound();
 
             return View(viewModel);

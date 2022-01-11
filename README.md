@@ -2,7 +2,22 @@
 
 [![.NET 6](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
 
-Fully automatic admin site generator for ASP.NET Core. Add one line of code, get loads of stuff.
+Fully automatic admin site generator for ASP.NET Core. Add one line of code, get loads of stuff. Features include:
+
+- A data grid for all your entities
+- Search, filter, sort etc on the grid
+- CRUD screens with validation
+- Binary support for image uploads
+- Foreign key navigation
+- ...and an awesome dark theme!
+
+![Screenshot of core admin](docs/screenshot-1.PNG "Core Admin")
+
+![Screenshot of core admin](docs/screenshot-2.png "Core Admin")
+
+The above screenshots are of the [Contoso University sample](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu30) with Core Admin added to it.
+
+Core Admin scans your app for Entity Framework DB Contexts and makes a nice set of CRUD screens for them.
 
 ## Setting up with .NET 6 Minimal APIs (version 2.0.0+)
 
@@ -39,15 +54,7 @@ services.AddCoreAdmin();
 ```
 ## Running the app
 
-Run your app with with /coreadmin on the end of the URL, for example https://localhost:5001/coreadmin and you'll get a little something like this -
-
-![Screenshot of core admin](docs/screenshot-1.PNG "Core Admin")
-
-![Screenshot of core admin](docs/screenshot-2.png "Core Admin")
-
-The above screenshots are of the [Contoso University sample](https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-rp/intro/samples/cu30) with Core Admin added to it.
-
-Core Admin scans your app for Entity Framework DB Contexts and makes a nice set of CRUD screens for them.
+Run your app with with /coreadmin on the end of the URL, for example https://localhost:5001/coreadmin and you'll get the app appearing as shown above.
 
 ### Security
 
@@ -107,6 +114,45 @@ If you don't want this behaviour for a byte array property, make sure to prevent
 [System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
 public byte[]? NotAnImage { get; set; }
 ```
+
+### Foreign keys
+
+If you have a foreign key in an entity, the create and edit screens will show a drop down list. For example:
+
+```csharp
+public class TestParentEntity
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    public Guid ChildId { get; set; }
+
+    [ForeignKey("ChildId")]
+    public TestChildEntity Child { get; set; }
+}
+```
+
+and
+
+```csharp
+public class TestChildEntity
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    public string Name { get; set; }
+
+    public override string ToString()
+    {
+        return Name;
+    }
+}
+
+```
+
+Will result in:
+
+![Screenshot of core admin](docs/screenshot-3.png "Core Admin")
 
 ### Custom URL to the admin panel
 
