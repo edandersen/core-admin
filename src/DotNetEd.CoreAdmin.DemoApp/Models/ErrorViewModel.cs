@@ -1,5 +1,3 @@
-using System;
-
 namespace DotNetEd.CoreAdmin.Models
 {
     public class ErrorViewModel

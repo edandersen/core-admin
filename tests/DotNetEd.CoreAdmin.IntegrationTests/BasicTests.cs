@@ -1,9 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp.Entities;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
@@ -48,7 +49,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
             var idGuid = Guid.NewGuid();
             var nameGuidString = Guid.NewGuid().ToString();
-            dbContext.TestEntities.Add(new TestApp.Entities.TestEntity() { Id = idGuid, Name = nameGuidString});
+            dbContext.TestEntities.Add(new TestEntity() { Id = idGuid, Name = nameGuidString});
             await dbContext.SaveChangesAsync();
 
             // Arrange

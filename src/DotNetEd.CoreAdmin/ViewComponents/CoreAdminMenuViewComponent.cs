@@ -1,11 +1,7 @@
-﻿using DotNetEd.CoreAdmin.ViewModels;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using DotNetEd.CoreAdmin.ViewModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetEd.CoreAdmin.ViewComponents
 {
