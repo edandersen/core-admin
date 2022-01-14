@@ -1,9 +1,5 @@
 ﻿using DotNetEd.CoreAdmin.DemoAppDotNet6.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DotNetEd.CoreAdmin.DemoApp.Models
 {
@@ -36,7 +32,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
             var seedDataImages = new List<TestEntityWithImage>();
 
-            seedDataImages.Add(new TestEntityWithImage() { Id = Guid.NewGuid(), Name = "Handsome person", Image = System.IO.File.ReadAllBytes("DemoAssets/ed-100.png") });
+            seedDataImages.Add(new TestEntityWithImage() { Id = Guid.NewGuid(), Name = "Handsome person", Image = File.ReadAllBytes("DemoAssets/ed-100.png") });
         
             modelBuilder.Entity<TestEntityWithImage>().HasData(seedDataImages);
 

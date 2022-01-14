@@ -1,10 +1,11 @@
+using System;
+using System.Net;
+using System.Threading.Tasks;
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
@@ -92,7 +93,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var response = await client.GetAsync("/coreadmin");
 
             // Assert
-            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+            Assert.True(response.StatusCode == HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -106,7 +107,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var response = await client.GetAsync("/coreadmin");
 
             // Assert
-            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+            Assert.True(response.StatusCode == HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -161,7 +162,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             // Assert
             Assert.True(authCalled);
-            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+            Assert.True(response.StatusCode == HttpStatusCode.Unauthorized);
         }
 
         [Fact]
@@ -196,7 +197,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             // Assert
             Assert.True(authCalled);
-            Assert.True(response.StatusCode == System.Net.HttpStatusCode.Unauthorized);
+            Assert.True(response.StatusCode == HttpStatusCode.Unauthorized);
         }
     }
 }

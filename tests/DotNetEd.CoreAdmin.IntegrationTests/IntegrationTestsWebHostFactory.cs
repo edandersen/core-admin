@@ -1,16 +1,12 @@
-﻿using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+﻿using System;
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
+using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.TestHost;
-using Microsoft.AspNetCore.Mvc.Authorization;
+using Microsoft.Extensions.Logging;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
 {

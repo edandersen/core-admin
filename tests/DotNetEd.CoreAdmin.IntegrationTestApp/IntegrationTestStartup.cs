@@ -1,15 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using DotNetEd.CoreAdmin.Controllers;
+using DotNetEd.CoreAdmin.IntegrationTestApp.Middleware;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using DotNetEd.CoreAdmin;
 using Microsoft.Extensions.Hosting;
-using DotNetEd.CoreAdmin.Controllers;
-using Microsoft.AspNetCore.Mvc.Authorization;
-using DotNetEd.CoreAdmin.IntegrationTestApp.Middleware;
 
 namespace DotNetEd.CoreAdmin.IntegrationTests.TestApp
 {

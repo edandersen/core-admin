@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace DotNetEd.CoreAdmin.IntegrationTestApp.Middleware
 {
