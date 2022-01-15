@@ -17,6 +17,12 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         [Required]
         public string Title { get; set; }
 
+        [DataType(DataType.MultilineText)]
+        public string? Description { get; set; }
+
+        [DataType("Markdown")]
+        public string? Body { get; set; }
+
         [Display(Name = "Enum name")]
         public TestEnum EnumName { get; set; }
 
