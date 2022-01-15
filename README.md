@@ -9,6 +9,7 @@ Fully automatic admin site generator for ASP.NET Core. Add one line of code, get
 - CRUD screens with validation
 - Binary support for image uploads
 - Foreign key navigation
+- Markdown editor
 - ...and an awesome dark theme!
 
 ![Screenshot of core admin](docs/screenshot-1.PNG "Core Admin")
@@ -153,6 +154,13 @@ public class TestChildEntity
 Will result in:
 
 ![Screenshot of core admin](docs/screenshot-3.PNG "Core Admin")
+
+### Markdown Editor
+If you want to make a `string` Property editable with the Markdown editor. You need to add the `[DataType("Markdown")]` type to it. For example: 
+```cs
+[DataType("Markdown")]
+public string? Body { get; set; }
+```
 
 ### Custom URL to the admin panel
 
