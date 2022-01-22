@@ -7,11 +7,11 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
         [Key]
         public Guid Id { get; set; }
 
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         public override string ToString()
         {
-            return Name;
+            return Name ?? String.Empty;
         }
 
     }

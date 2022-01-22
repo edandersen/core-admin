@@ -12,10 +12,10 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         [Required]
-        public string Title { get; set; }
+        public string? Title { get; set; }
 
         [DataType(DataType.MultilineText)]
         public string? Description { get; set; }

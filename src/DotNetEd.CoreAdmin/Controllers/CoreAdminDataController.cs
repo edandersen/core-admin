@@ -1,7 +1,6 @@
 ﻿using DotNetEd.CoreAdmin.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -9,7 +8,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DotNetEd.CoreAdmin.Controllers
@@ -57,6 +55,7 @@ namespace DotNetEd.CoreAdmin.Controllers
             return View(viewModel);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "EF1001:Internal EF Core API usage.", Justification = "<Pending>")]
         private object GetDbSetValueOrNull(string dbSetName, out DbContext dbContextObject,
             out Type typeOfEntity,
             out Dictionary<string, Dictionary<object, string>> relationships)
@@ -134,9 +133,9 @@ namespace DotNetEd.CoreAdmin.Controllers
             {
                 convertedPrimaryKey = int.Parse(id);
             }
-            else if (clrType == typeof(Int64))
+            else if (clrType == typeof(long))
             {
-                convertedPrimaryKey = Int64.Parse(id);
+                convertedPrimaryKey = long.Parse(id);
             }
 
             return dbSetValue.GetType().InvokeMember("Find", BindingFlags.InvokeMethod, null, dbSetValue, args: new object[] { convertedPrimaryKey });

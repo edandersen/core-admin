@@ -10,7 +10,7 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
         public Guid Id { get; set; }
 
         [Required]
-        public string Name { get; set; }
+        public string? Name { get; set; }
 
         // [System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
         public byte[]? Image { get; set; }

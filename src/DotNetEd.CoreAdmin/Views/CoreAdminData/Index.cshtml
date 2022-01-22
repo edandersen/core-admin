@@ -24,7 +24,6 @@
         foreach(var entityProperty in Model.EntityType.GetProperties())
         {
 
-
             ParameterExpression entity = Expression.Parameter(typeof(object), "ent");
             var changedType = Expression.Convert(entity, Model.EntityType);
             var property = Expression.Property(changedType, entityProperty.Name);
@@ -78,7 +77,7 @@
         }
 
         // only supports single PKs, not composite ones
-        var pkProperties = Model.DbContext.Model.GetEntityTypes(Model.EntityType).First().FindPrimaryKey().Properties;
+        var pkProperties = Model.DbContext.Model.FindEntityTypes(Model.EntityType).First().FindPrimaryKey().Properties;
         if (pkProperties.Count == 1)
         {
             var pKProperty = pkProperties.Single()?.PropertyInfo;

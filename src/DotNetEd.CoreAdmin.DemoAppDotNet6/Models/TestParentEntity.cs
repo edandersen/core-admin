@@ -11,6 +11,6 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
         public Guid ChildId { get; set; }
 
         [ForeignKey("ChildId")]
-        public TestChildEntity Child { get; set; }
+        public TestChildEntity? Child { get; set; }
     }
 }
