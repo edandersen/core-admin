@@ -10,6 +10,7 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
         public Guid Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string? Name { get; set; }
 
         // [System.ComponentModel.DataAnnotations.ScaffoldColumn(false)]
