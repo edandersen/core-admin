@@ -2,6 +2,8 @@
 
 [![.NET 6](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
 
+> [🤩 Click here to view a live demo on a really slow free Azure Web App instance that might go down at any time!](https://core-admin-demo.azurewebsites.net/)
+
 Fully automatic admin site generator for ASP.NET Core. Add one line of code, get loads of stuff. Features include:
 
 - A data grid for all your entities
