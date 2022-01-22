@@ -59,6 +59,12 @@
 
                 columns.Add(lambda).Titled(entityProperty.Name);
             }
+            else if (entityProperty.PropertyType == typeof(Boolean))
+            {
+                var lambda = Expression.Lambda<Func<object, Boolean>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name);
+            }
             else if (entityProperty.PropertyType == typeof(byte[]))
             {
                 var lambda = Expression.Lambda<Func<object, byte[]>>(property, entity);

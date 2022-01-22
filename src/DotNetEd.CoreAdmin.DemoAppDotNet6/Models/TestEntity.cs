@@ -32,6 +32,8 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+
+        public bool IsUseful {get;set;}
     }
 
     public enum TestEnum
