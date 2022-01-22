@@ -200,7 +200,7 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     background-clip: padding-box;
     max-width: calc(100% - 2em);
-    background-color: #ffffff;
+    background-color: #111;
     border: 1px solid #cccccc;
     border-radius: 4px;
     position: absolute;
@@ -255,8 +255,8 @@
 .mvc-grid-popup .mvc-grid-value,
 .mvc-grid-popup .mvc-grid-method,
 .mvc-grid-popup .mvc-grid-operator {
-    border: 1px solid #cccccc;
-    background-color: #ffffff;
+    border: 1px solid #555;
+    background-color: #333;
     box-sizing: border-box;
     font-size: 0.9em;
     padding: 0 0.2em;
