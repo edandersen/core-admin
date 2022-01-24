@@ -37,43 +37,43 @@
 
 </head>
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-3 mr-0 px-3" href="#">Core Admin</a>
-        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <ul class="navbar-nav px-3">
-        </ul>
-    </nav>
-    <div class="container-fluid">
-        <div class="row">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-3 d-md-block bg-light sidebar collapse">
-                <div class="sidebar-sticky pt-3">
-
-                    @await Component.InvokeAsync("CoreAdminMenu")
-
-                </div>
-            </nav>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-9 px-md-4">
-
-                @if (WebHostEnvionment.EnvironmentName == "Development")
-                {
-                    @if (CoreAdminOptions == null || !CoreAdminOptions.Any() || CoreAdminOptions.All(o => !o.IsSecuritySet))
-                    {
-                        <div class="alert alert-warning mt-3 mb-0" role="alert">
-                            You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development
-                            environments until security has been set up. See the documentation at <a href="https://github.com/edandersen/core-admin">https://github.com/edandersen/core-admin</a>.
-                        </div>
-                    }
-                }
-
-                @RenderBody()
-
-            </main>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap justify-content-start p-0 py-3 shadow">
+        <div class="navbar-brand sidebar-width">
+            <button id="sidebarToggle" class="navbar-toggler ml-2 collapsed" type="button">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a class="mr-0 pl-1" href="@Url.Action("Index", "CoreAdmin")">Core Admin</a>
         </div>
+    </nav>
 
+    <!-- Sidebar -->
+    <nav id="sidebar-wrapper" class="sidebar-width d-md-block bg-light sidebar sidebar-wrapper">
+        <div class="sidebar-sticky pt-3">
+            @await Component.InvokeAsync("CoreAdminMenu")
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <div class="d-flex" id="wrapper">
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <main role="main" class="px-md-4">
+                    @if (WebHostEnvionment.EnvironmentName == "Development")
+                    {
+                        @if (CoreAdminOptions == null || !CoreAdminOptions.Any() || CoreAdminOptions.All(o => !o.IsSecuritySet))
+                        {
+                            <div class="alert alert-warning mt-3 mb-0" role="alert">
+                                You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development
+                                environments until security has been set up. See the documentation at <a href="https://github.com/edandersen/core-admin">https://github.com/edandersen/core-admin</a>.
+                            </div>
+                        }
+                    }
+
+                    @RenderBody()
+                </main>
+            </div>
+        </div>
     </div>
 
     @if (cdnPath == null)
