@@ -50,7 +50,8 @@ body.sb-sidenav-toggled #sidebar-wrapper {
     }
 
     #sidebar-wrapper {
-        width: 100%;
+        width: 100% !important;
+        min-width: 100%;
     }
 
     body.sb-sidenav-toggled #sidebar-wrapper {
