@@ -203,6 +203,7 @@ If you see a 401 error when accessing /coreadmin it means you are running in a n
 You can find in this section some links about community content (writing, code samples, etc...). Don't hesitate to make a PR to add your own.
 
 * [Add An Admin Panel to a .NET Core or .NET 5 App in 2 Minutes!](https://www.youtube.com/watch?v=LMZEOgS8t8g)
+* [.NET 6 free Admin Panel for Minimal API apps - nuget package](https://www.youtube.com/watch?v=7uvFbrBOPXc)
 * [Add an admin CRUD web page to your ASP.NET Core web app in 5 minutes using EF Core Power Tools and CoreAdmin](https://erikej.github.io/efcore/aspnet/2022/01/25/efcore-admin-crud.html)
 * [Sample project of a blog using ASP.net API with CoreAdmin (backend) and NextJS (frontend)](https://github.com/Brouilles/CoreAdmin_BlogSample)
 
