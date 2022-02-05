@@ -9,16 +9,78 @@
 }
 
 /*
+ * Wrapper
+ */
+#wrapper {
+    overflow-x: hidden;
+}
+
+#page-content-wrapper {
+    min-width: 100vw;
+    margin-left: 317px;
+}
+
+.sb-sidenav-toggled #page-content-wrapper {
+    margin-left: 0;
+}
+
+/*
  * Sidebar
  */
+.sidebar-width {
+    width: 317px;
+}
+
+#sidebar-wrapper {
+    min-height: 100vh;
+}
+
+body.sb-sidenav-toggled #sidebar-wrapper {
+    margin-left: 0;
+}
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0 !important;
+    }
+
+    .navbar-brand {
+        width: 100%;
+        margin: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 100% !important;
+        min-width: 100%;
+    }
+
+    body.sb-sidenav-toggled #sidebar-wrapper {
+        margin-left: -100vw;
+    }
+}
+
+@media (min-width: 768px) {
+    #sidebar-wrapper {
+        margin-left: 0;
+    }
+
+    #page-content-wrapper {
+        min-width: 0;
+        width: 100%;
+    }
+
+    body.sb-sidenav-toggled #sidebar-wrapper {
+        margin-left: -100vw;
+    }
+}
 
 .sidebar {
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
-    z-index: 100; /* Behind the navbar */
     padding: 48px 0 0; /* Height of navbar */
+    z-index: 100; /* Behind the navbar */
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
 }
 
@@ -29,13 +91,6 @@
     padding-top: .5rem;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-}
-
-@supports ((position: -webkit-sticky) or (position: sticky)) {
-    .sidebar-sticky {
-        position: -webkit-sticky;
-        position: sticky;
-    }
 }
 
 .sidebar .nav-link {
@@ -57,21 +112,27 @@
             color: inherit;
         }
 
-.sidebar-heading {
-    font-size: .75rem;
-    text-transform: uppercase;
-}
-
 /*
  * Navbar
  */
 
 .navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
     font-size: 1rem;
     background-color: rgba(0, 0, 0, .25);
     box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+
+    height: 48px;
+    overflow: hidden;
+    padding: 0.25rem 0;
+}
+
+    .navbar-brand a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+.navbar {
+    height: 48px;
 }
 
 .navbar .navbar-toggler {
