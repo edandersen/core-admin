@@ -128,6 +128,7 @@ public class TestParentEntity
     [Key]
     public Guid Id { get; set; }
 
+    [Display(AutoGenerateField = false)] // prevent showing on the grid
     public Guid ChildId { get; set; }
 
     [ForeignKey("ChildId")]
@@ -157,7 +158,7 @@ Will result in:
 
 ![Screenshot of core admin](docs/screenshot-3.PNG "Core Admin")
 
-Make sure to provide a ToString() method on your Entity as this is what will be used in the drop down menu!
+Make sure to provide a ToString() method on your Entity as this is what will be used in the drop down menu and in the grid!
 
 ### Markdown Editor
 If you want to make a `string` Property editable with the Markdown editor. You need to add the `[DataType("Markdown")]` type to it. For example: 
