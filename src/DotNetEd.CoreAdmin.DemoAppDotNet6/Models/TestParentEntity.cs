@@ -7,10 +7,10 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
     {
         [Display(AutoGenerateField = false)]
         [Key]
-        public Guid Id { get; set; }
+        public Guid ParentId { get; set; }
 
         [Display(AutoGenerateField = false)]
-        public Guid ChildId { get; set; }
+        public Guid? ChildId { get; set; }
 
         [ForeignKey("ChildId")]
         public TestChildEntity? Child { get; set; }

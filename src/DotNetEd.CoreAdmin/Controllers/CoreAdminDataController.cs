@@ -100,6 +100,20 @@ namespace DotNetEd.CoreAdmin.Controllers
                                 var primaryKey2 = dbContextObject.Model.FindEntityType(typeOfChild.PrincipalEntityType.Name).FindPrimaryKey();
 
                                 var allChildren2 = (IEnumerable<object>)dbContextObject.GetType().GetProperty(targetChildListOnDbContext.Name).GetValue(dbContextObject);
+
+                                // if the foreign key type is nullable, add an empty row
+                                //if (typeOfChild.PrincipalEntityTyp)
+
+                                //typeOfChild.Properties
+
+                                
+                                NullabilityInfoContext _nullabilityContext = new NullabilityInfoContext();
+                                var nullabilityInfo = _nullabilityContext.Create(typeOfEntity.GetProperty(f.Name));
+                                if (nullabilityInfo.WriteState == NullabilityState.Nullable)
+                                {
+                                    childValues.Add(string.Empty, String.Empty);
+                                }
+
                                 foreach (var childValue in allChildren2)
                                 {
                                     var childPkValue = childValue.GetType().GetProperty(primaryKey2.Properties.First().Name).GetValue(childValue);

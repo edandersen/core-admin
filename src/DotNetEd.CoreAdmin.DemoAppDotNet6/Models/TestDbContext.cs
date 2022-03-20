@@ -50,7 +50,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             modelBuilder.Entity<TestChildEntity>().HasData(seedDataChildren);
 
             var seedDataParents = new List<TestParentEntity>();
-            seedDataParents.Add(new TestParentEntity() { Id = Guid.NewGuid(), ChildId = seedDataChildren.First().Id });
+            seedDataParents.Add(new TestParentEntity() { ParentId = Guid.NewGuid(), ChildId = seedDataChildren.First().Id });
             modelBuilder.Entity<TestParentEntity>().HasData(seedDataParents);
 
             
