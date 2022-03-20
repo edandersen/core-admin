@@ -5,9 +5,11 @@ namespace DotNetEd.CoreAdmin.DemoAppDotNet6.Models
 {
     public class TestParentEntity
     {
+        [Display(AutoGenerateField = false)]
         [Key]
         public Guid Id { get; set; }
 
+        [Display(AutoGenerateField = false)]
         public Guid ChildId { get; set; }
 
         [ForeignKey("ChildId")]

@@ -38,10 +38,19 @@ namespace DotNetEd.CoreAdmin.Controllers
                         viewModel.DbSetProperty = dbSetProperty;
 
                         var dbContextObject = (DbContext)this.HttpContext.RequestServices.GetRequiredService(dbSetEntity.DbContextType);
+                        var query = dbContextObject.Set(viewModel.EntityType);
 
                         var dbSetValue = dbSetProperty.GetValue(dbContextObject);
 
-                        viewModel.Data = (IEnumerable<object>)dbSetValue;
+                        var navProperties = dbContextObject.Model.FindEntityType(viewModel.EntityType).GetNavigations();
+                        foreach (var property in navProperties)
+                        {
+                            // Only display One to One relationships on the Grid
+                            if(property.GetCollectionAccessor() == null)    
+                                query = query.Include(property.Name);
+                        }
+
+                        viewModel.Data = (IEnumerable<object>)query;
                         viewModel.DbContext = dbContextObject;
                     }
                 }
