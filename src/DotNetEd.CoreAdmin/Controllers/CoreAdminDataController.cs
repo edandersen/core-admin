@@ -273,7 +273,6 @@ namespace DotNetEd.CoreAdmin.Controllers
                 await dbContextObject.SaveChangesAsync();
                 return RedirectToAction("Index", new { id = dbSetName });
             }
-            
 
             ViewBag.DbSetName = dbSetName;
             ViewBag.Id = id;
