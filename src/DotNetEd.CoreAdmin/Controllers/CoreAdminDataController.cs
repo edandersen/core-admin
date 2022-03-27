@@ -228,9 +228,14 @@ namespace DotNetEd.CoreAdmin.Controllers
         {
             var entityToEdit = GetEntityFromDbSet(dbSetName, id, out var dbContextObject, out var entityType, out var relationships);
 
+            var databaseGeneratedProperties =
+            entityToEdit.GetType().GetProperties()
+            .Where(p => p.GetCustomAttributes().Any(a => a.GetType().Name.Contains("DatabaseGenerated"))).Select(p => p.Name);
+
             ViewBag.DbSetName = dbSetName;
             ViewBag.Id = id;
             ViewBag.Relationships = relationships;
+            ViewBag.IgnoreFromForm = databaseGeneratedProperties;
             return View("Edit", entityToEdit);
         }
 
@@ -245,7 +250,12 @@ namespace DotNetEd.CoreAdmin.Controllers
 
             await AddByteArrayFiles(entityToEdit);
 
-            await TryUpdateModelAsync(entityToEdit, entityType, string.Empty);
+            var databaseGeneratedProperties =
+           entityToEdit.GetType().GetProperties()
+           .Where(p => p.GetCustomAttributes().Any(a => a.GetType().Name.Contains("DatabaseGenerated"))).Select(p => p.Name);
+
+            await TryUpdateModelAsync(entityToEdit, entityType, string.Empty, await CompositeValueProvider.CreateAsync(this.ControllerContext, this.ControllerContext.ValueProviderFactories),
+                (ModelMetadata meta) => !databaseGeneratedProperties.Contains(meta.PropertyName));
 
             // remove any errors from fk properties - ef will handle this validation
             foreach (var fkProperty in entityToEdit.GetType().GetProperties()
@@ -268,6 +278,7 @@ namespace DotNetEd.CoreAdmin.Controllers
             ViewBag.DbSetName = dbSetName;
             ViewBag.Id = id;
             ViewBag.Relationships = relationships;
+            ViewBag.IgnoreFromForm = databaseGeneratedProperties;
 
             return View("Edit", entityToEdit);
         }
