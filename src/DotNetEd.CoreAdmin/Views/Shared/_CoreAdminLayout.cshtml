@@ -1,10 +1,18 @@
-﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
+﻿@using System.Reflection;
+@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
+
 @{ 
     string cdnPath = null;
     if (CoreAdminOptions.Any())
     {
         cdnPath = CoreAdminOptions.First().CdnPath;
+    }
+
+    string HostAppName = @Assembly.GetEntryAssembly().GetName().Name;
+    if (HostAppName == null)
+    {
+        HostAppName = "Core Admin";
     }
 }
 <!DOCTYPE html>
@@ -25,11 +33,10 @@
         <link rel="stylesheet" href="@cdnPath/css/mvc-grid/mvc-grid.css" />
         <link rel="stylesheet" href="@cdnPath/css/site.css" />
     }
-
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Core Admin</a>
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/">@HostAppName</a>
         <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -64,7 +71,6 @@
 
             </main>
         </div>
-
     </div>
 
     @if (cdnPath == null)
@@ -86,7 +92,7 @@
         <script src="@cdnPath/js/jquery.validate.unobtrusive.min.js"></script>
     }
 
-
     @RenderSection("Scripts", required: false)
+
 </body>
 </html>
