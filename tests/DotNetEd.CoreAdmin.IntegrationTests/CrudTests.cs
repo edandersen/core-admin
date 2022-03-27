@@ -76,6 +76,40 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         }
 
         [Fact]
+        public async Task Create_ChildEntityWithNonNullableFK_HappyPath()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var idGuid = Guid.NewGuid();
+            var nameGuidString = Guid.NewGuid().ToString();
+
+            // Arrange
+            var client = _factory.WithWebHostBuilder(builder => {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
+
+            // Do the post to create the child item
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
+            var data = new Dictionary<string, string>() { { "Name", nameGuidString }, { "Id", nameGuidString } };
+
+            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/testchildentities?dbSetName=testchildentities", new FormUrlEncodedContent(data));
+            response.EnsureSuccessStatusCode();
+
+            Assert.True(await dbContext.TestChildEntities.AnyAsync(test => test.Name == nameGuidString));
+
+            var parentId = Guid.NewGuid();
+
+            data = new Dictionary<string, string>() { { "ParentId", parentId.ToString() }, { "ChildId", idGuid.ToString() }, { "dbSetName", "testparententities" } };
+
+            response = await client.PostAsync("/coreadmindata/CreateEntityPost/testparententities", new FormUrlEncodedContent(data));
+            
+            response.EnsureSuccessStatusCode();
+
+            Assert.True(await dbContext.TestParentEntities.AnyAsync(test => test.ChildId == idGuid));
+
+        }
+
+        [Fact]
         public async Task CreateTestEntityWithValidationError_TooLongName()
         {
             var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
