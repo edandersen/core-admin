@@ -49,19 +49,19 @@
     color: #333;
 }
 
-    .sidebar .nav-link .feather {
-        margin-right: 4px;
-        color: #999;
-    }
+.sidebar .nav-link .feather {
+    margin-right: 4px;
+    color: #999;
+}
 
-    .sidebar .nav-link.active {
-        color: #007bff;
-    }
+.sidebar .nav-link.active {
+    color: #007bff;
+}
 
-        .sidebar .nav-link:hover .feather,
-        .sidebar .nav-link.active .feather {
-            color: inherit;
-        }
+.sidebar .nav-link:hover .feather,
+.sidebar .nav-link.active .feather {
+        color: inherit;
+}
 
 .sidebar-heading {
     font-size: .75rem;
@@ -97,11 +97,32 @@
     border-color: rgba(255, 255, 255, .1);
 }
 
-    .form-control-dark:focus {
-        border-color: transparent;
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
-    }
+.form-control-dark:focus {
+    border-color: transparent;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
 
-    h1.display-4 {
-        padding-top: 20px;
-    }
+h1.display-4 {
+    padding-top: 20px;
+}
+
+/*
+ * CreateEntity EditEntity
+ */
+
+form[action*="CreateEntityPost"],
+form[action*="EditEntityPost"] {
+    margin-top: 1rem;
+}
+
+/*
+ * DeleteEntity
+ */
+
+div.display-label {
+    font-weight: bold;
+}
+
+div.display-field {
+    margin-left: 1rem;
+}

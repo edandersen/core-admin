@@ -5,23 +5,22 @@
 
 <h1 class="display-4">@ViewBag.DbSetName - Create</h1>
 
-
 @using (Html.BeginForm("CreateEntityPost", "CoreAdminData", new { id = ViewBag.DbSetName }, FormMethod.Post))
 {
 
-
     @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
+
 
     @Html.EditorForModel("DefaultEntity")
 
     <div class="row">
         <div class="col-md-12 px-4">
-            <button type="submit" class="btn btn-primary">Create</button>
+            <button type="submit" class="btn btn-primary mr-3">Create</button>
 
-            @Html.ActionLink("No, go back", "Index", new { Id = ViewBag.DbSetName })
+            @Html.ActionLink("Cancel", "Index", new { Id = ViewBag.DbSetName })
 
         </div>
     </div>
 
-
 }
+

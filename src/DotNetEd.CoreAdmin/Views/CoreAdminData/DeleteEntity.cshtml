@@ -19,10 +19,8 @@
     @Html.HiddenFor(m => m.DbSetName)
     @Html.HiddenFor(m => m.Id)
 
-    <button type="submit" class="btn btn-primary">Yes, delete it</button>
+    <button type="submit" class="btn btn-primary ml-2 mr-3">Delete</button>
 
-    @Html.ActionLink("No, go back", "Index", new {Id = Model.DbSetName})
+    @Html.ActionLink("Cancel", "Index", new {Id = Model.DbSetName})
 }
-
-
 
