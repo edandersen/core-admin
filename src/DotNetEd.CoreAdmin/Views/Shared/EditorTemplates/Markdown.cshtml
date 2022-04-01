@@ -1,24 +1,21 @@
 ﻿@model string
 @inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @{ 
-    string cdnPath = null;
+    string assetsPath = "/_content/CoreAdmin";
     if (CoreAdminOptions.Any())
     {
-        cdnPath = CoreAdminOptions.First().CdnPath;
+        string cdnPath = CoreAdminOptions.First().CdnPath;
+        if (cdnPath != null)
+        {
+            assetsPath = cdnPath;
+        }
     }
 }
 
 @Html.TextArea("", ViewData.TemplateInfo.FormattedModelValue.ToString(), 8, 0, new { @class = "text-box multi-line form-control" })
 
 <!-- Markdown -->
-@if (cdnPath == null)
-{
-	<script src="~/_content/CoreAdmin/js/easymde/easymde.min.js"></script>
-}
-else
-{
-	<script src="@cdnPath/js/easymde/easymde.min.js"></script>
-}
+<script src="@assetsPath/js/easymde/easymde.min.js"></script>
 <script>
 	const easyMDE_@ViewData.ModelMetadata.Name = new EasyMDE({
 		element: document.getElementById('@ViewData.ModelMetadata.Name'),
