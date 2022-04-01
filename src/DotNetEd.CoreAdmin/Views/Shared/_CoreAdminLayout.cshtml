@@ -1,10 +1,14 @@
 ﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
-@{ 
-    string cdnPath = null;
+@{
+    string assetsPath = "/_content/CoreAdmin";
     if (CoreAdminOptions.Any())
     {
-        cdnPath = CoreAdminOptions.First().CdnPath;
+        string cdnPath = CoreAdminOptions.First().CdnPath;
+        if (cdnPath != null)
+        {
+            assetsPath = cdnPath;
+        }
     }
 }
 <!DOCTYPE html>
@@ -16,26 +20,13 @@
 
     <meta name="color-scheme" content="light dark" />
 
-    @if (cdnPath == null)
-    {
-        <link rel="stylesheet" class="meta-css-dark" href="~/_content/CoreAdmin/css/bootstrap-dark.min.css" media="(prefers-color-scheme: dark)" />
-        <link rel="stylesheet" class="meta-css-light" href="~/_content/CoreAdmin/css/bootstrap.min.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-        <link rel="stylesheet" class="meta-css-dark" href="~/_content/CoreAdmin/css/mvc-grid/mvc-grid-dark.css" media="(prefers-color-scheme: dark)" />
-        <link rel="stylesheet" class="meta-css-light" href="~/_content/CoreAdmin/css/mvc-grid/mvc-grid.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-        <link rel="stylesheet" href="~/_content/CoreAdmin/css/easymde/easymde.min.css" />
-        <link rel="stylesheet" href="~/_content/CoreAdmin/css/jquery-ui.min.css" />
-        <link rel="stylesheet" href="~/_content/CoreAdmin/css/site.css" />
-    }
-    else
-    {
-        <link rel="stylesheet" class="meta-css-dark" href="@cdnPath/css/bootstrap-dark.min.css" media="(prefers-color-scheme: dark)" />
-        <link rel="stylesheet" class="meta-css-light" href="@cdnPath/css/bootstrap.min.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-        <link rel="stylesheet" class="meta-css-dark" href="@cdnPath/css/mvc-grid/mvc-grid-dark.css" media="(prefers-color-scheme: dark)" />
-        <link rel="stylesheet" class="meta-css-light" href="@cdnPath/css/mvc-grid/mvc-grid.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-        <link rel="stylesheet" href="@cdnPath/css/easymde/easymde.min.css" />
-        <link rel="stylesheet" href="@cdnPath/css/jquery-ui.min.css" />
-        <link rel="stylesheet" href="@cdnPath/css/site.css" />
-    }
+    <link rel="stylesheet" class="meta-css-dark" href="@assetsPath/css/bootstrap-dark.min.css" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" class="meta-css-light" href="@assetsPath/css/bootstrap.min.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
+    <link rel="stylesheet" class="meta-css-dark" href="@assetsPath/css/mvc-grid/mvc-grid-dark.css" media="(prefers-color-scheme: dark)" />
+    <link rel="stylesheet" class="meta-css-light" href="@assetsPath/css/mvc-grid/mvc-grid.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
+    <link rel="stylesheet" href="@assetsPath/css/easymde/easymde.min.css" />
+    <link rel="stylesheet" href="@assetsPath/css/jquery-ui.min.css" />
+    <link rel="stylesheet" href="@assetsPath/css/site.css" />
 
 </head>
 <body>
@@ -78,27 +69,13 @@
         </div>
     </div>
 
-    @if (cdnPath == null)
-    {
-        <script src="~/_content/CoreAdmin/js/jquery.min.js"></script>
-        <script src="~/_content/CoreAdmin/js/bootstrap.bundle.min.js"></script>
-        <script src="~/_content/CoreAdmin/js/mvc-grid/mvc-grid.js"></script>
-        <script src="~/_content/CoreAdmin/js/site.js" asp-append-version="true"></script>
-        <script src="~/_content/CoreAdmin/js/jquery.validate.js"></script>
-        <script src="~/_content/CoreAdmin/js/jquery.validate.unobtrusive.min.js"></script>
-        <script src="~/_content/CoreAdmin/js/jquery-ui.min.js"></script>
-    }
-    else
-    {
-        <script src="@cdnPath/js/jquery.min.js"></script>
-        <script src="@cdnPath/js/bootstrap.bundle.min.js"></script>
-        <script src="@cdnPath/js/mvc-grid/mvc-grid.js"></script>
-        <script src="@cdnPath/js/site.js" asp-append-version="true"></script>
-        <script src="@cdnPath/js/jquery.validate.js"></script>
-        <script src="@cdnPath/js/jquery.validate.unobtrusive.min.js"></script>
-        <script src="@cdnPath/js/jquery-ui.min.js"></script>
-    }
-
+    <script src="@assetsPath/js/jquery.min.js"></script>
+    <script src="@assetsPath/js/bootstrap.bundle.min.js"></script>
+    <script src="@assetsPath/js/mvc-grid/mvc-grid.js"></script>
+    <script src="@assetsPath/js/site.js" asp-append-version="true"></script>
+    <script src="@assetsPath/js/jquery.validate.js"></script>
+    <script src="@assetsPath/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="@assetsPath/js/jquery-ui.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>
