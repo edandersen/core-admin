@@ -45,7 +45,7 @@ body.sb-sidenav-toggled #sidebar-wrapper {
   }
 
   .navbar-brand {
-    width: 100%;
+    width: 100% !important;
     margin: 0;
   }
 
@@ -126,17 +126,11 @@ body.sb-sidenav-toggled #sidebar-wrapper {
   padding: 0.25rem 0;
 }
 
-/* use when toggling working again on navbar brand */
-/* .sb-sidenav-toggled .navbar-brand {
-  background-color: transparent;
-  box-shadow: 0px;
-} */
-
-/* work around for toggling not working yet */
-.navbar-brand {
-  background-color: transparent;
-  box-shadow: inset 0px 0 0 rgba(0, 0, 0, 0.25);
-}
+.sb-sidenav-toggled .navbar-brand {
+    background-color: transparent;
+    box-shadow: 0px;
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.0);
+} 
 
 .navbar-brand a {
   color: #fff;

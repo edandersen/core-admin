@@ -44,10 +44,8 @@ function checkIfSidebarNeedToBeClosed() {
 function updateSidebarWidth() {
   if (document.body.classList.contains("sb-sidenav-toggled")) {
     $("#page-content-wrapper").css({ marginLeft: "" });
-    //$(".navbar-brand").css({ width: "" });
   } else {
     $("#page-content-wrapper").css({ marginLeft: sidebarWidth + "px" });
-    $(".navbar-brand").css({ width: sidebarWidth + "px" });
   }
 }
 
@@ -93,14 +91,15 @@ window.addEventListener("DOMContentLoaded", (event) => {
 $(document).ready(function () {
   if (sidebarWidth) {
     $("#sidebar-wrapper").width(sidebarWidth);
-    $(".navbar-brand").css({ width: sidebarWidth + "px" });
+    $(".navbar-brand").width(sidebarWidth);
   }
 
   $("#sidebar-wrapper").resizable({
     resize: function (e, ui) {
-      localStorage.setItem("sidebar-width", ui.size.width);
+      sidebarWidth = ui.size.width;
+      localStorage.setItem("sidebar-width", sidebarWidth);
       $("#page-content-wrapper").css({ marginLeft: ui.size.width + "px" });
-      $(".navbar-brand").css({ width: ui.size.width + "px" });
+      $(".navbar-brand").width(sidebarWidth);
     },
   });
 });
