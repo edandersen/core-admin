@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DotNetEd.CoreAdmin
 {
-    internal class ImageUtils
+    public class ImageUtils
     {
         public static string WebBase64EncodeImageByteArrayOrNull(byte[] image)
         {
