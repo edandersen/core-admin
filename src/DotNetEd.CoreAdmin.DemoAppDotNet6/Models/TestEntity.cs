@@ -40,7 +40,9 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
-        public bool IsUseful {get;set;}
+        public bool IsUseful { get; set; }
+
+        public decimal DecimalValue { get; set; }
     }
 
     public enum TestEnum

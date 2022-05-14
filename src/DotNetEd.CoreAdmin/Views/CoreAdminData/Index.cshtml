@@ -74,6 +74,12 @@
 
                 columns.Add(lambda).Titled(propertyDisplayName);
             }
+            else if (entityProperty.PropertyType == typeof(decimal))
+            {
+                var lambda = Expression.Lambda<Func<object, decimal>>(property, entity);
+
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
             else if (entityProperty.PropertyType == typeof(Boolean))
             {
                 var lambda = Expression.Lambda<Func<object, Boolean>>(property, entity);
