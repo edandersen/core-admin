@@ -1,6 +1,8 @@
 ﻿using DotNetEd.CoreAdmin;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,18 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 coreAdminOptions.CustomAuthorisationMethod = customAuthorisationMethod;
             }
-           
+
             services.AddSingleton(coreAdminOptions);
-            
+
+            AddLocalisation(services);
 
             services.AddControllersWithViews();
+        }
+
+        private static void AddLocalisation(IServiceCollection services)
+        {
+            services.AddSingleton<IStringLocalizer<JsonLocalizer>, JsonLocalizer>();
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         public static void AddCoreAdmin(this IServiceCollection services, CoreAdminOptions options)
@@ -35,6 +44,8 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddSingleton(options);
 
             services.AddControllersWithViews();
+
+            AddLocalisation(services);
         }
 
         public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
@@ -50,6 +61,8 @@ namespace Microsoft.Extensions.DependencyInjection
             }
             
             services.AddSingleton(coreAdminOptions);
+
+            AddLocalisation(services);
 
             services.AddControllersWithViews();
 

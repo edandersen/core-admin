@@ -1,0 +1,10 @@
+{
+  "Create": "作成",
+  "AccessDatabaseEntries": "データベースのデーターを左にアクセスしてください。",
+  "DevelopmentModeMessage": "今、開発モードですから、セキュリティはありません。ウェブサイトを読んでください： https://github.com/edandersen/core-admin.",
+  "CreateNew": "新しいアイテムを作成する",
+  "GoBack": "戻る",
+  "Edit": "編集",
+  "Delete": "削除",
+  "DeleteConfirm": "これを本当に削除しますか？"
+}

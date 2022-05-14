@@ -1,4 +1,7 @@
-﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions;
+﻿@using DotNetEd.CoreAdmin
+@using Microsoft.Extensions.Localization
+@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions;
+@inject IStringLocalizer<JsonLocalizer> _localizer
 @{
     ViewData["Page_Title"] = "Home";
     Layout = "_CoreAdminLayout";
@@ -7,6 +10,8 @@
 
 <div>
     <h1 class="display-4">@options?.Title</h1>
+
+    
 </div>
 
-<p>Access database entities on the left.</p>
+<p>@_localizer["AccessDatabaseEntries"]</p>

@@ -189,6 +189,12 @@ This will result in something like this:
 
 ![Screenshot of core admin custom title](docs/custom-title.png "Core Admin")
 
+### Localisation
+
+Localisation is supported with built in JSON files thanks to inspiration from https://github.com/Amine-Smahi/LocaliJson. English and Japanese are supported at the moment, please submit a pull request if you would like to add a translation!
+
+![Screenshot of core admin custom title](docs/localisation.png "Core Admin")
+
 ### Ignoring certain entity types
 
 You can prevent certain types of entities being shown or available in the admin panel by setting the ```IgnoreEntityTypes``` value in the options during ```AddCoreAdmin()```, like so:

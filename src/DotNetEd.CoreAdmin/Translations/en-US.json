@@ -1,0 +1,10 @@
+{
+  "Create": "Create",
+  "AccessDatabaseEntries": "Access database entries on the left.",
+  "DevelopmentModeMessage": "You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development environments until security has been set up. See the documentation at https://github.com/edandersen/core-admin.",
+  "CreateNew": "Create new",
+  "GoBack": "Go back",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "DeleteConfirm": "Are you sure you want to delete this?"
+}

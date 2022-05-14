@@ -1,5 +1,8 @@
-﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
+﻿@using DotNetEd.CoreAdmin
+@using Microsoft.Extensions.Localization
+@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
+@inject IStringLocalizer<JsonLocalizer> _localizer
 @{
     string assetsPath = "/_content/CoreAdmin";
     if (CoreAdminOptions.Any())
@@ -59,8 +62,7 @@
                         @if (CoreAdminOptions == null || !CoreAdminOptions.Any() || CoreAdminOptions.All(o => !o.IsSecuritySet))
                         {
                             <div class="alert alert-warning mt-3 mb-0" role="alert">
-                                You are running in Development mode. No security has been set on Core Admin. Core Admin will not be accessible in non-Development
-                                environments until security has been set up. See the documentation at <a href="https://github.com/edandersen/core-admin">https://github.com/edandersen/core-admin</a>.
+                                @_localizer["DevelopmentModeMessage"]
                             </div>
                         }
                     }
