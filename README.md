@@ -177,6 +177,18 @@ app.UseCoreAdminCustomUrl("customurltoadmin");
 
 you can then access the panel at ```/customurltoadmin``` or whatever you need it to be.
 
+### Custom app title
+
+To have a custom title of the app, use the following code in Program.cs or Startup.cs:
+
+```
+app.UseCoreAdminCustomTitle("AwesomeTitle");
+```
+
+This will result in something like this:
+
+![Screenshot of core admin custom title](docs/custom-title.png "Core Admin")
+
 ### Ignoring certain entity types
 
 You can prevent certain types of entities being shown or available in the admin panel by setting the ```IgnoreEntityTypes``` value in the options during ```AddCoreAdmin()```, like so:
