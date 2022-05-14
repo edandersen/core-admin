@@ -17,6 +17,8 @@ namespace DotNetEd.CoreAdmin
         public Dictionary<Int32, string> PageSizes { get; set; }
         public bool ShowPageSizes { get; set; }
         public GridFilterMode FilterMode { get; set; }
+        public string Title { get; set; } = "Core Admin";
+
         public CoreAdminOptions()
         {
             PageSizes = new Dictionary<Int32, String> { { 0, "All" }, { 10, "10" }, { 20, "20" } };

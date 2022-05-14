@@ -1,10 +1,12 @@
-﻿@{
+﻿@inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions;
+@{
     ViewData["Page_Title"] = "Core Admin Home";
     Layout = "_CoreAdminLayout";
+    var options = CoreAdminOptions.FirstOrDefault();
 }
 
 <div>
-    <h1 class="display-4">Core Admin Home</h1>
+    <h1 class="display-4">@options?.Title</h1>
 </div>
 
 <p>Access database entities on the left.</p>

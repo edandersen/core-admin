@@ -10,13 +10,15 @@
             assetsPath = cdnPath;
         }
     }
+
+    var options = CoreAdminOptions.FirstOrDefault();
 }
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Page_Title"] - Core Admin</title>
+    <title>@ViewData["Page_Title"] - @options?.Title</title>
 
     <meta name="color-scheme" content="light dark" />
 
@@ -36,7 +38,7 @@
             <button id="sidebarToggle" class="navbar-toggler ml-2 collapsed" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <a class="mr-0 pl-1" href="@Url.Action("Index", "CoreAdmin")">Core Admin</a>
+            <a class="mr-0 pl-1" href="@Url.Action("Index", "CoreAdmin")">@options?.Title</a>
         </div>
     </nav>
 

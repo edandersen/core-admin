@@ -75,6 +75,15 @@ namespace Microsoft.Extensions.DependencyInjection
             }
         }
 
+        public static void UseCoreAdminCustomTitle(this IApplicationBuilder app, string customTitle)
+        {
+            var options = app.ApplicationServices.GetServices<CoreAdminOptions>();
+            foreach (var option in options)
+            {
+                option.Title = customTitle;
+            }
+        }
+
         public static void UseCoreAdminCustomAuth(this IApplicationBuilder app, Func<IServiceProvider, Task<bool>> customAuthFunction)
         {
             var options = app.ApplicationServices.GetServices<CoreAdminOptions>();

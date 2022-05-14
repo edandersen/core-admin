@@ -31,6 +31,8 @@ app.UseAuthorization();
 
 app.MapRazorPages();
 
+app.UseCoreAdminCustomTitle("Core Admin Demo App");
+
 // Required for Core Admin
 app.MapDefaultControllerRoute();
 
