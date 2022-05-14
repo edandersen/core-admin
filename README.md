@@ -193,7 +193,7 @@ This will result in something like this:
 
 Localisation is supported with built in JSON files thanks to inspiration from https://github.com/Amine-Smahi/LocaliJson. English and Japanese are supported at the moment, please submit a pull request if you would like to add a translation!
 
-![Screenshot of core admin custom title](docs/localisation.png "Core Admin")
+![Screenshot of core admin custom title](docs/localisation.PNG "Core Admin")
 
 ### Ignoring certain entity types
 

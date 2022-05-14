@@ -11,7 +11,7 @@ namespace DotNetEd.CoreAdmin
 {
     public class JsonLocalizer : IStringLocalizer<JsonLocalizer>
     {
-        public static Dictionary<string, Dictionary<string, string>> translations = new();
+        public Dictionary<string, Dictionary<string, string>> translations = new();
         private readonly IHttpContextAccessor httpContextAccessor;
 
         public JsonLocalizer(IHttpContextAccessor httpContextAccessor)
