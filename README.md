@@ -191,7 +191,7 @@ This will result in something like this:
 
 ### Localisation
 
-Localisation is supported with built in JSON files thanks to inspiration from https://github.com/Amine-Smahi/LocaliJson. English and Japanese are supported at the moment, please submit a pull request if you would like to add a translation!
+Localisation is supported with built in JSON files thanks to inspiration from https://github.com/Amine-Smahi/LocaliJson. English, French and Japanese are supported at the moment, please submit a pull request if you would like to add a translation!
 
 ![Screenshot of core admin custom title](docs/localisation.PNG "Core Admin")
 
