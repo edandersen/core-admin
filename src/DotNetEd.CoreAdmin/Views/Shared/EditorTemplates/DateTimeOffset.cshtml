@@ -1,0 +1,2 @@
+﻿@model DateTimeOffset?
+@Html.TextBox("", (Model.HasValue ? Model.Value.ToString("s") : string.Empty), new { type = "datetime-local", @class = "datePicker form-control" })

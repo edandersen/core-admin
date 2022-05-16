@@ -70,6 +70,12 @@
 
                 columns.Add(lambda).Titled(propertyDisplayName);
             }
+            else if (entityProperty.PropertyType == typeof(DateTimeOffset))
+            {
+                var lambda = Expression.Lambda<Func<object,DateTimeOffset>>(property, entity);
+
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
             else if (entityProperty.PropertyType == typeof(double))
             {
                 var lambda = Expression.Lambda<Func<object, double>>(property, entity);

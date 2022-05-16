@@ -1,2 +1,14 @@
-﻿@model DateTime?
-@Html.TextBox("", (Model.HasValue ? Model.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
+﻿@model object
+
+@if (Model is DateTime?)
+{
+    var date = (DateTime?)Model;
+    @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
+}
+
+@if (Model is DateTimeOffset?)
+{
+    var date = (DateTimeOffset?)Model;
+    @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
+}
+
