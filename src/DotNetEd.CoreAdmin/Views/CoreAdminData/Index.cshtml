@@ -104,10 +104,34 @@
                         return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
                     } ).Encoded(false);
             }
+            else if(entityProperty.PropertyType == typeof(decimal?)){
+                var lambda = Expression.Lambda<Func<object, decimal?>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
+            else if(entityProperty.PropertyType == typeof(DateTime?)){
+                var lambda = Expression.Lambda<Func<object, DateTime?>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
+             else if(entityProperty.PropertyType == typeof(int?)){
+                var lambda = Expression.Lambda<Func<object, int?>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
+             else if(entityProperty.PropertyType == typeof(long?)){
+                var lambda = Expression.Lambda<Func<object, long?>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
+             else if(entityProperty.PropertyType == typeof(long)){
+                var lambda = Expression.Lambda<Func<object, long>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
+             else if(entityProperty.PropertyType == typeof(DateTimeOffset?)){
+                var lambda = Expression.Lambda<Func<object, DateTimeOffset?>>(property, entity);
+                columns.Add(lambda).Titled(propertyDisplayName);
+            }
             else
             {
+                //TODO: probably some generic way to build up typed Expression or column for any propertyType here. As-is this throws exception Expression of type 'foo' cannot be used for return type 'System.Object' for unsupported types
                 var lambda = Expression.Lambda<Func<object, object>>(property, entity);
-
                 columns.Add(item=> lambda.Compile().Invoke(item).ToString()).Titled(propertyDisplayName);
             }
         }

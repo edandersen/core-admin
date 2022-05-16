@@ -45,6 +45,13 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         public bool IsUseful { get; set; }
 
         public decimal DecimalValue { get; set; }
+
+        public decimal? NullableDecimalValue {get;set;}
+        public DateTime? NullableDateTimeValue { get; set; }
+        public int? NullableIntValue { get; set; }
+        public long? NullableLongValue { get; set; }
+        public long LongValue { get; set; }
+        public DateTimeOffset? NullableDateTimeOffsetValue { get; set; }
     }
 
     public enum TestEnum
