@@ -24,11 +24,13 @@
 
   <ItemGroup>
     <Content Remove="Translations\en-us.json" />
+    <Content Remove="Translations\fr-FR.json" />
     <Content Remove="Translations\ja-JP.json" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Translations\en-US.json" />
+    <EmbeddedResource Include="Translations\fr-FR.json" />
     <EmbeddedResource Include="Translations\ja-JP.json" />
   </ItemGroup>
 
