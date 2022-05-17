@@ -51,6 +51,8 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         public int? NullableIntValue { get; set; }
         public long? NullableLongValue { get; set; }
         public long LongValue { get; set; }
+        public double DoubleValue {get;set;}
+        public double? NullableDoubleValue {get;set;}
         public DateTimeOffset? NullableDateTimeOffsetValue { get; set; }
     }
 
