@@ -4,6 +4,7 @@
 @using System.Linq.Expressions
 @using Microsoft.EntityFrameworkCore
 @using System.ComponentModel.DataAnnotations;
+@using System.Reflection
 @inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @model DotNetEd.CoreAdmin.ViewModels.DataListViewModel
 @inject IStringLocalizer<JsonLocalizer> _localizer
@@ -45,8 +46,23 @@
                         if(!string.IsNullOrEmpty(displayAttribute.Description))
                     propertyDisplayName = displayAttribute.Description;
                 }
+            }         
+            else if (entityProperty.PropertyType == typeof(Boolean))
+            {
+                var lambda = Expression.Lambda<Func<object, Boolean>>(property, entity);
+                columns.Add(lambda).RenderedAs(m=> Html.CheckBox(entityProperty.Name, lambda.Compile().Invoke(m))).Titled(propertyDisplayName);
             }
-            if (entityProperty.PropertyType == typeof(Guid))
+            else if (entityProperty.PropertyType == typeof(byte[]))
+            {
+                var lambda = Expression.Lambda<Func<object, byte[]>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name)
+                    .RenderedAs((value) => {
+                        var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
+                        return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
+                    } ).Encoded(false);
+            }   
+             /*  if (entityProperty.PropertyType == typeof(Guid))
             {
                 var lambda = Expression.Lambda<Func<object,Guid>>(property, entity);
 
@@ -88,23 +104,7 @@
 
                 columns.Add(lambda).Titled(propertyDisplayName);
             }
-            else if (entityProperty.PropertyType == typeof(Boolean))
-            {
-                var lambda = Expression.Lambda<Func<object, Boolean>>(property, entity);
-
-                columns.Add(lambda).RenderedAs(m=> Html.CheckBox(entityProperty.Name, lambda.Compile().Invoke(m))).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(byte[]))
-            {
-                var lambda = Expression.Lambda<Func<object, byte[]>>(property, entity);
-
-                columns.Add(lambda).Titled(entityProperty.Name)
-                    .RenderedAs((value) => {
-                        var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
-                        return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
-                    } ).Encoded(false);
-            }
-            else if(entityProperty.PropertyType == typeof(decimal?)){
+              else if(entityProperty.PropertyType == typeof(decimal?)){
                 var lambda = Expression.Lambda<Func<object, decimal?>>(property, entity);
                 columns.Add(lambda).Titled(propertyDisplayName);
             }
@@ -127,12 +127,23 @@
              else if(entityProperty.PropertyType == typeof(DateTimeOffset?)){
                 var lambda = Expression.Lambda<Func<object, DateTimeOffset?>>(property, entity);
                 columns.Add(lambda).Titled(propertyDisplayName);
-            }
+            }*/       
             else
             {
-                //TODO: probably some generic way to build up typed Expression or column for any propertyType here. As-is this throws exception Expression of type 'foo' cannot be used for return type 'System.Object' for unsupported types
-                var lambda = Expression.Lambda<Func<object, object>>(property, entity);
-                columns.Add(item=> lambda.Compile().Invoke(item).ToString()).Titled(propertyDisplayName);
+                //Use reflection to build up lambda expression and call columns.Add(...) and Titled(...) for any field that can be rendered as text.
+                //This is equivalent to:
+                //if(entityProperty.PropertyType == typeof(Foo?)){
+                //  var lambda = Expression.Lambda<Func<object, Foo?>>(property, entity);
+                //  columns.Add(lambda).Titled(propertyDisplayName);
+                //}
+                //But avoids needing an else if for each possible type, nullable types, etc..
+               var funcType = typeof(Func<,>).MakeGenericType(typeof(object),entityProperty.PropertyType);              
+               var lambdaMethod = typeof(Expression).GetMethods(BindingFlags.Public|BindingFlags.Static).Where(m=>m.Name == "Lambda" && m.IsGenericMethod).First().MakeGenericMethod(funcType);
+               var lambda = lambdaMethod.Invoke(null,new object[]{property,new ParameterExpression[]{entity}});
+               var addMethod = columns.GetType().GetMethods(BindingFlags.Public|BindingFlags.Instance).Where(m=>m.Name=="Add" && m.IsGenericMethod).First();               
+               var column = addMethod.MakeGenericMethod(entityProperty.PropertyType).Invoke(columns,new object[]{lambda});
+               var titledMethod = typeof(GridColumnExtensions).GetMethods(BindingFlags.Static|BindingFlags.Public).Where(m=>m.Name=="Titled").First().MakeGenericMethod(typeof(object),entityProperty.PropertyType);
+               titledMethod.Invoke(null, new[]{column, propertyDisplayName});          
             }
         }
 
