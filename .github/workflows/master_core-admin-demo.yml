@@ -21,13 +21,13 @@ jobs:
           dotnet-version: 7.0.x
 
       - name: dotnet publish
-        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj -c Release -o ${{env.DOTNET_ROOT}}\myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
+          path: ${{env.DOTNET_ROOT}}\myapp
 
   deploy:
     runs-on: windows-latest
