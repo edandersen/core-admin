@@ -18,13 +18,13 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 6.0.x
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
 
       - name: dotnet publish
-        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj -c Release -o ${{env.DOTNET_ROOT}}\myapp
+        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
