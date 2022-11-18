@@ -24,6 +24,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             services.AddCoreAdmin("TestRole"); 
         }
 
+        [Obsolete]
         static void ConfigureTestServicesWithSecurityAuthMethod(IServiceCollection services, Func<Task<bool>> authMethod)
         {
             services.AddCoreAdmin(authMethod);
@@ -125,6 +126,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         }
 
         [Fact]
+        [Obsolete]
         public async Task SuccessStatusCodeAndCallsCustomAuthMethodInProductionAndAuthMethodCheckSet()
         {
             bool authCalled = false;
@@ -145,6 +147,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         }
 
         [Fact]
+        [Obsolete]
         public async Task ReturnsUnauthorizedWhenInProductionCustomAuthMethodFails()
         {
             bool authCalled = false;

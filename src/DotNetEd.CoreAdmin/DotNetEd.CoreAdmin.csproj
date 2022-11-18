@@ -1,49 +1,51 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFrameworks>net6.0</TargetFrameworks>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
-    <PreserveCompilationContext>false</PreserveCompilationContext>
-    <SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
-    <PackageId>CoreAdmin</PackageId>
-    <PackageVersion>2.6.3</PackageVersion>
-    <Description>Automagically add an Admin Panel to your .NET 6 web app.</Description>
-    <Title>Core Admin Panel for ASP.NET Core</Title>
-    <Authors>edandersen</Authors>
-    <Copyright>Copyright ©2022 Ed Andersen</Copyright>
-    <PackageProjectUrl>https://github.com/edandersen/core-admin</PackageProjectUrl>
-    <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net7.0</TargetFrameworks>
+		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+		<PreserveCompilationContext>false</PreserveCompilationContext>
+		<SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
+		<PackageId>CoreAdmin</PackageId>
+		<PackageVersion>2.7.0</PackageVersion>
+		<Description>Automagically add an Admin Panel to your .NET 6 web app.</Description>
+		<Title>Core Admin Panel for ASP.NET Core</Title>
+		<Authors>edandersen</Authors>
+		<Copyright>Copyright ©2022 Ed Andersen</Copyright>
+		<PackageProjectUrl>https://github.com/edandersen/core-admin</PackageProjectUrl>
+		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
+		<Nullable>disable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Areas\**" />
-    <Content Remove="Areas\**" />
-    <EmbeddedResource Remove="Areas\**" />
-    <None Remove="Areas\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="Areas\**" />
+		<Content Remove="Areas\**" />
+		<EmbeddedResource Remove="Areas\**" />
+		<None Remove="Areas\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Content Remove="Translations\en-us.json" />
-    <Content Remove="Translations\fr-FR.json" />
-    <Content Remove="Translations\it-IT.json" />
-    <Content Remove="Translations\ja-JP.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Remove="Translations\en-us.json" />
+		<Content Remove="Translations\fr-FR.json" />
+		<Content Remove="Translations\it-IT.json" />
+		<Content Remove="Translations\ja-JP.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="Translations\it-IT.json" />
-    <EmbeddedResource Include="Translations\en-US.json" />
-    <EmbeddedResource Include="Translations\fr-FR.json" />
-    <EmbeddedResource Include="Translations\ja-JP.json" />
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Translations\it-IT.json" />
+		<EmbeddedResource Include="Translations\en-US.json" />
+		<EmbeddedResource Include="Translations\fr-FR.json" />
+		<EmbeddedResource Include="Translations\ja-JP.json" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
-    <PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="7.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net7.0'" Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="7.1.0" />
+	</ItemGroup>
 
 
 </Project>
