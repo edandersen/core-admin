@@ -20,9 +20,6 @@ jobs:
         with:
           dotnet-version: 7.0.x
 
-      - name: Build with dotnet
-        run: dotnet build --configuration Release
-
       - name: dotnet publish
         run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp
 
