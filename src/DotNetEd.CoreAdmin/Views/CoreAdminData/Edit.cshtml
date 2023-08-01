@@ -8,7 +8,6 @@
 
 <h1 class="display-4">@ViewBag.DbSetName - @_localizer["Edit"]</h1>
 
-
 @using (Html.BeginForm("EditEntityPost", 
 "CoreAdminData", 
 new { dbSetName = ViewBag.DbSetName, id = ViewBag.Id }, 
@@ -18,12 +17,13 @@ new { enctype = "multipart/form-data" }))
 
     @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })
     @Html.Hidden("id", ViewBag.Id, new { })
+    @Html.Hidden("secondId", ViewBag.SecondId, new { })
 
     @Html.EditorForModel("DefaultEntity")
 
     <div class="row">
         <div class="col-md-12">
-            <button type="submit" class="btn btn-primary">@_localizer["Edit"]</button>
+            <button type="submit" class="btn btn-primary">Save</button>
             <p class="mt-2">
             @Html.ActionLink(@_localizer["GoBack"], "Index", new { Id = ViewBag.DbSetName })
             </p>

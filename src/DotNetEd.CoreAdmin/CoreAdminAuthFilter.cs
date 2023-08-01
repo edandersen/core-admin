@@ -7,69 +7,63 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetEd.CoreAdmin
 {
-    public class CoreAdminAuthAttribute : TypeFilterAttribute
-    {
-        public CoreAdminAuthAttribute() : base(typeof(CoreAdminAuthFilter)) { }
-    }
+	public class CoreAdminAuthAttribute : TypeFilterAttribute
+	{
+		public CoreAdminAuthAttribute() : base(typeof(CoreAdminAuthFilter)) { }
+	}
 
-    public class CoreAdminAuthFilter : IAuthorizationFilter
-    {
-        private readonly IWebHostEnvironment environment;
-        private readonly IList<CoreAdminOptions> coreAdminOptions;
-        private readonly IServiceProvider serviceProvider;
+	public class CoreAdminAuthFilter : IAuthorizationFilter
+	{
+		private readonly IWebHostEnvironment environment;
+		private readonly IList<CoreAdminOptions> coreAdminOptions;
+		private readonly IServiceProvider serviceProvider;
 
-        public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminOptions> securityOptions, IServiceProvider serviceProvider)
-        {
-            this.environment = environment;
-            this.coreAdminOptions = securityOptions.ToList();
-            this.serviceProvider = serviceProvider;
-        }
+		public CoreAdminAuthFilter(IWebHostEnvironment environment, IEnumerable<CoreAdminOptions> securityOptions, IServiceProvider serviceProvider)
+		{
+			this.environment = environment;
+			this.coreAdminOptions = securityOptions.ToList();
+			this.serviceProvider = serviceProvider;
+		}
 
-        public async void OnAuthorization(AuthorizationFilterContext context)
-        {
+		public async void OnAuthorization(AuthorizationFilterContext context)
+		{
 
-            bool failedSecurityCheck = true;
+			bool failedSecurityCheck = true;
 
-            // in Development mode, allow bypassing security (shows a warning message)
-            if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any(o => o.IsSecuritySet))
-            {
-                failedSecurityCheck = false;
-            }
-            else
-            {
-                foreach (var options in coreAdminOptions)
-                {
-                    if (options.RestrictToRoles != null && options.RestrictToRoles.Any())
-                    {
-                        foreach (var role in options.RestrictToRoles)
-                        {
-                            if (context.HttpContext.User.IsInRole(role))
-                            {
-                                failedSecurityCheck = false;
-                            }
-                        }
-                    }
+			// in Development mode, allow bypassing security (shows a warning message)
+			if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any(o => o.IsSecuritySet))
+			{
+				failedSecurityCheck = false;
+			}
+			else
+			{
+				foreach (var options in coreAdminOptions)
+				{
+					if (options.RestrictToRoles != null && options.RestrictToRoles.Any())
+					{
+						options.RestrictToRoles.ToList().ForEach(role =>
+						{
+							if (context.HttpContext.User.IsInRole(role))
+							{
+								failedSecurityCheck = false;
+							}
+						});
+					}
 
-                    if (options.CustomAuthorisationMethod != null)
-                    {
-                        if (await options.CustomAuthorisationMethod())
-                        {
-                            failedSecurityCheck = false;
-                        }
-                    }
+					if (options.CustomAuthorisationMethod != null && await options.CustomAuthorisationMethod())
+					{
+						failedSecurityCheck = false;
+					}
 
-                    if (options.CustomAuthorisationMethodWithServiceProvider != null)
-                    {
-                        if (await options.CustomAuthorisationMethodWithServiceProvider(serviceProvider))
-                        {
-                            failedSecurityCheck = false;
-                        }
-                    }
-                }
-            }
+					if (options.CustomAuthorisationMethodWithServiceProvider != null && await options.CustomAuthorisationMethodWithServiceProvider(serviceProvider))
+					{
+						failedSecurityCheck = false;
+					}
+				}
+			}
 
-            if (failedSecurityCheck) context.Result = new UnauthorizedResult();
+			if (failedSecurityCheck) context.Result = new UnauthorizedResult();
 
-        }
-    }
+		}
+	}
 }

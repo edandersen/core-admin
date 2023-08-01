@@ -16,11 +16,11 @@
     var options = CoreAdminOptions.FirstOrDefault();
 }
 
-<h1 class="display-4">@Model.DbSetProperty.Name</h1>
+<h1 class="display-4">@Model.TableName</h1>
 
 <div class="row">
     <div class="col-lg-12 my-3">
-        @Html.ActionLink(_localizer["CreateNew"], "Create", new { id = Model.DbSetProperty.Name }, new { @class = "btn btn-primary"})
+        @Html.ActionLink(_localizer["CreateNew"], "Create", new { id = Model.TableName }, new { @class = "btn btn-primary"})
     </div>
 </div>
 
@@ -30,7 +30,6 @@
 
         foreach(var entityProperty in Model.EntityType.GetProperties())
         {
-
             ParameterExpression entity = Expression.Parameter(typeof(object), "ent");
             var changedType = Expression.Convert(entity, Model.EntityType);
             var property = Expression.Property(changedType, entityProperty.Name);
@@ -46,11 +45,11 @@
                         if(!string.IsNullOrEmpty(displayAttribute.Description))
                     propertyDisplayName = displayAttribute.Description;
                 }
-            }         
+            }
             else if (entityProperty.PropertyType == typeof(Boolean))
             {
                 var lambda = Expression.Lambda<Func<object, Boolean>>(property, entity);
-                columns.Add(lambda).RenderedAs(m=> Html.CheckBox(entityProperty.Name, lambda.Compile().Invoke(m))).Titled(propertyDisplayName);
+                columns.Add(lambda).RenderedAs(m=> Html.CheckBox(entityProperty.Name, lambda.Compile().Invoke(m), new { @disabled = true })).Titled(propertyDisplayName);
             }
             else if (entityProperty.PropertyType == typeof(byte[]))
             {
@@ -59,91 +58,18 @@
                 columns.Add(lambda).Titled(entityProperty.Name)
                     .RenderedAs((value) => {
                         var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
-                        return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
+                        return string.Empty;
                     } ).Encoded(false);
-            }   
-             /*  if (entityProperty.PropertyType == typeof(Guid))
-            {
-                var lambda = Expression.Lambda<Func<object,Guid>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
             }
-            else if (entityProperty.PropertyType == typeof(string))
-            {
-                var lambda = Expression.Lambda<Func<object,string>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(Int32))
-            {
-                var lambda = Expression.Lambda<Func<object,Int32>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(DateTime))
-            {
-                var lambda = Expression.Lambda<Func<object,DateTime>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(DateTimeOffset))
-            {
-                var lambda = Expression.Lambda<Func<object,DateTimeOffset>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(double))
-            {
-                var lambda = Expression.Lambda<Func<object, double>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if (entityProperty.PropertyType == typeof(decimal))
-            {
-                var lambda = Expression.Lambda<Func<object, decimal>>(property, entity);
-
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-              else if(entityProperty.PropertyType == typeof(decimal?)){
-                var lambda = Expression.Lambda<Func<object, decimal?>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-            else if(entityProperty.PropertyType == typeof(DateTime?)){
-                var lambda = Expression.Lambda<Func<object, DateTime?>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-             else if(entityProperty.PropertyType == typeof(int?)){
-                var lambda = Expression.Lambda<Func<object, int?>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-             else if(entityProperty.PropertyType == typeof(long?)){
-                var lambda = Expression.Lambda<Func<object, long?>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-             else if(entityProperty.PropertyType == typeof(long)){
-                var lambda = Expression.Lambda<Func<object, long>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }
-             else if(entityProperty.PropertyType == typeof(DateTimeOffset?)){
-                var lambda = Expression.Lambda<Func<object, DateTimeOffset?>>(property, entity);
-                columns.Add(lambda).Titled(propertyDisplayName);
-            }*/       
             else
             {
-                //Use reflection to build up lambda expression and call columns.Add(...) and Titled(...) for any field that can be rendered as text.
-                //This is equivalent to:
-                //if(entityProperty.PropertyType == typeof(Foo?)){
-                //  var lambda = Expression.Lambda<Func<object, Foo?>>(property, entity);
-                //  columns.Add(lambda).Titled(propertyDisplayName);
-                //}
-                //But avoids needing an else if for each possible type, nullable types, etc..
-               var funcType = typeof(Func<,>).MakeGenericType(typeof(object),entityProperty.PropertyType);              
+               var funcType = typeof(Func<,>).MakeGenericType(typeof(object),entityProperty.PropertyType);
                var lambdaMethod = typeof(Expression).GetMethods(BindingFlags.Public|BindingFlags.Static).Where(m=>m.Name == "Lambda" && m.IsGenericMethod).First().MakeGenericMethod(funcType);
                var lambda = lambdaMethod.Invoke(null,new object[]{property,new ParameterExpression[]{entity}});
-               var addMethod = columns.GetType().GetMethods(BindingFlags.Public|BindingFlags.Instance).Where(m=>m.Name=="Add" && m.IsGenericMethod).First();               
+               var addMethod = columns.GetType().GetMethods(BindingFlags.Public|BindingFlags.Instance).Where(m=>m.Name=="Add" && m.IsGenericMethod).First();
                var column = addMethod.MakeGenericMethod(entityProperty.PropertyType).Invoke(columns,new object[]{lambda});
                var titledMethod = typeof(GridColumnExtensions).GetMethods(BindingFlags.Static|BindingFlags.Public).Where(m=>m.Name=="Titled").First().MakeGenericMethod(typeof(object),entityProperty.PropertyType);
-               titledMethod.Invoke(null, new[]{column, propertyDisplayName});          
+               titledMethod.Invoke(null, new[]{column, propertyDisplayName});
             }
         }
 
@@ -151,16 +77,26 @@
         var pkProperties = Model.DbContext.Model.FindEntityTypes(Model.EntityType).First().FindPrimaryKey().Properties;
         if (pkProperties.Count == 1)
         {
-            var pKProperty = pkProperties.Single()?.PropertyInfo;
+           var pKProperty = pkProperties.Single()?.PropertyInfo;
 
             if (pKProperty != null)
             {
-                columns.Add(item => Html.ActionLink(_localizer["Delete"], "DeleteEntity", new { dbSetName = Model.DbSetProperty.Name, Id = pKProperty.GetValue(item)}));
-                columns.Add(item => Html.ActionLink(@_localizer["Edit"], "EditEntity", new { dbSetName = Model.DbSetProperty.Name, Id = pKProperty.GetValue(item) }));
+                columns.Add(item => Html.ActionLink(_localizer["Delete"], "DeleteEntity", new { dbSetName = Model.TableName, Id = pKProperty.GetValue(item)}));
+                columns.Add(item => Html.ActionLink(@_localizer["Edit"], "EditEntity", new { dbSetName = Model.TableName, Id = pKProperty.GetValue(item)}));
             }
         }
 
+        if (pkProperties.Count == 2)
+        {
+            var firstPkProperty = pkProperties[0]?.PropertyInfo;
+            var secondPkProperty = pkProperties[1]?.PropertyInfo;
 
+            if (firstPkProperty != null && secondPkProperty != null)
+            {
+                columns.Add(item => Html.ActionLink(_localizer["Delete"], "DeleteEntity", new { dbSetName = Model.TableName, Id = firstPkProperty.GetValue(item), SecondId = secondPkProperty.GetValue(item)}));
+                columns.Add(item => Html.ActionLink(_localizer["Edit"], "EditEntity", new { dbSetName = Model.TableName, Id = firstPkProperty.GetValue(item), SecondId = secondPkProperty.GetValue(item)}));
+            }
+        }
     }
 
         )
@@ -178,8 +114,8 @@
 @section Scripts
 {
      <script>
-           document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
-        </script>
+        document.querySelectorAll(".mvc-grid").forEach(element => new MvcGrid(element));
+     </script>
 }
 
 

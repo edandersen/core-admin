@@ -5,20 +5,6 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin", "src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj", "{44822078-CB19-4FE8-BC1D-141F067D6FF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.IntegrationTestApp", "tests\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj", "{20A156BB-163F-40B5-A577-1C3E76751DE9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.IntegrationTests", "tests\DotNetEd.CoreAdmin.IntegrationTests\DotNetEd.CoreAdmin.IntegrationTests.csproj", "{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2C33B604-D233-456E-903D-B4264CE85786}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-		.github\workflows\dotnet-core-pull-request.yml = .github\workflows\dotnet-core-pull-request.yml
-		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.DemoAppDotNet6", "src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj", "{A3A57016-920D-4173-B054-891E42769923}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,18 +15,6 @@ Global
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44822078-CB19-4FE8-BC1D-141F067D6FF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20A156BB-163F-40B5-A577-1C3E76751DE9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

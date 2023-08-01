@@ -31,6 +31,12 @@ else
 {
     foreach (var prop in ViewData.ModelMetadata.Properties.Where(ShouldShow))
     {
+        if (prop.Name == "Id")
+        {
+            @Html.Hidden(prop.PropertyName, new { @Value = 0 }, new { @class = "col-md-2 col-form-label" });
+            continue;
+        }
+
         var relationships = (Dictionary<string, Dictionary<object, string>>)ViewBag.Relationships;
 
         if (!relationships.Keys.Contains(prop.PropertyName))
@@ -67,13 +73,12 @@ else
             }
 
             <div class="col-md-10">
-                    @Html.DropDownList(prop.PropertyName, new SelectList(relationships[prop.PropertyName],"Key", "Value"), new {@class = "form-control"})
+                    @Html.DropDownList(prop.PropertyName, new SelectList(relationships[prop.PropertyName],"Key", "Key"), new {@class = "form-control"})
 
                     @Html.ValidationMessage(prop.PropertyName)
                 </div>
             </div>
         }
-
     }
 }
 

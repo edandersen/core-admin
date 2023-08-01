@@ -16,11 +16,11 @@
     </div>
 </div>
 
-
 @using (Html.BeginForm("DeleteEntityPost", "CoreAdminData", new {}, FormMethod.Post))
 {
     @Html.HiddenFor(m => m.DbSetName)
     @Html.HiddenFor(m => m.Id)
+    @Html.HiddenFor(m => m.SecondId)
 
     <button type="submit" class="btn btn-primary">@_localizer["Delete"]</button>
 

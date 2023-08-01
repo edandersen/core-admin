@@ -1,7 +1,7 @@
 ﻿@model string
 @inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
 @{ 
-    string assetsPath = "/_content/CoreAdmin";
+    string assetsPath = "/_content/AmplifiAdminPortal";
     if (CoreAdminOptions.Any())
     {
         string cdnPath = CoreAdminOptions.First().CdnPath;

@@ -1,7 +1,6 @@
 ﻿@using DotNetEd.CoreAdmin
 @using Microsoft.Extensions.Localization
 @inject IEnumerable<DotNetEd.CoreAdmin.CoreAdminOptions> CoreAdminOptions
-@inject Microsoft.AspNetCore.Hosting.IWebHostEnvironment WebHostEnvionment
 @inject IStringLocalizer<JsonLocalizer> _localizer
 @{
     string assetsPath = "/_content/AmplifiAdminPortal";
@@ -16,6 +15,7 @@
 
     var options = CoreAdminOptions.FirstOrDefault();
 }
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,32 +35,12 @@
     <link rel="stylesheet" href="@assetsPath/css/site.css" />
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap justify-content-start p-0 py-3 shadow">
-        <div class="navbar-brand">
-            <button id="sidebarToggle" class="navbar-toggler ml-2" type="button">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <a class="mr-0 pl-1" href="@Url.Action("Index", "CoreAdmin")">@options?.Title</a>
-            <a class="pl-2" href="@Url.Action("Logout", "Account")">Logout</a>
-        </div>
-    </nav>
-
-    <!-- Sidebar -->
-    <nav id="sidebar-wrapper" class="sidebar-width d-md-block bg-light sidebar sidebar-wrapper">
-        <div class="sidebar-sticky pt-3">
-            @await Component.InvokeAsync("CoreAdminMenu")
-        </div>
-    </nav>
-
     <!-- Content -->
     <div class="d-flex" id="wrapper">
-        <div id="page-content-wrapper">
-            <div class="container-fluid">
-                <main role="main" class="px-md-4">
-                    @RenderBody()
-                </main>
-            </div>
+        <div class="container-fluid">
+            <main role="main" class="px-md-4">
+                @RenderBody()
+            </main>
         </div>
     </div>
 
@@ -74,12 +54,4 @@
 
     @RenderSection("Scripts", required: false)
 </body>
-<script>
-    $(document).ready(function() {
-        $(".collapsible").click(function (e) {
-            e.preventDefault();
-            $(this).closest('li').children('ul').slideToggle();
-        });
-    });
-</script>
 </html>

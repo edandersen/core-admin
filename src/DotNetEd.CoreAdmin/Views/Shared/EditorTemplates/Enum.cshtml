@@ -1,7 +1,6 @@
 ﻿@model object
 @if (ViewData.ModelMetadata.ModelType.IsEnum)
 {
-
     var values = Enum.GetValues(ViewData.ModelMetadata.ModelType);
     var names = Enum.GetNames(ViewData.ModelMetadata.ModelType);
     var items = new List<SelectListItem>();
@@ -11,5 +10,4 @@
     }
     
     @Html.DropDownList("", items, new {@class = "form-control"})
-
 }

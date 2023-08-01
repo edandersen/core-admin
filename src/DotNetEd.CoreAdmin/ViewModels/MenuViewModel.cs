@@ -2,9 +2,8 @@
 
 namespace DotNetEd.CoreAdmin.ViewModels
 {
-    public class MenuViewModel
-    {
-        public List<string> DbContextNames { get; set; } = new List<string>();
-        public List<string> DbSetNames { get; set; } = new List<string>();
-    }
+	public class MenuViewModel
+	{
+		public Dictionary<string, List<string>> Db2Tables { get; set; } = new Dictionary<string, List<string>>();
+	}
 }

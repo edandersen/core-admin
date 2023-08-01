@@ -1,4 +1,5 @@
-﻿@using Microsoft.AspNetCore.Mvc.Rendering;
+﻿@using DotNetEd.CoreAdmin.Extensions
+@using Microsoft.AspNetCore.Mvc.Rendering;
 @using Microsoft.Extensions.Primitives;
 @using NonFactors.Mvc.Grid;
 
@@ -136,11 +137,11 @@
 
                 if (String.IsNullOrEmpty(classes))
                 {
-                <td>@column.ValueFor(row)</td>
+                <td>@column.GetValue(row)</td>
                 }
                 else
                 {
-                <td class="@classes">@column.ValueFor(row)</td>
+                <td class="@classes">@column.GetValue(row)</td>
                 }
             }
             </!tr>
@@ -160,7 +161,7 @@
             @await Html.PartialAsync(Model.FooterPartialViewName, Model)
         </tfoot>
     }
-    </!table>
+    </!!table>
     @if (Model.Pager != null)
     {
         @await Html.PartialAsync(Model.Pager.PartialViewName, Model.Pager)

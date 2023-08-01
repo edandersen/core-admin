@@ -1,30 +1,25 @@
 ﻿using DotNetEd.CoreAdmin.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace DotNetEd.CoreAdmin.ViewComponents
 {
-    public class CoreAdminMenuViewComponent : ViewComponent
-    {
-        private readonly IEnumerable<DiscoveredDbSetEntityType> dbSetEntities;
+	public class CoreAdminMenuViewComponent : ViewComponent
+	{
+		private readonly CoreAdminTree coreAdminTree;
 
-        public CoreAdminMenuViewComponent(IEnumerable<DiscoveredDbSetEntityType> dbContexts)
-        {
-            this.dbSetEntities = dbContexts;
-        }
+		public CoreAdminMenuViewComponent(CoreAdminTree coreAdminTree)
+		{
+			this.coreAdminTree = coreAdminTree;
+		}
 
-        public IViewComponentResult Invoke()
-        {
-            var viewModel = new MenuViewModel();
+		public IViewComponentResult Invoke()
+		{
+			var viewModel = new MenuViewModel();
 
-            foreach(var dbSetEntity in dbSetEntities)
-            {
-                viewModel.DbContextNames.Add(dbSetEntity.DbContextType.Name);
-                viewModel.DbSetNames.Add(dbSetEntity.Name);
-            }    
+			viewModel.Db2Tables = coreAdminTree.Db2Tables;
 
-            return View(viewModel);
-        }
-    }
+			return View(viewModel);
+		}
+	}
 }
