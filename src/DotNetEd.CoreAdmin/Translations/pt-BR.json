@@ -1,0 +1,11 @@
+{
+    "Create": "Criar",
+    "AccessDatabaseEntries": "Consulte os registros através do painel à esquerda.",
+    "DevelopmentModeMessage": "Você está no ambiente de desenvolvimento. Nenhuma segurança foi definida para o Core Admin, e para acessá-lo em outros ambientes é necessário realizar as devidas configurações de segurança. Veja a documentação em: https://github.com/edandersen/core-admin.",
+    "CreateNew": "Novo registro",
+    "GoBack": "Voltar",
+    "Edit": "Editar",
+    "Delete": "Remover",
+    "DeleteConfirm": "Você tem certeza que deseja remover esse item?"
+  }
+  
