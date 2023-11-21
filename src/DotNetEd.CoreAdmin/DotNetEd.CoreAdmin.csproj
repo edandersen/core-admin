@@ -6,8 +6,8 @@
 		<PreserveCompilationContext>false</PreserveCompilationContext>
 		<SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
 		<PackageId>CoreAdmin</PackageId>
-		<PackageVersion>2.7.0</PackageVersion>
-		<Description>Automagically add an Admin Panel to your .NET 6 web app.</Description>
+		<PackageVersion>2.7.1</PackageVersion>
+		<Description>Automagically add an Admin Panel to your .NET 6 or .NET 7 web app.</Description>
 		<Title>Core Admin Panel for ASP.NET Core</Title>
 		<Authors>edandersen</Authors>
 		<Copyright>Copyright ©2022 Ed Andersen</Copyright>
