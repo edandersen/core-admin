@@ -94,7 +94,8 @@ namespace DotNetEd.CoreAdmin.Controllers
                                 var propsOnDbContext = dbContextObject.GetType().GetProperties();
 
                                 var targetChildListOnDbContext = dbContextObject.GetType().GetProperties()
-                                    .FirstOrDefault(p => p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
+                                    .FirstOrDefault(p => p.PropertyType.IsGenericType
+                                    && p.PropertyType.GetGenericTypeDefinition() == typeof(DbSet<>)
                                     && p.PropertyType.GetGenericArguments().First().FullName == typeOfChild.PrincipalEntityType.Name);
 
                                 var primaryKey2 = dbContextObject.Model.FindEntityType(typeOfChild.PrincipalEntityType.Name).FindPrimaryKey();
