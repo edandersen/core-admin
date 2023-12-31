@@ -1,27 +1,28 @@
-using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using System;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 using Xunit;
+
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
 {
-    public class SecurityTests : IClassFixture<IntegrationTestsWebHostFactory<IntegrationTestStartup>>
+    public class SecurityTests : IClassFixture<TestAppFixture>
     {
-        private readonly IntegrationTestsWebHostFactory<IntegrationTestStartup> _factory;
+        private readonly TestAppFixture _fixture;
 
-        public SecurityTests(IntegrationTestsWebHostFactory<IntegrationTestStartup> factory)
+        public SecurityTests(TestAppFixture fixture)
         {
-            _factory = factory;
+            _fixture = fixture;
         }
 
         static void ConfigureTestServices(IServiceCollection services) { }
 
-        static void ConfigureTestServicesWithSecurity(IServiceCollection services) { 
-            services.AddCoreAdmin("TestRole"); 
+        static void ConfigureTestServicesWithSecurity(IServiceCollection services) {
+            services.AddCoreAdmin("TestRole");
         }
 
         [Obsolete]
@@ -39,7 +40,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ShowsWarningMessageInDevelopmentModeWhenNoSecuritySet()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => { 
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServices); }).CreateClient();
 
@@ -61,7 +62,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task DoesNotShowWarningMessageInDevelopmentModeWhenSecurityIsSet()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServicesWithSecurity);
             }).CreateClient();
@@ -84,7 +85,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ReturnsUnauthorisedInDevelopmentModeWhenSecurityIsSetAndCheckFails()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServicesWithSecurityAndAlternativeTestRole);
             }).CreateClient();
@@ -100,8 +101,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ReturnsUnauthorizedWhenInProductionButNoSecuritySet()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(ConfigureTestServices)).CreateClient();
+            var client = _fixture.Factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(ConfigureTestServices);
+                builder.UseEnvironment("Production");
+            }).CreateClient();
 
             // Act
             var response = await client.GetAsync("/coreadmin");
@@ -114,7 +118,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task SuccessStatusCodeAndUsesRoleWhenInProductionAndRoleCheckSet()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
+            var client = _fixture.Factory.WithWebHostBuilder(builder =>
                     builder.ConfigureTestServices(ConfigureTestServicesWithSecurity)).CreateClient();
 
             // Act
@@ -134,8 +138,8 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var authMethod = new Func<Task<bool>>(() => { authCalled = true; return Task.FromResult(true); });
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
-                    builder.ConfigureTestServices(services => 
+            var client = _fixture.Factory.WithWebHostBuilder(builder =>
+                    builder.ConfigureTestServices(services =>
                     ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
 
             // Act
@@ -155,7 +159,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var authMethod = new Func<Task<bool>>(() => { authCalled = true; return Task.FromResult(false); });
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder =>
+            var client = _fixture.Factory.WithWebHostBuilder(builder =>
                    builder.ConfigureTestServices(services =>
                     ConfigureTestServicesWithSecurityAuthMethod(services, authMethod))).CreateClient();
 
@@ -175,7 +179,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var authMethod = new Func<IServiceProvider, Task<bool>>((serviceProvider) => { authCalled = true; return Task.FromResult(false); });
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Production");
                 builder.ConfigureTestServices(ConfigureTestServices);
                 builder.Configure(

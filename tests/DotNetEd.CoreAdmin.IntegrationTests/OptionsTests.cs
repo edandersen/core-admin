@@ -1,23 +1,25 @@
-using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
-using DotNetEd.CoreAdmin.IntegrationTests.TestApp.Entities;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Xunit;
+
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp.Entities;
+
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
 {
-    public class OptionsTests : IClassFixture<IntegrationTestsWebHostFactory<IntegrationTestStartup>>
+    public class OptionsTests : IClassFixture<TestAppFixture>
     {
-        private readonly IntegrationTestsWebHostFactory<IntegrationTestStartup> _factory;
+        private readonly TestAppFixture _fixture;
 
-        public OptionsTests(IntegrationTestsWebHostFactory<IntegrationTestStartup> factory)
+        public OptionsTests(TestAppFixture fixture)
         {
-            _factory = factory;
+            _fixture = fixture;
         }
 
         static void ConfigureTestServices(IServiceCollection services) { }
@@ -26,7 +28,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ReturnsBuiltInAssetPathWhenCdnOptionsNotSet()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServices);
             }).CreateClient();
@@ -51,7 +53,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         [Fact] public async Task IgnoreEntityTypes_DoesNotIncludeIgnoredDbSets()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(services =>
                         ConfigureTestServicesWithOptionsIgnoringDbSets(services,
@@ -72,7 +74,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             var cdnPath = "https://wow-an-amazing-cdn.com/assets";
 
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServices);
                 builder.Configure(

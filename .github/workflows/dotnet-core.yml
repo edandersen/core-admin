@@ -13,7 +13,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 7.0.x
+        dotnet-version: 8.0.x
     - name: Install dependencies
       run: dotnet restore
     - name: Build
@@ -23,11 +23,10 @@ jobs:
     - name: Build solution and generate NuGet package
       run: |
         cd src\DotNetEd.CoreAdmin
-        dotnet pack -c Release -o out  
+        dotnet pack -c Release -o out
     - name: Setup nuget
       uses: nuget/setup-nuget@v1
       with:
         nuget-api-key: ${{ secrets.NUGET_API_KEY }}
     - name: Push generated package to Nuget
       run: nuget push src\DotNetEd.CoreAdmin\out\*.nupkg -SkipDuplicate -NoSymbols -Source https://api.nuget.org/v3/index.json
-

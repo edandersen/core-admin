@@ -1,20 +1,23 @@
-using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using System;
+using System.Threading.Tasks;
+
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Threading.Tasks;
 using Xunit;
+
+using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+
 
 namespace DotNetEd.CoreAdmin.IntegrationTests
 {
-    public class BasicTests : IClassFixture<IntegrationTestsWebHostFactory<IntegrationTestStartup>>
+    public class BasicTests : IClassFixture<TestAppFixture>
     {
-        private readonly IntegrationTestsWebHostFactory<IntegrationTestStartup> _factory;
+        private readonly TestAppFixture _fixture;
 
-        public BasicTests(IntegrationTestsWebHostFactory<IntegrationTestStartup> factory)
+        public BasicTests(TestAppFixture fixture)
         {
-            _factory = factory;
+            _fixture = fixture;
         }
 
         static void ConfigureTestServices(IServiceCollection services) { }
@@ -23,7 +26,7 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         public async Task ShowsTestEntitiesOnScreenOnAdminScreen()
         {
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServices);
             }).CreateClient();
@@ -45,21 +48,26 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
         [Fact]
         public async Task ShowDataInDbSetOnScreen()
         {
-            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
-            var idGuid = Guid.NewGuid();
-            var nameGuidString = Guid.NewGuid().ToString();
-            dbContext.TestEntities.Add(new TestApp.Entities.TestEntity() { Id = idGuid, Name = nameGuidString});
-            await dbContext.SaveChangesAsync();
-
             // Arrange
-            var client = _factory.WithWebHostBuilder(builder => {
+            var client = _fixture.Factory.WithWebHostBuilder(builder => {
                 builder.UseEnvironment("Development");
                 builder.ConfigureTestServices(ConfigureTestServices);
             }).CreateClient();
 
+            var idGuid = Guid.NewGuid();
+            var nameGuidString = Guid.NewGuid().ToString();
+
+            using (var scope = _fixture.Factory.Services.CreateScope())
+            {
+                var dbContext = scope.ServiceProvider.GetRequiredService<IntegrationTestDbContext>();
+                dbContext.TestEntities.Add(new TestApp.Entities.TestEntity() { Id = idGuid, Name = nameGuidString });
+                await dbContext.SaveChangesAsync();
+            }
+
             // Act
             var response = await client.GetAsync("/coreadmindata/index/testentities");
 
+            // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             Assert.Equal("text/html; charset=utf-8",
                 response.Content.Headers.ContentType.ToString());
