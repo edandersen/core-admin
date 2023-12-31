@@ -50,7 +50,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         public static void AddCoreAdmin(this IServiceCollection services, params string[] restrictToRoles)
         {
-            
+
             var coreAdminOptions = new CoreAdminOptions();
 
             FindDbContexts(services, coreAdminOptions);
@@ -59,7 +59,7 @@ namespace Microsoft.Extensions.DependencyInjection
             {
                 coreAdminOptions.RestrictToRoles = restrictToRoles;
             }
-            
+
             services.AddSingleton(coreAdminOptions);
 
             AddLocalisation(services);
@@ -116,29 +116,26 @@ namespace Microsoft.Extensions.DependencyInjection
             }
 
             var discoveredServices = new List<DiscoveredDbSetEntityType>();
-            foreach (var service in services.ToList())
+
+            var dbContextImplementations = services
+                .Where(x => x.Lifetime is ServiceLifetime.Scoped && x.ServiceType.IsSubclassOf(typeof(DbContext)))
+                .ToList();
+
+            foreach (var dbContextImplementation in dbContextImplementations)
             {
-                if (service.ImplementationType == null)
-                    continue;
-                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)) && 
-                    !discoveredServices.Any(x => x.DbContextType == service.ImplementationType))
+                foreach (var dbSetProperty in dbContextImplementation.ServiceType.GetProperties())
                 {
-                    foreach (var dbSetProperty in service.ImplementationType.GetProperties())
+                    // looking for DbSet<Entity>
+                    if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
                     {
-                        // looking for DbSet<Entity>
-                        if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
+                        if (!options.IgnoreEntityTypes.Contains(dbSetProperty.PropertyType.GenericTypeArguments.First()))
                         {
-                            if (!options.IgnoreEntityTypes.Contains(dbSetProperty.PropertyType.GenericTypeArguments.First()))
-                            {
-                                discoveredServices.Add(new DiscoveredDbSetEntityType() { 
-                                    DbContextType = service.ImplementationType, 
-                                    DbSetType = dbSetProperty.PropertyType, 
-                                    UnderlyingType = dbSetProperty.PropertyType.GenericTypeArguments.First(), Name = dbSetProperty.Name });
-                            }
+                            discoveredServices.Add(new DiscoveredDbSetEntityType {
+                                DbContextType = dbContextImplementation.ServiceType,
+                                DbSetType = dbSetProperty.PropertyType,
+                                UnderlyingType = dbSetProperty.PropertyType.GenericTypeArguments.First(), Name = dbSetProperty.Name });
                         }
                     }
-
-                    
                 }
             }
 
