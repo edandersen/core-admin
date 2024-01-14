@@ -16,7 +16,7 @@
     <PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.AspNetCore.Mvc.Testing" Version="[8.0.0,9.0.0)" />
 
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
-    <PackageReference Include="xunit" Version="2.6.4" />
+    <PackageReference Include="xunit" Version="2.6.5" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -25,13 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net6.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net7.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net8.0" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\..\src\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
 
-    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" AdditionalProperties="TargetFramework=net6.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" AdditionalProperties="TargetFramework=net7.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" AdditionalProperties="TargetFramework=net8.0" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\DotNetEd.CoreAdmin.IntegrationTestApp\DotNetEd.CoreAdmin.IntegrationTestApp.csproj" />
   </ItemGroup>
 
   <ItemGroup>

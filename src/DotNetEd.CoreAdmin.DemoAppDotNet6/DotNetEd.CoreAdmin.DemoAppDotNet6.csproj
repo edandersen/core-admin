@@ -23,9 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net6.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net7.0" />
-    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" AdditionalProperties="TargetFramework=net8.0" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net6.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net7.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
+    <ProjectReference Condition="'$(TargetFramework)' == 'net8.0'" Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />
   </ItemGroup>
 
 </Project>
