@@ -12,3 +12,8 @@
     @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
 }
 
+@if (Model is DateOnly?)
+{
+    var date = (DateOnly?)Model;
+    @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
+}

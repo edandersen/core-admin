@@ -31,7 +31,19 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             var seedData = new List<TestEntity>();
             foreach(var i in Enumerable.Range(0, 2000))
             {
-                seedData.Add(new TestEntity() { Id = Guid.NewGuid(), Name = "Test entity " + i, Title = "Test title " + i, Price = new Random().NextDouble() });
+                seedData.Add(new TestEntity()
+                {
+                    Id = Guid.NewGuid(),
+                    Name = "Test entity " + i,
+                    Title = "Test title " + i,
+                    DateTime = DateTime.Now,
+                    DateTimeOffset = DateTimeOffset.UtcNow,
+                    Date = DateTime.Now,
+                    DateOnly = DateOnly.FromDateTime(DateTime.Now),
+                    TimeOnly = TimeOnly.FromDateTime(DateTime.Now),
+                    TimeSpan = TimeSpan.FromHours(3),
+                    Price = Random.Shared.NextDouble()
+                });
             }
 
             modelBuilder.Entity<TestEntity>().HasData(seedData);
@@ -39,7 +51,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             var seedDataImages = new List<TestEntityWithImage>();
 
             seedDataImages.Add(new TestEntityWithImage() { Id = Guid.NewGuid(), Name = "Handsome person", Image = System.IO.File.ReadAllBytes("DemoAssets/ed-100.png") });
-        
+
             modelBuilder.Entity<TestEntityWithImage>().HasData(seedDataImages);
 
             var seedDataChildren = new List<TestChildEntity>();
@@ -53,7 +65,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
             seedDataParents.Add(new TestParentEntity() { ParentId = Guid.NewGuid(), ChildId = seedDataChildren.First().Id });
             modelBuilder.Entity<TestParentEntity>().HasData(seedDataParents);
 
-            
+
         }
     }
 }

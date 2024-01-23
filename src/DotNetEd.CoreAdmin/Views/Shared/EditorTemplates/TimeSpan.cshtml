@@ -1,0 +1,2 @@
+﻿@model TimeSpan?
+@Html.TextBox("", (Model.HasValue ? Model.Value.ToString("c") : string.Empty), new { type = "time", @class = "form-control" })
