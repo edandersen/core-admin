@@ -10,10 +10,11 @@
 		<Description>Automagically add an Admin Panel to your .NET 6, .NET 7 or .NET 8 web app.</Description>
 		<Title>Core Admin Panel for ASP.NET Core</Title>
 		<Authors>edandersen</Authors>
-		<Copyright>Copyright © 2024 Ed Andersen</Copyright>
+		<Copyright>Copyright © 2022 Ed Andersen</Copyright>
 		<PackageProjectUrl>https://github.com/edandersen/core-admin</PackageProjectUrl>
 		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
 		<Nullable>disable</Nullable>
+		<IsPackable>true</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -44,9 +45,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.EntityFrameworkCore" Version="[6.0.0,7.0.0)" />
-		<PackageReference Condition="'$(TargetFramework)' == 'net7.0'" Include="Microsoft.EntityFrameworkCore" Version="[7.0.0,8.0.0)" />
-		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore" Version="[8.0.0,9.0.0)" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net7.0'" Include="Microsoft.EntityFrameworkCore" Version="7.0.0" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
 		<PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="7.2.0" />
 	</ItemGroup>
 
