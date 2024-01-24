@@ -41,7 +41,7 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
                     Date = DateTime.Now,
                     DateOnly = DateOnly.FromDateTime(DateTime.Now),
                     TimeOnly = TimeOnly.FromDateTime(DateTime.Now),
-                    TimeSpan = TimeSpan.FromHours(3),
+                    TimeSpan = new TimeSpan(3, 2, 1, 44, 55555),
                     Price = Random.Shared.NextDouble()
                 });
             }

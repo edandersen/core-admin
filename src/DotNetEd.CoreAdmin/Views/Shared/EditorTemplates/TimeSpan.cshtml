@@ -1,2 +1,2 @@
 ﻿@model TimeSpan?
-@Html.TextBox("", (Model.HasValue ? Model.Value.ToString("c") : string.Empty), new { type = "time", @class = "form-control" })
+@Html.TextBox("", Model?.Ticks, new { type = "number", @class = "text-box single-line form-control number-form-control", max = Int64.MaxValue, min = Int64.MinValue  })
