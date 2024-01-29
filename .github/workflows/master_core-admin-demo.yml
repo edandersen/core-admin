@@ -48,5 +48,5 @@ jobs:
         with:
           app-name: 'core-admin-demo-2'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_21D1316B63DB4C32B763C419FDE7FA79 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
           package: .
