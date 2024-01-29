@@ -1,5 +1,5 @@
 ﻿html[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar {
-    background-color: #3b3b3b;
+    background-color: transparent;
     border-color: #515151;
 }
 
@@ -17,7 +17,7 @@ html[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar .separator {
 }
 
 html[data-bs-theme="dark"] .EasyMDEContainer .CodeMirror {
-    background-color: #3b3b3b;
+    background-color: transparent;
     color: #ffffff;
     border-color: #515151;
 }
