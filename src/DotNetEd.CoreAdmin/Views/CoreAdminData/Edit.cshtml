@@ -6,7 +6,7 @@
     Layout = "_CoreAdminLayout";
 }
 
-<h1 class="display-4">@ViewBag.DbSetName - @_localizer["Edit"]</h1>
+<h1 class="mt-3">@ViewBag.DbSetName - @_localizer["Edit"]</h1>
 
 
 @using (Html.BeginForm("EditEntityPost", 
@@ -22,11 +22,9 @@ new { enctype = "multipart/form-data" }))
     @Html.EditorForModel("DefaultEntity")
 
     <div class="row">
-        <div class="col-md-12">
-            <button type="submit" class="btn btn-primary">@_localizer["Edit"]</button>
-            <p class="mt-2">
+        <div class="col-md-12 my-3 text-end">
             @Html.ActionLink(@_localizer["GoBack"], "Index", new { Id = ViewBag.DbSetName })
-            </p>
+            <button type="submit" class="btn btn-primary ms-3">@_localizer["Edit"]</button>
         </div>
     </div>
 

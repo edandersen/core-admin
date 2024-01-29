@@ -35,7 +35,7 @@ else
 
         if (!relationships.Keys.Contains(prop.PropertyName))
         {
-            <div class="form-group row">
+            <div class="mb-3 row">
             @if (prop.HideSurroundingHtml)
             {
                 @Html.Editor(prop.PropertyName) 
@@ -55,7 +55,7 @@ else
         } 
         else
         {
-            <div class="form-group row">
+            <div class="mb-3 row">
             @if (prop.HideSurroundingHtml)
             {
                 @Html.DropDownList(prop.PropertyName, new SelectList(relationships[prop.PropertyName],"Key", "Value"), new {@class = "form-control"})
