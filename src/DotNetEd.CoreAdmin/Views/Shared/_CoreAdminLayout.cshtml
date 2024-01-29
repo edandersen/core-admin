@@ -77,6 +77,15 @@
     </div>
 
     <script src="@assetsPath/js/bootstrap.bundle.min.js"></script>
+    <script src="@assetsPath/js/aspnet-validation.min.js"></script>
+    <script>
+        var v = new aspnetValidation.ValidationService();
+        v.ValidationInputCssClassName = 'is-invalid';
+        //v.ValidationInputValidCssClassName = 'is-valid';
+        v.ValidationMessageCssClassName = 'invalid-feedback';
+        //v.ValidationMessageValidCssClassName = 'valid-feedback';
+        v.bootstrap();
+    </script>
     <script src="@assetsPath/js/mvc-grid/mvc-grid.js"></script>
     <script src="@assetsPath/js/navbar.js"></script>
 

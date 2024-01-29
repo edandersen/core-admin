@@ -74,7 +74,7 @@ body.sb-sidenav-toggled #sidebar-wrapper {
 }
 
 .sidebar {
-    position: fixed;<
+    position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
@@ -135,17 +135,6 @@ body.sb-sidenav-toggled #sidebar-wrapper {
         border-radius: 0;
     }
 
-.form-control-dark {
-    color: #fff;
-    background-color: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.1);
-}
-
-    .form-control-dark:focus {
-        border-color: transparent;
-        box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
-    }
-
 h1.display-4 {
     padding-top: 20px;
 }
@@ -153,6 +142,10 @@ h1.display-4 {
 /*
  * Color Modes
  */
+.bd-mode-toggle {
+    z-index: 1000;
+}
+
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
 }
