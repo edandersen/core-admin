@@ -36,9 +36,13 @@ Add this line before ```var app = builder.Build();``` and after your DbContexts 
 builder.Services.AddCoreAdmin();
 ```
 
-You need to make sure Endpoints are enabled as they don't appear to be in the default templates. For example, add the following before ```app.Run();```:
+You need to make sure Endpoints are enabled as they don't appear to be in the default templates.
+Also [static files middleware](https://learn.microsoft.com/en-us/aspnet/core/fundamentals/static-files) has to be enabled.
+
+For example, add the following before ```app.Run();```:
 
 ```csharp
+app.UseStaticFiles();
 app.MapDefaultControllerRoute();
 ```
 
