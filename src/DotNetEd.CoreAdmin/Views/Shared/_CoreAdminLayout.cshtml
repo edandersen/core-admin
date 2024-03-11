@@ -25,20 +25,23 @@
 
     <meta name="color-scheme" content="light dark" />
 
-    <link rel="stylesheet" class="meta-css-dark" href="@assetsPath/css/bootstrap-dark.min.css" media="(prefers-color-scheme: dark)" />
-    <link rel="stylesheet" class="meta-css-light" href="@assetsPath/css/bootstrap.min.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-    <link rel="stylesheet" class="meta-css-dark" href="@assetsPath/css/mvc-grid/mvc-grid-dark.css" media="(prefers-color-scheme: dark)" />
-    <link rel="stylesheet" class="meta-css-light" href="@assetsPath/css/mvc-grid/mvc-grid.css" media="(prefers-color-scheme: no-preference), (prefers-color-scheme: light)" />
-    <link rel="stylesheet" href="@assetsPath/css/easymde/easymde.min.css" />
-    <link rel="stylesheet" class="meta-css-dark" href="@assetsPath/css/easymde/easymde-dark.min.css" media="(prefers-color-scheme: dark)" />
-    <link rel="stylesheet" href="@assetsPath/css/jquery-ui.min.css" />
-    <link rel="stylesheet" href="@assetsPath/css/site.css" />
+    <link rel="stylesheet" href="@assetsPath/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="@assetsPath/css/mvc-grid/mvc-grid.css" />
+    <link rel="stylesheet" href="@assetsPath/css/mvc-grid/mvc-grid-dark.css" />
+    <link rel="stylesheet" href="@assetsPath/css/easymde/easymde.css" />
+    <link rel="stylesheet" href="@assetsPath/css/easymde/easymde-dark.css" />
+    <link rel="stylesheet" href="@assetsPath/css/style.css" />
+
+    <script src="@assetsPath/js/color-modes.js"></script>
 </head>
 <body>
+    <!-- Light / Dark theme toggle -->
+    @Html.Partial("~/Views/Shared/Components/ThemeToggle.cshtml")
+
     <!-- Navbar -->
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap justify-content-start p-0 py-3 shadow">
         <div class="navbar-brand sidebar-width">
-            <button id="sidebarToggle" class="navbar-toggler ml-2 collapsed" type="button">
+            <button id="sidebarToggle" class="navbar-toggler mx-2 collapsed" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <a class="mr-0 pl-1" href="@Url.Action("Index", "CoreAdmin")">@options?.Title</a>
@@ -46,7 +49,7 @@
     </nav>
 
     <!-- Sidebar -->
-    <nav id="sidebar-wrapper" class="sidebar-width d-md-block bg-light sidebar sidebar-wrapper">
+    <nav id="sidebar-wrapper" class="sidebar-width d-md-block sidebar sidebar-wrapper border border-right bg-body-tertiary">
         <div class="sidebar-sticky pt-3">
             @await Component.InvokeAsync("CoreAdminMenu")
         </div>
@@ -73,13 +76,18 @@
         </div>
     </div>
 
-    <script src="@assetsPath/js/jquery.min.js"></script>
     <script src="@assetsPath/js/bootstrap.bundle.min.js"></script>
+    <script src="@assetsPath/js/aspnet-validation.min.js"></script>
+    <script>
+        var v = new aspnetValidation.ValidationService();
+        v.ValidationInputCssClassName = 'is-invalid';
+        //v.ValidationInputValidCssClassName = 'is-valid';
+        v.ValidationMessageCssClassName = 'invalid-feedback';
+        //v.ValidationMessageValidCssClassName = 'valid-feedback';
+        v.bootstrap();
+    </script>
     <script src="@assetsPath/js/mvc-grid/mvc-grid.js"></script>
-    <script src="@assetsPath/js/site.js" asp-append-version="true"></script>
-    <script src="@assetsPath/js/jquery.validate.js"></script>
-    <script src="@assetsPath/js/jquery.validate.unobtrusive.min.js"></script>
-    <script src="@assetsPath/js/jquery-ui.min.js"></script>
+    <script src="@assetsPath/js/navbar.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

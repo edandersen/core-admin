@@ -1,35 +1,35 @@
-﻿.EasyMDEContainer .editor-toolbar {
-    background-color: #3b3b3b;
+﻿html[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar {
+    background-color: transparent;
     border-color: #515151;
 }
 
-.EasyMDEContainer .editor-toolbar button {
+html[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar button {
     color: #ffffff;
 }
 
-.editor-toolbar button.active, .editor-toolbar button:hover {
+html[data-bs-theme="dark"] .editor-toolbar button.active, .editor-toolbar button:hover {
     background-color: rgba(0, 0, 0, 0.2);
     border-color: #515151;
 }
 
-.EasyMDEContainer .editor-toolbar .separator {
+html[data-bs-theme="dark"] .EasyMDEContainer .editor-toolbar .separator {
     border-color: #515151;
 }
 
-.EasyMDEContainer .CodeMirror {
-    background-color: #3b3b3b;
+html[data-bs-theme="dark"] .EasyMDEContainer .CodeMirror {
+    background-color: transparent;
     color: #ffffff;
     border-color: #515151;
 }
 
-.EasyMDEContainer .CodeMirror-cursor {
+html[data-bs-theme="dark"] .EasyMDEContainer .CodeMirror-cursor {
     border-color: #ffffff;
 }
 
-.CodeMirror-selected {
+html[data-bs-theme="dark"] .CodeMirror-selected {
     background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
-.EasyMDEContainer .editor-preview {
+html[data-bs-theme="dark"] .EasyMDEContainer .editor-preview {
     color: #000;
 }

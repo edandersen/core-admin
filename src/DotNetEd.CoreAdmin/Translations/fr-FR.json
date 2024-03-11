@@ -6,5 +6,8 @@
   "GoBack": "Retour",
   "Edit": "Modifier",
   "Delete": "Supprimer",
-  "DeleteConfirm": "Êtes-vous sûr de vouloir le supprimer ?"
+  "DeleteConfirm": "Êtes-vous sûr de vouloir le supprimer ?",
+  "Auto": "Auto",
+  "Dark": "Sombre",
+  "Light": "Clair"
 }

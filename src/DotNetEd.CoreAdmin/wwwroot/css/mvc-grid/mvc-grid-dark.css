@@ -13,48 +13,48 @@
     font-family: GridGlyphs;
 }
 
-.mvc-grid {
+html[data-bs-theme="dark"] .mvc-grid {
     line-height: 1.25em;
     position: relative;
     overflow-x: auto;
     font-size: 1rem;
 }
 
-.mvc-grid > table {
+html[data-bs-theme="dark"] .mvc-grid > table {
     border-collapse: collapse;
     max-width: 100%;
     width: 100%;
 }
 
-.mvc-grid > table > thead > tr > th {
+html[data-bs-theme="dark"] .mvc-grid > table > thead > tr > th {
     background-clip: padding-box;
     background-color: #222222;
     position: relative;
 }
 
-.mvc-grid > table > thead > tr > th,
-.mvc-grid > table > tbody > tr > td,
-.mvc-grid > table > tfoot > tr > td {
+html[data-bs-theme="dark"] .mvc-grid > table > thead > tr > th,
+html[data-bs-theme="dark"] .mvc-grid > table > tbody > tr > td,
+html[data-bs-theme="dark"] .mvc-grid > table > tfoot > tr > td {
     border: 1px solid #495057;
     padding: 0.75em;
 }
 
-.mvc-grid .sortable {
+html[data-bs-theme="dark"] .mvc-grid .sortable {
     padding-right: 2.75em;
     cursor: pointer;
 }
 
-.mvc-grid-hidden,
-.mvc-grid-options {
+html[data-bs-theme="dark"] .mvc-grid-hidden,
+html[data-bs-theme="dark"] .mvc-grid-options {
     display: none;
 }
 
-.mvc-grid-title {
+html[data-bs-theme="dark"] .mvc-grid-title {
     display: inline-block;
 }
 
-.mvc-grid-sort,
-.mvc-grid-filter {
+html[data-bs-theme="dark"] .mvc-grid-sort,
+html[data-bs-theme="dark"] .mvc-grid-filter {
     background-color: rgba(0, 0, 0, 0.03);
     transition: background-color 0.5s;
     font-family: GridGlyphs;
@@ -69,40 +69,40 @@
     top: 0;
 }
 
-.mvc-grid-filter:focus,
-.mvc-grid-filter:hover {
+html[data-bs-theme="dark"] .mvc-grid-filter:focus,
+html[data-bs-theme="dark"] .mvc-grid-filter:hover {
     background-color: rgba(0, 0, 0, 0.06);
     color: inherit;
 }
 
-.mvc-grid-filter::before {
+html[data-bs-theme="dark"] .mvc-grid-filter::before {
     content: "\0041";
 }
 
-.mvc-grid-filter.applied::before {
+html[data-bs-theme="dark"] .mvc-grid-filter.applied::before {
     content: "\0042";
 }
 
-.mvc-grid-sort {
+html[data-bs-theme="dark"] .mvc-grid-sort {
     background: transparent;
     font-weight: normal;
     transition: none;
 }
 
-.mvc-grid-sort::after {
+html[data-bs-theme="dark"] .mvc-grid-sort::after {
     font-size: 0.9em;
     content: "\0044";
     opacity: 0.15;
 }
 
-.mvc-grid-sort::before {
+html[data-bs-theme="dark"] .mvc-grid-sort::before {
     margin-right: -0.5em;
     font-size: 0.9em;
     content: "\0043";
     opacity: 0.15;
 }
 
-.mvc-grid-sort span {
+html[data-bs-theme="dark"] .mvc-grid-sort span {
     position: absolute;
     font-weight: bold;
     text-align: left;
@@ -113,20 +113,20 @@
     top: 40%;
 }
 
-.mvc-grid .desc .mvc-grid-sort::after,
-.mvc-grid .asc .mvc-grid-sort::before {
+html[data-bs-theme="dark"] .mvc-grid .desc .mvc-grid-sort::after,
+html[data-bs-theme="dark"] .mvc-grid .asc .mvc-grid-sort::before {
     opacity: 0.5;
 }
 
-.mvc-grid-row-filters .filterable {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .filterable {
     padding: 0.25em;
 }
 
-.mvc-grid-row-filters th div {
+html[data-bs-theme="dark"] .mvc-grid-row-filters th div {
     display: flex;
 }
 
-.mvc-grid-row-filters .mvc-grid-value {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .mvc-grid-value {
     background-color: #ffffff;
     border: 1px solid #cccccc;
     text-overflow: ellipsis;
@@ -137,47 +137,47 @@
     flex: 1;
 }
 
-.mvc-grid-row-filters select.mvc-grid-value {
+html[data-bs-theme="dark"] .mvc-grid-row-filters select.mvc-grid-value {
     padding: 0 0.2em;
 }
 
-.mvc-grid-row-filters .mvc-grid-value.invalid {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .mvc-grid-value.invalid {
     outline-color: #dc3545;
 }
 
-.mvc-grid-row-filters .mvc-grid-value::placeholder {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .mvc-grid-value::placeholder {
     color: #bbbbbb;
 }
 
-.mvc-grid-row-filters .mvc-grid-value::-ms-input-placeholder {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .mvc-grid-value::-ms-input-placeholder {
     color: #bbbbbb;
 }
 
-.mvc-grid-row-filters .mvc-grid-filter {
+html[data-bs-theme="dark"] .mvc-grid-row-filters .mvc-grid-filter {
     border: 1px solid #cccccc;
     position: static;
     height: 2.25em;
     width: 2.25em;
 }
 
-.mvc-grid-excel-mode .filterable {
+html[data-bs-theme="dark"] .mvc-grid-excel-mode .filterable {
     padding-right: 3.5em;
 }
 
-.mvc-grid-excel-mode .sortable.filterable {
+html[data-bs-theme="dark"] .mvc-grid-excel-mode .sortable.filterable {
     padding-right: 5.5em;
 }
 
-.mvc-grid-excel-mode .filterable .mvc-grid-sort,
-.mvc-grid-header-mode .filterable .mvc-grid-sort {
+html[data-bs-theme="dark"] .mvc-grid-excel-mode .filterable .mvc-grid-sort,
+html[data-bs-theme="dark"] .mvc-grid-header-mode .filterable .mvc-grid-sort {
     right: 2.75em;
 }
 
-.mvc-grid-header-mode .filterable {
+html[data-bs-theme="dark"] .mvc-grid-header-mode .filterable {
     padding: 0 2.75em 0 0;
 }
 
-.mvc-grid-header-mode .mvc-grid-value {
+html[data-bs-theme="dark"] .mvc-grid-header-mode .mvc-grid-value {
     background-color: #222222;
     padding: 0.75em;
     font: inherit;
@@ -185,18 +185,18 @@
     margin: 0;
 }
 
-.mvc-grid-header-mode .mvc-grid-filter {
+html[data-bs-theme="dark"] .mvc-grid-header-mode .mvc-grid-filter {
     position: absolute;
     width: 2.75em;
     border: none;
     height: 100%;
 }
 
-.mvc-grid-header-mode .sortable .mvc-grid-value {
+html[data-bs-theme="dark"] .mvc-grid-header-mode .sortable .mvc-grid-value {
     padding-right: 2.5em;
 }
 
-.mvc-grid-popup {
+html[data-bs-theme="dark"] .mvc-grid-popup {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.176);
     background-clip: padding-box;
     max-width: calc(100% - 2em);
@@ -210,11 +210,11 @@
     margin: 1em;
 }
 
-.mvc-grid-popup.mvc-grid-guid-filter {
+html[data-bs-theme="dark"] .mvc-grid-popup.mvc-grid-guid-filter {
     min-width: 20em;
 }
 
-.mvc-grid-popup .popup-arrow {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-arrow {
     border-right: 7px solid transparent;
     border-left: 7px solid transparent;
     border-bottom: 8px solid #ffffff;
@@ -224,7 +224,7 @@
     top: -8px;
 }
 
-.mvc-grid-popup .popup-arrow::after {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-arrow::after {
     border-right: 8px solid transparent;
     border-left: 8px solid transparent;
     border-bottom: 9px solid #cccccc;
@@ -235,26 +235,26 @@
     top: -1px;
 }
 
-.mvc-grid-popup .popup-content {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-content {
     padding: 0.5em;
 }
 
-.mvc-grid-popup .popup-group {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-group {
     padding: 0.2em;
 }
 
-.mvc-grid-popup .popup-operator {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-operator {
     text-align: center;
 }
 
-.mvc-grid-popup .popup-actions {
+html[data-bs-theme="dark"] .mvc-grid-popup .popup-actions {
     padding: 0.4em 0 0.2em;
     text-align: center;
 }
 
-.mvc-grid-popup .mvc-grid-value,
-.mvc-grid-popup .mvc-grid-method,
-.mvc-grid-popup .mvc-grid-operator {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-value,
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-method,
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-operator {
     border: 1px solid #555;
     background-color: #333;
     box-sizing: border-box;
@@ -264,26 +264,26 @@
     width: 100%;
 }
 
-.mvc-grid-popup .mvc-grid-value[multiple] {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-value[multiple] {
     overflow-y: auto;
     height: 8em;
 }
 
-.mvc-grid-popup .mvc-grid-operator {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-operator {
     width: auto;
 }
 
-.mvc-grid-popup input.mvc-grid-value {
+html[data-bs-theme="dark"] .mvc-grid-popup input.mvc-grid-value {
     text-overflow: ellipsis;
     padding: 0 0.5em;
 }
 
-.mvc-grid-popup .mvc-grid-value.invalid {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-value.invalid {
     outline-color: #dc3545;
 }
 
-.mvc-grid-popup .mvc-grid-apply,
-.mvc-grid-popup .mvc-grid-cancel {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-apply,
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-cancel {
     border: 1px solid #ffffff;
     padding: 0.25em;
     cursor: pointer;
@@ -292,28 +292,28 @@
     outline: 0;
 }
 
-.mvc-grid-popup .mvc-grid-apply {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-apply {
     background-color: #28a745;
     border-color: #28a745;
     margin-right: 0.3em;
     font-weight: bold;
 }
 
-.mvc-grid-popup .mvc-grid-apply:focus {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-apply:focus {
     box-shadow: 0 0 0 0.2em rgba(40, 167, 69, 0.5);
 }
 
-.mvc-grid-popup .mvc-grid-cancel {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-cancel {
     background-color: #dc3545;
     border-color: #dc3545;
     margin-left: 0.3em;
 }
 
-.mvc-grid-popup .mvc-grid-cancel:focus {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-cancel:focus {
     box-shadow: 0 0 0 0.2em rgba(220, 53, 69, 0.5);
 }
 
-.mvc-grid-popup .mvc-grid-column {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-column {
     box-sizing: border-box;
     align-items: center;
     cursor: pointer;
@@ -323,38 +323,38 @@
     margin: 0;
 }
 
-.mvc-grid-popup .mvc-grid-column span {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-column span {
     padding: 0 0.5em;
 }
 
-.mvc-grid-popup .mvc-grid-dropzone:first-child {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-dropzone:first-child {
     padding-top: 0.5em;
 }
 
-.mvc-grid-popup .mvc-grid-dropzone:last-child {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-dropzone:last-child {
     padding-bottom: 0.5em;
 }
 
-.mvc-grid-popup .mvc-grid-dragging .mvc-grid-column {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-dragging .mvc-grid-column {
     padding: 0 0.5em;
 }
 
-.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone {
     background-color: #c4daff;
     padding: 0.5em;
     opacity: 0.4;
 }
 
-.mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone.hover {
+html[data-bs-theme="dark"] .mvc-grid-popup .mvc-grid-dragging .mvc-grid-dropzone.hover {
     background-color: #5a90ea;
 }
 
-.mvc-grid-pager,
-.mvc-grid-empty-row {
+html[data-bs-theme="dark"] .mvc-grid-pager,
+html[data-bs-theme="dark"] .mvc-grid-empty-row {
     text-align: center;
 }
 
-.mvc-grid-pager button {
+html[data-bs-theme="dark"] .mvc-grid-pager button {
     background-color: #375a7f;
     border: 1px solid #375a7f;
     box-sizing: content-box;
@@ -367,24 +367,24 @@
     border-radius: 0.25rem;
 }
 
-.mvc-grid-pager button:focus,
-.mvc-grid-pager button:hover {
+html[data-bs-theme="dark"] .mvc-grid-pager button:focus,
+html[data-bs-theme="dark"] .mvc-grid-pager button:hover {
     background-color: #2b4764;
     border-color: #2b4764;
     color: #fafafa;
 }
 
-.mvc-grid-pager .active,
-.mvc-grid-pager .active:focus,
-.mvc-grid-pager .active:hover {
+html[data-bs-theme="dark"] .mvc-grid-pager .active,
+html[data-bs-theme="dark"] .mvc-grid-pager .active:focus,
+html[data-bs-theme="dark"] .mvc-grid-pager .active:hover {
     background-color: #2b4764;
     border-color: #2b4764;
     color: #fafafa;
 }
 
-.mvc-grid-pager .disabled,
-.mvc-grid-pager .disabled:focus,
-.mvc-grid-pager .disabled:hover {
+html[data-bs-theme="dark"] .mvc-grid-pager .disabled,
+html[data-bs-theme="dark"] .mvc-grid-pager .disabled:focus,
+html[data-bs-theme="dark"] .mvc-grid-pager .disabled:hover {
     background-color: #375a7f;
     cursor: not-allowed;
     color: #fafafa;
@@ -392,18 +392,18 @@
     opacity: 0.65;
 }
 
-.mvc-grid-page-sizes {
+html[data-bs-theme="dark"] .mvc-grid-page-sizes {
     display: inline-block;
     margin-left: 0.5em;
 }
 
-.mvc-grid-page-sizes select {
+html[data-bs-theme="dark"] .mvc-grid-page-sizes select {
     border: 1px solid #dddddd;
     padding: 0.5em;
     font: inherit;
 }
 
-.mvc-grid-page-sizes input {
+html[data-bs-theme="dark"] .mvc-grid-page-sizes input {
     border: 1px solid #dddddd;
     box-sizing: content-box;
     text-align: center;
@@ -412,7 +412,7 @@
     width: 2.5em;
 }
 
-.mvc-grid-loader {
+html[data-bs-theme="dark"] .mvc-grid-loader {
     background-color: rgba(0, 0, 0, 0.3);
     justify-content: center;
     transition: opacity 1s;
@@ -428,11 +428,11 @@
     top: 0;
 }
 
-.mvc-grid-loading {
+html[data-bs-theme="dark"] .mvc-grid-loading {
     opacity: 1;
 }
 
-.mvc-grid-loading > div > div {
+html[data-bs-theme="dark"] .mvc-grid-loading > div > div {
     animation: loader-points 1.4s infinite ease-in-out both;
     background-color: #f5f5f5;
     display: inline-block;
@@ -442,11 +442,11 @@
     width: 1.5em;
 }
 
-.mvc-grid-loading > div > div:nth-child(1) {
+html[data-bs-theme="dark"] .mvc-grid-loading > div > div:nth-child(1) {
     animation-delay: -0.32s;
 }
 
-.mvc-grid-loading > div > div:nth-child(2) {
+html[data-bs-theme="dark"] .mvc-grid-loading > div > div:nth-child(2) {
     animation-delay: -0.16s;
 }
 

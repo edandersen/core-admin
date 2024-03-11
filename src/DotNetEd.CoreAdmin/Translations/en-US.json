@@ -6,5 +6,8 @@
   "GoBack": "Go back",
   "Edit": "Edit",
   "Delete": "Delete",
-  "DeleteConfirm": "Are you sure you want to delete this?"
+  "DeleteConfirm": "Are you sure you want to delete this?",
+  "Auto": "Auto",
+  "Dark": "Dark",
+  "Light": "Light"
 }
