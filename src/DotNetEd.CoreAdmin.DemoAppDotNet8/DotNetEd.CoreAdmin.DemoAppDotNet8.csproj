@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
@@ -17,10 +17,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Condition="'$(TargetFramework)' == 'net6.0'" Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.0" />
-     <PackageReference Condition="'$(TargetFramework)' == 'net7.0'" Include="Microsoft.EntityFrameworkCore.InMemory" Version="7.0.0" />
+     <PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.2" />
  
-	</ItemGroup>
+    </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DotNetEd.CoreAdmin\DotNetEd.CoreAdmin.csproj" />

@@ -14,10 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 		.github\workflows\dotnet-core-pull-request.yml = .github\workflows\dotnet-core-pull-request.yml
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+		.github\workflows\master_core-admin-demo.yml = .github\workflows\master_core-admin-demo.yml
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.DemoAppDotNet6", "src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet6.csproj", "{A3A57016-920D-4173-B054-891E42769923}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetEd.CoreAdmin.DemoAppDotNet8", "src\DotNetEd.CoreAdmin.DemoAppDotNet8\DotNetEd.CoreAdmin.DemoAppDotNet8.csproj", "{6C4638AD-33BA-4FFD-8608-45F081F17467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +38,10 @@ Global
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DEFCA510-EDB9-4D6C-8DF6-D006504C2046}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A3A57016-920D-4173-B054-891E42769923}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C4638AD-33BA-4FFD-8608-45F081F17467}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C4638AD-33BA-4FFD-8608-45F081F17467}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C4638AD-33BA-4FFD-8608-45F081F17467}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C4638AD-33BA-4FFD-8608-45F081F17467}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
