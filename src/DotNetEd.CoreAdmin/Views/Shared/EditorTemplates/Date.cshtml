@@ -1,14 +1,28 @@
 ﻿@model object
 
-@if (Model is DateTime?)
+@switch (Model)
 {
-    var date = (DateTime?)Model;
-    @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
-}
+    case DateTime dateTimeValue:
+    {
+        @Html.TextBox("", dateTimeValue.ToString("yyyy-MM-dd"), new { type = "date", @class = "datePicker form-control" });
+        break;
+    }
 
-@if (Model is DateTimeOffset?)
-{
-    var date = (DateTimeOffset?)Model;
-    @Html.TextBox("", (date.HasValue ? date.Value.ToString("yyyy-MM-dd") : string.Empty), new { type = "date", @class = "datePicker form-control" })
-}
+    case DateTimeOffset dateTimeOffsetValue:
+    {
+        @Html.TextBox("", dateTimeOffsetValue.ToString("yyyy-MM-dd"), new { type = "date", @class = "datePicker form-control" });
+        break;
+    }
 
+    case DateOnly dateOnlyValue:
+    {
+        @Html.TextBox("", dateOnlyValue.ToString("yyyy-MM-dd"), new { type = "date", @class = "datePicker form-control" });
+        break;
+    }
+
+    default:
+    {
+        @Html.TextBox("", null, new { type = "date", @class = "datePicker form-control" })
+        break;
+    }
+}

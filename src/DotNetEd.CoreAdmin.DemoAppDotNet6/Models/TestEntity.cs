@@ -12,17 +12,17 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
         public Guid Id { get; set; }
 
         [Required]
-        
+
         [MaxLength(100)]
         public string? Name { get; set; }
 
         [Required]
-        
+
         [MaxLength(100)]
         public string? Title { get; set; }
 
         [DataType(DataType.MultilineText)]
-        
+
         [MaxLength(300)]
         public string? Description { get; set; }
 
@@ -39,6 +39,10 @@ namespace DotNetEd.CoreAdmin.DemoApp.Models
 
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+
+        public DateOnly DateOnly { get; set; }
+        public TimeOnly TimeOnly { get; set; }
+        public TimeSpan TimeSpan { get; set; }
 
         public DateTimeOffset DateTimeOffset { get; set; }
 
