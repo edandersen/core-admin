@@ -1,6 +1,6 @@
-# Core Admin Panel for ASP.NET Core & .NET 6 / .NET 7
+# Core Admin Panel for ASP.NET Core & .NET 8
 
-[![.NET 6](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
+[![.NET 8](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml/badge.svg)](https://github.com/edandersen/core-admin/actions/workflows/dotnet-core.yml)
 
 > [🤩 Click here to view a live demo on a really slow free Azure Web App instance that might go down at any time!](https://core-admin-demo-2.azurewebsites.net/)
 
