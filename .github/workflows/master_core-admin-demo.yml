@@ -21,7 +21,7 @@ jobs:
           dotnet-version: 8.0.x
 
       - name: dotnet publish
-        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet6\DotNetEd.CoreAdmin.DemoAppDotNet8.csproj -c Release -o "${{env.DOTNET_ROOT}}\myapp" --framework net8.0
+        run: dotnet publish src\DotNetEd.CoreAdmin.DemoAppDotNet8\DotNetEd.CoreAdmin.DemoAppDotNet8.csproj -c Release -o "${{env.DOTNET_ROOT}}\myapp" --framework net8.0
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
