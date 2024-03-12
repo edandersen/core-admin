@@ -1,4 +1,5 @@
-﻿@using DotNetEd.CoreAdmin
+﻿@using System.Collections
+@using DotNetEd.CoreAdmin
 @using Microsoft.Extensions.Localization
 @using NonFactors.Mvc.Grid
 @using System.Linq.Expressions
@@ -61,7 +62,27 @@
                         var base64 = ImageUtils.WebBase64EncodeImageByteArrayOrNull(lambda.Compile().Invoke(value));
                         return base64 == null ? string.Empty : $"<img height='48' src='{base64}'>";
                     } ).Encoded(false);
-            }   
+            }
+            else if (entityProperty.PropertyType.IsAssignableTo(typeof(IEnumerable)) && entityProperty.PropertyType != typeof(string))
+            {
+                var lambda = Expression.Lambda<Func<object, object>>(property, entity);
+
+                columns.Add(lambda).Titled(entityProperty.Name)
+                    .RenderedAs((value) =>
+                    {
+                        var finalString = "<ul>";
+                        try
+                        {
+                            foreach (var raw in (IEnumerable)entityProperty.GetValue(value)!)
+                            {
+                                finalString += $"<li><a href=\"{Url.Action("Index", new { id = raw.GetType().Name })}\">{raw}</a></li>";
+                            }
+                        }
+                        catch(NullReferenceException) {}
+                        finalString += "</ul>";
+                        return finalString;
+                    } ).Encoded(false);
+            }
              /*  if (entityProperty.PropertyType == typeof(Guid))
             {
                 var lambda = Expression.Lambda<Func<object,Guid>>(property, entity);
