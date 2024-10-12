@@ -1,0 +1,13 @@
+{
+  "Create": "创建",
+  "AccessDatabaseEntries": "访问左侧的数据库条目.",
+  "DevelopmentModeMessage": "您正在开发模式下运行。尚未在核心管理员上设置安全性。在设置安全性之前,核心管理员在非开发环境中将无法访问。请参阅中的文档 https://github.com/edandersen/core-admin.",
+  "CreateNew": "新建",
+  "GoBack": "返回",
+  "Edit": "编辑",
+  "Delete": "删除",
+  "DeleteConfirm": "是否确实要删除此?",
+  "Auto": "自动",
+  "Dark": "暗色",
+  "Light": "亮色"
+}
