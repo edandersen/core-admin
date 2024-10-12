@@ -32,9 +32,9 @@ namespace DotNetEd.CoreAdmin
 
         public IEnumerable<LocalizedString> GetAllStrings(bool includeParentCultures)
         {
-            var cultureKeys = httpContextAccessor.HttpContext.Request.Headers["Accept-Language"];
-
-            foreach(var culture in cultureKeys)
+            //var cultureKeys = httpContextAccessor.HttpContext.Request.Headers["Accept-Language"];
+            var cultureKeys = httpContextAccessor.HttpContext.Request.GetTypedHeaders().AcceptLanguage;
+            foreach (var culture in cultureKeys)
             {
                 var fileName = $"{culture}.json";
                 var key = translations.Keys.FirstOrDefault(k => k.EndsWith(fileName));
