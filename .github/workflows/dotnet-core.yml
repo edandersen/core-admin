@@ -1,4 +1,4 @@
-name: .NET 8
+name: .NET 10
 
 on:
   push:
