@@ -89,7 +89,7 @@ namespace DotNetEd.CoreAdmin.Controllers
 
                             if (f.ForeignKeys.Count == 1)
                             {
-                                var typeOfChild = f.ForeignKeys[0];
+                                var typeOfChild = f.ForeignKeys.First();
 
                                 var propsOnDbContext = dbContextObject.GetType().GetProperties();
 

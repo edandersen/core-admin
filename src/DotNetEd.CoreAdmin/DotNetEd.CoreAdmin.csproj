@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0</TargetFrameworks>
+		<TargetFrameworks>net10.0</TargetFrameworks>
 		<AddRazorSupportForMvc>true</AddRazorSupportForMvc>
 		<PreserveCompilationContext>false</PreserveCompilationContext>
 		<SuppressDependenciesWhenPacking>false</SuppressDependenciesWhenPacking>
 		<PackageId>CoreAdmin</PackageId>
-		<PackageVersion>3.0.0</PackageVersion>
-		<Description>Automagically add an Admin Panel to your .NET 8 web app.</Description>
+		<PackageVersion>4.0.0</PackageVersion>
+		<Description>Automagically add an Admin Panel to your .NET 10 web app.</Description>
 		<Title>Core Admin Panel for ASP.NET Core</Title>
 		<Authors>edandersen</Authors>
-		<Copyright>Copyright ©2024 Ed Andersen</Copyright>
+		<Copyright>Copyright ©2026 Ed Andersen</Copyright>
 		<PackageProjectUrl>https://github.com/edandersen/core-admin</PackageProjectUrl>
 		<PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
 		<Nullable>disable</Nullable>
@@ -45,7 +45,8 @@
 
 	<ItemGroup>
 		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
-		<PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="7.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="8.0.0" />
 	</ItemGroup>
 
 
