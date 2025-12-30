@@ -44,8 +44,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Condition="'$(TargetFramework)' == 'net8.0'" Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
+		<PackageReference Condition="'$(TargetFramework)' == 'net10.0'" Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
 		<PackageReference Include="NonFactors.Grid.Core.Mvc6" Version="8.0.0" />
 	</ItemGroup>
 
