@@ -29,6 +29,7 @@
 		<Content Remove="Translations\it-IT.json" />
 		<Content Remove="Translations\ja-JP.json" />
 		<Content Remove="Translations\pt-BR.json" />
+		<Content Remove="Translations\pl-PL.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,6 +38,7 @@
 		<EmbeddedResource Include="Translations\fr-FR.json" />
 		<EmbeddedResource Include="Translations\ja-JP.json" />
 		<EmbeddedResource Include="Translations\pt-BR.json" />
+		<EmbeddedResource Include="Translations\pl-PL.json" />
 	</ItemGroup>
 
 	<ItemGroup>

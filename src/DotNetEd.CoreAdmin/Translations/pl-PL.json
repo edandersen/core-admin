@@ -1,0 +1,11 @@
+{
+    "Create": "Dodaj",
+    "AccessDatabaseEntries": "Dostęp do obiektów bazodanowych znajduje się po lewej stronie.",
+    "DevelopmentModeMessage": "Aplikacja działa obecnie w trybie developerskim. Nie ustawiono jeszcze kontroli dostępu w Core Admin. Core Admin nie będzie dostępny na środowiskach nie-developerskich dopóki nie skonfigurujesz kontroli dostępu. Więcej przeczytasz w dokumentacji dostępnej pod linkiem https://github.com/edandersen/core-admin.",
+    "CreateNew": "Dodaj nowy",
+    "GoBack": "Wstecz",
+    "Edit": "Edytuj",
+    "Delete": "Usuń",
+    "DeleteConfirm": "Czy na pewno chcesz usunąć ten obiekt?"
+  }
+  
