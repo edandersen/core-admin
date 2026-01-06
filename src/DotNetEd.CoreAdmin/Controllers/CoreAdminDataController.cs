@@ -50,7 +50,7 @@ namespace DotNetEd.CoreAdmin.Controllers
                                 query = query.Include(property.Name);
                         }
 
-                        viewModel.Data = (IEnumerable<object>)query;
+                        viewModel.Data = query.ToArray();
                         viewModel.DbContext = dbContextObject;
                     }
                 }
