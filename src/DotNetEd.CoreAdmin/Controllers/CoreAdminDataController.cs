@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -22,6 +23,60 @@ namespace DotNetEd.CoreAdmin.Controllers
             this.dbSetEntities = dbSetEntities;
         }
 
+        /// <summary>
+        /// Converts a string ID to the appropriate CLR type for the primary key.
+        /// Supports built-in types (Guid, int, long), IParsable&lt;T&gt; for strongly-typed IDs,
+        /// and TypeConverter as a fallback.
+        /// </summary>
+        private static object ConvertPrimaryKey(string id, Type clrType)
+        {
+            // Fast path for common built-in types
+            if (clrType == typeof(Guid))
+            {
+                return Guid.Parse(id);
+            }
+            if (clrType == typeof(int))
+            {
+                return int.Parse(id);
+            }
+            if (clrType == typeof(long))
+            {
+                return long.Parse(id);
+            }
+            if (clrType == typeof(string))
+            {
+                return id;
+            }
+
+            // Check for IParsable<T> interface (supports strongly-typed IDs)
+            var parsableInterface = clrType.GetInterfaces()
+                .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IParsable<>));
+
+            if (parsableInterface != null)
+            {
+                // Call the static Parse method: T.Parse(string, IFormatProvider?)
+                var parseMethod = clrType.GetMethod("Parse",
+                    BindingFlags.Public | BindingFlags.Static,
+                    null,
+                    new[] { typeof(string), typeof(IFormatProvider) },
+                    null);
+
+                if (parseMethod != null)
+                {
+                    return parseMethod.Invoke(null, new object[] { id, null });
+                }
+            }
+
+            // Fallback to TypeConverter
+            var converter = TypeDescriptor.GetConverter(clrType);
+            if (converter.CanConvertFrom(typeof(string)))
+            {
+                return converter.ConvertFromString(id);
+            }
+
+            // Last resort: return as-is and let EF Core handle it (will likely fail)
+            return id;
+        }
 
         [HttpGet]
         public IActionResult Index(string id)
@@ -142,19 +197,7 @@ namespace DotNetEd.CoreAdmin.Controllers
             var primaryKey = dbContextObject.Model.FindEntityType(typeOfEntity).FindPrimaryKey();
             var clrType = primaryKey.Properties[0].ClrType;
 
-            object convertedPrimaryKey = id;
-            if (clrType == typeof(Guid))
-            {
-                convertedPrimaryKey = Guid.Parse(id);
-            }
-            else if (clrType == typeof(int))
-            {
-                convertedPrimaryKey = int.Parse(id);
-            }
-            else if (clrType == typeof(long))
-            {
-                convertedPrimaryKey = long.Parse(id);
-            }
+            var convertedPrimaryKey = ConvertPrimaryKey(id, clrType);
 
             return dbSetValue.GetType().InvokeMember("Find", BindingFlags.InvokeMethod, null, dbSetValue, args: new object[] { convertedPrimaryKey });
 
@@ -326,19 +369,7 @@ namespace DotNetEd.CoreAdmin.Controllers
                         var primaryKey = dbContextObject.Model.FindEntityType(dbSetProperty.PropertyType.GetGenericArguments()[0]).FindPrimaryKey();
                         var clrType = primaryKey.Properties[0].ClrType;
 
-                        object convertedPrimaryKey = viewModel.Id;
-                        if (clrType == typeof(Guid))
-                        {
-                            convertedPrimaryKey = Guid.Parse(viewModel.Id);
-                        } 
-                        else if(clrType == typeof(int))
-                        {
-                            convertedPrimaryKey = int.Parse(viewModel.Id);
-                        } 
-                        else if (clrType == typeof(Int64))
-                        {
-                            convertedPrimaryKey = Int64.Parse(viewModel.Id);
-                        }
+                        var convertedPrimaryKey = ConvertPrimaryKey(viewModel.Id, clrType);
 
                         var entityToDelete = dbSetValue.GetType().InvokeMember("Find", BindingFlags.InvokeMethod, null, dbSetValue, args: new object[] { convertedPrimaryKey });
                         dbSetValue.GetType().InvokeMember("Remove", BindingFlags.InvokeMethod, null, dbSetValue, args: new object[] {entityToDelete});
