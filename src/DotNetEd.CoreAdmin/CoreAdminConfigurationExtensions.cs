@@ -118,12 +118,12 @@ namespace Microsoft.Extensions.DependencyInjection
             var discoveredServices = new List<DiscoveredDbSetEntityType>();
             foreach (var service in services.ToList())
             {
-                if (service.ImplementationType == null)
+                if (service.ServiceType == null)
                     continue;
-                if (service.ImplementationType.IsSubclassOf(typeof(DbContext)) && 
-                    !discoveredServices.Any(x => x.DbContextType == service.ImplementationType))
+                if (service.ServiceType.IsSubclassOf(typeof(DbContext)) && 
+                    !discoveredServices.Any(x => x.DbContextType == service.ServiceType))
                 {
-                    foreach (var dbSetProperty in service.ImplementationType.GetProperties())
+                    foreach (var dbSetProperty in service.ServiceType.GetProperties())
                     {
                         // looking for DbSet<Entity>
                         if (dbSetProperty.PropertyType.IsGenericType && dbSetProperty.PropertyType.Name.StartsWith("DbSet"))
@@ -131,7 +131,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             if (!options.IgnoreEntityTypes.Contains(dbSetProperty.PropertyType.GenericTypeArguments.First()))
                             {
                                 discoveredServices.Add(new DiscoveredDbSetEntityType() { 
-                                    DbContextType = service.ImplementationType, 
+                                    DbContextType = service.ServiceType, 
                                     DbSetType = dbSetProperty.PropertyType, 
                                     UnderlyingType = dbSetProperty.PropertyType.GenericTypeArguments.First(), Name = dbSetProperty.Name });
                             }
