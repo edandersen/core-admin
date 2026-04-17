@@ -1,4 +1,5 @@
-﻿@model DotNetEd.CoreAdmin.ViewModels.MenuViewModel
+﻿
+@model DotNetEd.CoreAdmin.ViewModels.MenuViewModel
     <ul class="nav flex-column">
         <li class="nav-item">
             <a class="nav-link" title="Home" href="@Url.Action("Index", "CoreAdmin")">
@@ -14,13 +15,13 @@
         <span>Resources</span>
     </h6>
     <ul class="nav flex-column mb-auto">
-        @foreach (var dbSetName in Model.DbSetNames)
-        {
+    @for (int i = 0; i < Model.DbSetNames.Count; i++)
+    {
             <li class="nav-item">
-                <a class="nav-link d-flex align-items-center gap-2" title="@dbSetName" href="@Url.Action("Index", "CoreAdminData", new { Id = dbSetName })">
+            <a class="nav-link d-flex align-items-center gap-2" title="@Model.DbSetNames[i]" href="@Url.Action("Index", "CoreAdminData", new { Id = Model.DbSetNames[i] })">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
 
-                    @dbSetName
+                    @Model.DbDisplayNames[i]
                 </a>
             </li>
         }

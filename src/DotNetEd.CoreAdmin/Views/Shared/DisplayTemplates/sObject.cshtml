@@ -1,0 +1,23 @@
+@* @using System.ComponentModel.DataAnnotations
+@model object
+
+@if (Model == null) { return; }
+
+@foreach (var prop in Model.GetType().GetProperties())
+{
+    var scaffold = prop.GetCustomAttributes(typeof(ScaffoldColumnAttribute), false)
+                       .FirstOrDefault() as ScaffoldColumnAttribute;
+    if (scaffold?.Scaffold == false) { continue; }
+    @ViewData.ModelExplorer.GetSimpleDisplayText()
+
+    var display = prop.GetCustomAttributes(typeof(DisplayAttribute), false)
+                      .FirstOrDefault() as DisplayAttribute;
+    var label = display?.GetName() ?? prop.Name;
+    var value = prop.GetValue(Model);
+
+    <div class="row mb-1">
+        <div class="col-sm-4 fw-bold">@label</div>
+        <div class="col-sm-8">@(value ?? "-")</div>
+    </div>
+    <hr />
+} *@

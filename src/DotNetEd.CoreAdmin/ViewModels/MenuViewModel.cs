@@ -6,5 +6,7 @@ namespace DotNetEd.CoreAdmin.ViewModels
     {
         public List<string> DbContextNames { get; set; } = new List<string>();
         public List<string> DbSetNames { get; set; } = new List<string>();
+
+        public List<string> DbDisplayNames { get; set; } = new List<string>();
     }
 }

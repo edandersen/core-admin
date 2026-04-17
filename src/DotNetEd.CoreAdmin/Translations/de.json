@@ -1,0 +1,13 @@
+{
+  "Create": "Erstellen",
+  "AccessDatabaseEntries": "Zugang der Datenbank auf der linken Seite",
+  "DevelopmentModeMessage": "Sie befinden sich im Entwicklermodus. Keine Authentisierung wurde für CoreAdmin festgelegt. Core Admin wird außerhalb vom Entwicklermodus nicht erreichbar sein. Siehe Dokumentation https://github.com/edandersen/core-admin.",
+  "CreateNew": "Neu Erstellen",
+  "GoBack": "Zurück",
+  "Edit": "Bearbeiten",
+  "Delete": "Löschen",
+  "DeleteConfirm": "Bestätige Löschung",
+  "Auto": "Auto",
+  "Dark": "Dunkel",
+  "Light": "Hell"
+}

@@ -36,7 +36,8 @@ namespace DotNetEd.CoreAdmin
 
             foreach(var culture in cultureKeys)
             {
-                var fileName = $"{culture}.json";
+                //Firefox usually returns something like: "de,en-US;q=0.9,en;q=0.8"
+                var fileName = $"{culture.Split(',')[0]}.json";
                 var key = translations.Keys.FirstOrDefault(k => k.EndsWith(fileName));
                 if (key != null)
                 {
