@@ -1,4 +1,5 @@
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +18,14 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             _factory = factory;
         }
 
-        static void ConfigureTestServices(IServiceCollection services) { }
+        static void ConfigureTestServices(IServiceCollection services)
+        {
+            // These UI smoke tests explicitly opt into the Development-only bypass.
+            services.AddCoreAdmin(new CoreAdminOptions
+            {
+                AllowUnauthenticatedAccessInDevelopment = true
+            });
+        }
 
         [Fact]
         public async Task ShowsTestEntitiesOnScreenOnAdminScreen()

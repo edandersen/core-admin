@@ -12,7 +12,7 @@
 @using (Html.BeginForm("CreateEntityPost",
 "CoreAdminData",
 new { id = ViewBag.DbSetName },
-FormMethod.Post, false,
+FormMethod.Post, true,
 new { enctype = "multipart/form-data" }))
 {
     @Html.Hidden("dbSetName", ViewBag.DbSetName, new { })

@@ -1,4 +1,5 @@
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
+using DotNetEd.CoreAdmin;
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -20,7 +21,14 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             _factory = factory;
         }
 
-        static void ConfigureTestServices(IServiceCollection services) { }
+        static void ConfigureTestServices(IServiceCollection services)
+        {
+            // These tests explicitly opt into the Development-only bypass to test UI options.
+            services.AddCoreAdmin(new CoreAdminOptions
+            {
+                AllowUnauthenticatedAccessInDevelopment = true
+            });
+        }
 
         [Fact]
         public async Task ReturnsBuiltInAssetPathWhenCdnOptionsNotSet()
@@ -44,7 +52,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
         static void ConfigureTestServicesWithOptionsIgnoringDbSets(IServiceCollection services, IEnumerable<Type> dbSetsToIgnore)
         {
-            services.AddCoreAdmin(new CoreAdminOptions() { IgnoreEntityTypes = dbSetsToIgnore });
+            services.AddCoreAdmin(new CoreAdminOptions
+            {
+                IgnoreEntityTypes = dbSetsToIgnore,
+                AllowUnauthenticatedAccessInDevelopment = true
+            });
         }
 
         [Fact] public async Task IgnoreEntityTypes_DoesNotIncludeIgnoredDbSets()
