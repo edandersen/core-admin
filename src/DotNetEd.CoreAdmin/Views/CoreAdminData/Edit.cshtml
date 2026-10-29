@@ -12,7 +12,7 @@
 @using (Html.BeginForm("EditEntityPost", 
 "CoreAdminData", 
 new { dbSetName = ViewBag.DbSetName, id = ViewBag.Id }, 
-FormMethod.Post, false,
+FormMethod.Post, true,
 new { enctype = "multipart/form-data" }))
 {
 

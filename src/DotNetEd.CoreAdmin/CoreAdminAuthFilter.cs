@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNetEd.CoreAdmin
@@ -12,7 +13,7 @@ namespace DotNetEd.CoreAdmin
         public CoreAdminAuthAttribute() : base(typeof(CoreAdminAuthFilter)) { }
     }
 
-    public class CoreAdminAuthFilter : IAuthorizationFilter
+    public class CoreAdminAuthFilter : IAsyncAuthorizationFilter
     {
         private readonly IWebHostEnvironment environment;
         private readonly IList<CoreAdminOptions> coreAdminOptions;
@@ -25,13 +26,16 @@ namespace DotNetEd.CoreAdmin
             this.serviceProvider = serviceProvider;
         }
 
-        public async void OnAuthorization(AuthorizationFilterContext context)
+        public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
 
             bool failedSecurityCheck = true;
 
-            // in Development mode, allow bypassing security (shows a warning message)
-            if (environment.EnvironmentName == "Development" && !coreAdminOptions.Any(o => o.IsSecuritySet))
+            // Permit the Development-only bypass only when explicitly opted in.
+            // Missing security configuration is denied by default in every environment.
+            if (environment.EnvironmentName == "Development"
+                && coreAdminOptions.Any(o => o.AllowUnauthenticatedAccessInDevelopment)
+                && !coreAdminOptions.Any(o => o.IsSecuritySet))
             {
                 failedSecurityCheck = false;
             }

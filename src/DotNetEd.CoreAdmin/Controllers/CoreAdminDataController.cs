@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 namespace DotNetEd.CoreAdmin.Controllers
 {
     [CoreAdminAuth]
+    [AutoValidateAntiforgeryToken]
     public class CoreAdminDataController : Controller
     {
         private readonly IEnumerable<DiscoveredDbSetEntityType> dbSetEntities;
@@ -161,7 +162,6 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpPost]
-        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> CreateEntityPost(string dbSetName, string id, [FromForm] object formData)
         {
             var dbSetValue = GetDbSetValueOrNull(dbSetName, out var dbContextObject, out var entityType, out var relationships);
@@ -207,7 +207,6 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpGet]
-        [IgnoreAntiforgeryToken]
         public IActionResult Create(string id)
         {
             var dbSetValue = GetDbSetValueOrNull(id, out var dbContextObject, out var entityType, out var relationships);
@@ -311,7 +310,6 @@ namespace DotNetEd.CoreAdmin.Controllers
         }
 
         [HttpPost]
-        [IgnoreAntiforgeryToken]
         public async Task<IActionResult> DeleteEntityPost([FromForm] DataDeleteViewModel viewModel)
         {
             foreach (var dbSetEntity in dbSetEntities.Where(db => db.Name.ToLowerInvariant() == viewModel.DbSetName.ToLowerInvariant()))

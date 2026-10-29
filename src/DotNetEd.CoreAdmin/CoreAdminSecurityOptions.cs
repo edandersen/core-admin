@@ -9,6 +9,12 @@ namespace DotNetEd.CoreAdmin
     {
         public string[] RestrictToRoles { get; set; }
         public Func<Task<bool>> CustomAuthorisationMethod { get; set; }
+
+        /// <summary>
+        /// Explicitly allows access without security configuration in Development only.
+        /// This option is ignored in every other environment and is disabled by default.
+        /// </summary>
+        public bool AllowUnauthenticatedAccessInDevelopment { get; set; }
         public bool IsSecuritySet => (RestrictToRoles != null && RestrictToRoles.Length > 0) || CustomAuthorisationMethod != null || CustomAuthorisationMethodWithServiceProvider != null;
 
         public string CdnPath { get; set; }

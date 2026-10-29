@@ -1,3 +1,4 @@
+using DotNetEd.CoreAdmin;
 using DotNetEd.CoreAdmin.DemoApp.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,7 +11,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<TestDbContext>(options => options.UseInMemoryDatabase("TestDatabase"));
 
 // add Core Admin
-builder.Services.AddCoreAdmin();
+// Demo-only opt-in. This bypass is effective only in Development.
+// Real applications should configure a role restriction or custom authorization.
+builder.Services.AddCoreAdmin(new CoreAdminOptions
+{
+    AllowUnauthenticatedAccessInDevelopment = builder.Environment.IsDevelopment()
+});
 
 var app = builder.Build();
 

@@ -33,7 +33,7 @@ dotnet add package CoreAdmin
 Add this line before ```var app = builder.Build();``` and after your DbContexts have been added to Services in Program.cs:
 
 ```csharp
-builder.Services.AddCoreAdmin();
+builder.Services.AddCoreAdmin("Administrator");
 ```
 
 You need to make sure Endpoints are enabled as they don't appear to be in the default templates.
@@ -57,7 +57,7 @@ dotnet add package CoreAdmin
 Add this line at the bottom of ConfigureServices() (and after your DbContexts have been added to Services) in Startup.cs:
 
 ```csharp
-services.AddCoreAdmin();
+services.AddCoreAdmin("Administrator");
 ```
 ## Running the app
 
@@ -65,7 +65,18 @@ Run your app with with /coreadmin on the end of the URL, for example https://loc
 
 ### Security
 
-Basic role based security is currently supported. Whilst this does not need to be set up when running the admin panel in Development mode (for testing), all other environments need this set up.
+Core Admin denies access by default unless a role restriction or custom authorization method is configured. This applies in Development as well as Production.
+
+For an intentionally unprotected local demo or test only, you can explicitly enable the Development-only bypass. This setting has no effect outside Development and should not be enabled in production or on a network-accessible development server:
+
+```csharp
+builder.Services.AddCoreAdmin(new DotNetEd.CoreAdmin.CoreAdminOptions
+{
+    AllowUnauthenticatedAccessInDevelopment = true
+});
+```
+
+For real applications, configure a role restriction or a custom authorization method instead.
 
 #### Role based security
 

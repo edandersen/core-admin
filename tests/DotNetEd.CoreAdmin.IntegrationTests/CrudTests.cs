@@ -1,7 +1,10 @@
 using System;
+using DotNetEd.CoreAdmin;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using DotNetEd.CoreAdmin.IntegrationTests.TestApp;
 using Microsoft.AspNetCore.Hosting;
@@ -21,7 +24,116 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             _factory = factory;
         }
 
-         static void ConfigureTestServices(IServiceCollection services) { }
+        static void ConfigureTestServices(IServiceCollection services)
+        {
+            // CRUD tests explicitly opt into the Development-only bypass.
+            services.AddCoreAdmin(new CoreAdminOptions
+            {
+                AllowUnauthenticatedAccessInDevelopment = true
+            });
+        }
+
+        private static readonly Regex AntiforgeryTokenRegex = new Regex(
+            "<input\\b(?=[^>]*\\bname\\s*=\\s*[\"']__RequestVerificationToken[\"'])(?=[^>]*\\bvalue\\s*=\\s*[\"']([^\"']+)[\"'])[^>]*>",
+            RegexOptions.IgnoreCase | RegexOptions.Compiled);
+
+        private static async Task<HttpResponseMessage> PostWithAntiforgeryTokenAsync(
+            HttpClient client,
+            string formUrl,
+            string postUrl,
+            IDictionary<string, string> formData)
+        {
+            using var formResponse = await client.GetAsync(formUrl);
+            formResponse.EnsureSuccessStatusCode();
+
+            var html = await formResponse.Content.ReadAsStringAsync();
+            var tokenMatch = AntiforgeryTokenRegex.Match(html);
+            Assert.True(tokenMatch.Success, $"CSRF token was not found in form: {formUrl}");
+
+            var data = new Dictionary<string, string>(formData)
+            {
+                ["__RequestVerificationToken"] = WebUtility.HtmlDecode(tokenMatch.Groups[1].Value)
+            };
+
+            // WebApplicationFactory's client keeps the antiforgery cookie between GET and POST.
+            return await client.PostAsync(postUrl, new FormUrlEncodedContent(data));
+        }
+
+        [Fact]
+        public async Task CreateWithoutAntiforgeryToken_IsRejectedAndDoesNotCreateEntity()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var name = Guid.NewGuid().ToString();
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
+
+            var data = new Dictionary<string, string> { { "Name", name }, { "Id", Guid.NewGuid().ToString() } };
+            var response = await client.PostAsync(
+                "/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities",
+                new FormUrlEncodedContent(data));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.False(await dbContext.TestEntities.AnyAsync(entity => entity.Name == name));
+        }
+
+        [Fact]
+        public async Task EditWithoutAntiforgeryToken_IsRejectedAndDoesNotUpdateEntity()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var entity = new TestApp.Entities.TestEntity { Id = Guid.NewGuid(), Name = "Original" };
+            dbContext.TestEntities.Add(entity);
+            await dbContext.SaveChangesAsync();
+
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
+
+            var data = new Dictionary<string, string>
+            {
+                { "Name", "Changed" },
+                { "Id", entity.Id.ToString() },
+                { "dbSetName", "TestEntities" }
+            };
+            var response = await client.PostAsync(
+                $"/coreadmindata/EditEntityPost/{entity.Id}?dbSetName=TestEntities",
+                new FormUrlEncodedContent(data));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            await dbContext.Entry(entity).ReloadAsync();
+            Assert.Equal("Original", entity.Name);
+        }
+
+        [Fact]
+        public async Task DeleteWithoutAntiforgeryToken_IsRejectedAndDoesNotDeleteEntity()
+        {
+            var dbContext = _factory.Services.GetService<IntegrationTestDbContext>();
+            var entity = new TestApp.Entities.TestEntity { Id = Guid.NewGuid(), Name = "Must remain" };
+            dbContext.TestEntities.Add(entity);
+            await dbContext.SaveChangesAsync();
+
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.UseEnvironment("Development");
+                builder.ConfigureTestServices(ConfigureTestServices);
+            }).CreateClient();
+
+            var data = new Dictionary<string, string>
+            {
+                { "Id", entity.Id.ToString() },
+                { "DbSetName", "testentities" }
+            };
+            var response = await client.PostAsync(
+                "/coreadmindata/DeleteEntityPost",
+                new FormUrlEncodedContent(data));
+
+            Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.True(await dbContext.TestEntities.AnyAsync(item => item.Id == entity.Id));
+        }
 
         [Fact]
         public async Task DeleteHappyPath()
@@ -42,7 +154,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "id", idGuid.ToString() }, { "dbSetName", "testentities" } };
 
-            var response = await client.PostAsync("/coreadmindata/DeleteEntityPost", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                $"/coreadmindata/DeleteEntity/{idGuid}?dbSetName=testentities",
+                "/coreadmindata/DeleteEntityPost",
+                data);
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is deleted from DB context
@@ -67,7 +183,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", nameGuidString }, { "Id", nameGuidString } };
 
-            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                "/coreadmindata/Create/testentities",
+                "/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities",
+                data);
             response.EnsureSuccessStatusCode();
 
             
@@ -92,7 +212,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", nameGuidString }, { "Id", nameGuidString } };
 
-            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/testchildentities?dbSetName=testchildentities", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                "/coreadmindata/Create/testchildentities",
+                "/coreadmindata/CreateEntityPost/testchildentities?dbSetName=testchildentities",
+                data);
             response.EnsureSuccessStatusCode();
 
             Assert.True(await dbContext.TestChildEntities.AnyAsync(test => test.Name == nameGuidString));
@@ -101,7 +225,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
 
             data = new Dictionary<string, string>() { { "ParentId", parentId.ToString() }, { "ChildId", idGuid.ToString() }, { "dbSetName", "testparententities" } };
 
-            response = await client.PostAsync("/coreadmindata/CreateEntityPost/testparententities", new FormUrlEncodedContent(data));
+            response = await PostWithAntiforgeryTokenAsync(
+                client,
+                "/coreadmindata/Create/testparententities",
+                "/coreadmindata/CreateEntityPost/testparententities",
+                data);
             
             response.EnsureSuccessStatusCode();
 
@@ -126,7 +254,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", nameString }, { "Id", idGuid.ToString() } };
 
-            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                "/coreadmindata/Create/testentities",
+                "/coreadmindata/CreateEntityPost/testentities?dbSetName=testentities",
+                data);
             response.EnsureSuccessStatusCode();
 
             // make sure it has not written to DB
@@ -151,7 +283,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", nameGuidString } };
 
-            var response = await client.PostAsync("/coreadmindata/CreateEntityPost/TestAutogeneratedKeyEntities?dbSetName=TestAutogeneratedKeyEntities", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                "/coreadmindata/Create/TestAutogeneratedKeyEntities",
+                "/coreadmindata/CreateEntityPost/TestAutogeneratedKeyEntities?dbSetName=TestAutogeneratedKeyEntities",
+                data);
             response.EnsureSuccessStatusCode();
 
 
@@ -180,7 +316,11 @@ namespace DotNetEd.CoreAdmin.IntegrationTests
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("*/*"));
             var data = new Dictionary<string, string>() { { "Name", updatedNameGuid }, { "Id", idGuid.ToString() } };
 
-            var response = await client.PostAsync("/coreadmindata/editentityPost/" + idGuid.ToString() + "?dbSetName=TestEntities", new FormUrlEncodedContent(data));
+            var response = await PostWithAntiforgeryTokenAsync(
+                client,
+                $"/coreadmindata/EditEntity/{idGuid}?dbSetName=TestEntities",
+                $"/coreadmindata/editentityPost/{idGuid}?dbSetName=TestEntities",
+                data);
             response.EnsureSuccessStatusCode();
 
             // check to see if the item is updated from DB context
